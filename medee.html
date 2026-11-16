@@ -1,0 +1,2474 @@
+<!DOCTYPE html>
+<html lang="mn" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Сургуулийн мэдээ мэдээлэл | Мандал сумын Ерөнхий боловсролын 4-р сургууль</title>
+
+  <!-- Google Fonts: Montserrat & Nunito with full Cyrillic support -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Nunito', 'sans-serif'],
+            heading: ['Montserrat', 'sans-serif'],
+          },
+        },
+      },
+    };
+
+    /* Synchronous image fallback handler */
+    window.handleImageError = function (imgEl, labelText = 'Сургуулийн мэдээ') {
+      if (!imgEl) return;
+      imgEl.onerror = null;
+      const safeLabel = (labelText || 'Сургуулийн мэдээ').slice(0, 28);
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+        <defs>
+          <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#4f46e5"/>
+            <stop offset="50%" stop-color="#db2777"/>
+            <stop offset="100%" stop-color="#0891b2"/>
+          </linearGradient>
+        </defs>
+        <rect width="800" height="500" fill="url(#g)"/>
+        <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#ffffff" font-family="sans-serif" font-size="26" font-weight="bold">${safeLabel}</text>
+      </svg>`;
+      imgEl.src = 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg);
+    };
+  </script>
+
+  <style>
+    /* ==========================================================================
+       1. ANIMATED LIQUID MESH GRADIENT & FROSTED GLASSMORPHISM
+       ========================================================================== */
+    body {
+      font-family: 'Nunito', sans-serif;
+      background-color: #f4f6fb;
+      color: #0f172a;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, .font-heading {
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .liquid-gradient-bg {
+      background: linear-gradient(
+        -45deg,
+        #312e81,
+        #7e22ce,
+        #db2777,
+        #0891b2,
+        #f97316,
+        #4f46e5
+      );
+      background-size: 400% 400%;
+      animation: liquidFlow 16s ease infinite;
+    }
+
+    @keyframes liquidFlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .ambient-mesh {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      overflow: hidden;
+      pointer-events: none;
+      background:
+        radial-gradient(at 8% 12%, rgba(79, 70, 229, 0.14) 0px, transparent 52%),
+        radial-gradient(at 92% 18%, rgba(236, 72, 153, 0.14) 0px, transparent 50%),
+        radial-gradient(at 80% 78%, rgba(6, 182, 212, 0.16) 0px, transparent 52%),
+        radial-gradient(at 15% 85%, rgba(249, 115, 22, 0.12) 0px, transparent 50%),
+        #f5f7fc;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 9999px;
+      filter: blur(75px);
+      opacity: 0.6;
+      pointer-events: none;
+      animation: floatOrb 14s ease-in-out infinite alternate;
+    }
+
+    .orb-delay-1 {
+      animation-delay: -5s;
+      animation-duration: 18s;
+    }
+
+    .orb-delay-2 {
+      animation-delay: -9s;
+      animation-duration: 21s;
+    }
+
+    @keyframes floatOrb {
+      0% { transform: translate(0px, 0px) scale(1); }
+      50% { transform: translate(38px, -32px) scale(1.12); }
+      100% { transform: translate(-28px, 26px) scale(0.95); }
+    }
+
+    .glass-nav {
+      background: rgba(255, 255, 255, 0.82);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.85);
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(255, 255, 255, 0.92);
+      box-shadow:
+        0 14px 36px -10px rgba(49, 46, 129, 0.1),
+        0 4px 14px -2px rgba(15, 23, 42, 0.04);
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+    }
+
+    .glass-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(236, 72, 153, 0.35);
+      box-shadow:
+        0 24px 48px -12px rgba(126, 34, 206, 0.18),
+        0 8px 22px -4px rgba(6, 182, 212, 0.12);
+    }
+
+    .glass-dark {
+      background: rgba(15, 23, 42, 0.45);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .text-gradient {
+      background: linear-gradient(135deg, #4f46e5 0%, #db2777 50%, #0891b2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .text-gradient-warm {
+      background: linear-gradient(135deg, #fde047 0%, #fb7185 50%, #38bdf8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .btn-gradient {
+      background: linear-gradient(135deg, #6d28d9 0%, #db2777 52%, #f97316 100%);
+      background-size: 200% auto;
+      color: #ffffff;
+      transition: all 0.35s ease;
+      box-shadow: 0 10px 25px -5px rgba(219, 39, 119, 0.45);
+    }
+
+    .btn-gradient:hover {
+      background-position: right center;
+      transform: translateY(-2px);
+      box-shadow: 0 14px 30px -5px rgba(109, 40, 217, 0.55);
+    }
+
+    .btn-cool {
+      background: linear-gradient(135deg, #0891b2 0%, #3b82f6 50%, #6d28d9 100%);
+      background-size: 200% auto;
+      color: #ffffff;
+      transition: all 0.35s ease;
+      box-shadow: 0 10px 25px -5px rgba(8, 145, 178, 0.4);
+    }
+
+    .btn-cool:hover {
+      background-position: right center;
+      transform: translateY(-2px);
+    }
+
+    @keyframes shakeModal {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-10px); }
+      40%, 80% { transform: translateX(10px); }
+    }
+
+    .animate-shake {
+      animation: shakeModal 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+    }
+  </style>
+</head>
+<body class="antialiased selection:bg-fuchsia-500 selection:text-white min-h-screen flex flex-col">
+
+  <!-- Ambient Liquid Mesh Gradient Background Layer -->
+  <div class="ambient-mesh" aria-hidden="true">
+    <div class="orb w-96 h-96 bg-indigo-400/30 top-1/4 -left-24"></div>
+    <div class="orb orb-delay-1 w-[28rem] h-[28rem] bg-pink-400/25 top-1/2 right-0"></div>
+    <div class="orb orb-delay-2 w-96 h-96 bg-cyan-400/25 bottom-10 left-1/3"></div>
+  </div>
+
+  <!-- ========================================================================
+       1. TOP STICKY GLASS NAVBAR
+       ======================================================================== -->
+  <header class="sticky top-0 z-40 glass-nav transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20 gap-3">
+        <!-- School Emblem & Name -->
+        <a href="index.html" class="flex items-center gap-3 group min-w-0">
+          <div class="w-11 h-11 rounded-2xl liquid-gradient-bg flex items-center justify-center text-white shadow-lg shadow-purple-500/30 group-hover:scale-105 transition-transform shrink-0">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5z" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+            </svg>
+          </div>
+          <div class="truncate">
+            <span class="block font-heading font-extrabold text-sm sm:text-base lg:text-[17px] tracking-tight text-slate-900 leading-tight truncate">
+              Мандал сумын ЕБ-ын 4-р сургууль
+            </span>
+            <span class="block text-[11px] font-bold text-gradient tracking-wider uppercase mt-0.5">
+              Сэлэнгэ аймаг • Мандал сум
+            </span>
+          </div>
+        </a>
+
+        <!-- Desktop Section Links -->
+        <nav class="hidden xl:flex items-center gap-6 text-sm font-bold text-slate-700">
+          <a href="index.html" class="hover:text-fuchsia-600 transition-colors py-2">Нүүр</a>
+          <a href="index.html#events-calendar" class="hover:text-fuchsia-600 transition-colors py-2">Үйл ажиллагаа</a>
+          <a href="index.html#cultures" class="hover:text-fuchsia-600 transition-colors py-2">5 Соёл</a>
+          <a href="sain-hicheel.html" class="hover:text-fuchsia-600 transition-colors py-2">Сайн хичээл</a>
+          <a href="medee.html" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full btn-gradient text-white shadow-sm">
+            <span>📰 Мэдээ мэдээлэл</span>
+          </a>
+          <a href="index.html#gallery" class="hover:text-fuchsia-600 transition-colors py-2">Зургийн цомог</a>
+        </nav>
+
+        <!-- Primary Schedule Button & Mobile Menu Toggle -->
+        <div class="flex items-center gap-2.5 shrink-0">
+          <button
+            onclick="openScheduleLink()"
+            class="btn-cool px-3.5 sm:px-5 py-2.5 rounded-full text-xs sm:text-sm font-heading font-bold flex items-center gap-2 cursor-pointer"
+          >
+            <span>📅 Хичээлийн хуваарь харах</span>
+          </button>
+
+          <button
+            id="mobile-menu-btn"
+            onclick="toggleMobileMenu()"
+            aria-label="Цэс нээх"
+            class="xl:hidden p-2.5 rounded-xl bg-white/90 border border-slate-200 text-slate-700 hover:bg-slate-100"
+          >
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Dropdown Navigation -->
+    <div id="mobile-menu" class="hidden xl:hidden bg-white/95 backdrop-blur-xl border-b border-slate-200 px-6 py-4 space-y-2">
+      <a href="index.html" onclick="toggleMobileMenu()" class="block py-2 font-bold text-slate-700 hover:text-fuchsia-600">Нүүр</a>
+      <a href="index.html#events-calendar" onclick="toggleMobileMenu()" class="block py-2 font-bold text-slate-700 hover:text-fuchsia-600">Үйл ажиллагаа</a>
+      <a href="index.html#cultures" onclick="toggleMobileMenu()" class="block py-2 font-bold text-slate-700 hover:text-fuchsia-600">5 Соёл</a>
+      <a href="sain-hicheel.html" onclick="toggleMobileMenu()" class="block py-2 font-bold text-slate-700 hover:text-fuchsia-600">Сайн хичээл</a>
+      <a href="medee.html" onclick="toggleMobileMenu()" class="block py-2 font-extrabold text-fuchsia-600">📰 Мэдээ мэдээлэл (Одоогийн хуудас)</a>
+      <a href="index.html#gallery" onclick="toggleMobileMenu()" class="block py-2 font-bold text-slate-700 hover:text-fuchsia-600">Зургийн цомог</a>
+    </div>
+  </header>
+
+  <!-- ========================================================================
+       2. HERO BANNER FOR "СУРГУУЛИЙН МЭДЭЭ МЭДЭЭЛЭЛ"
+       ======================================================================== -->
+  <section class="relative overflow-hidden liquid-gradient-bg text-white py-12 sm:py-16 lg:py-20">
+    <div class="orb w-80 h-80 bg-cyan-300/60 -top-16 -left-16"></div>
+    <div class="orb orb-delay-1 w-96 h-96 bg-amber-300/55 top-1/3 right-0"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.2)_1px,transparent_1px)] [background-size:26px_26px] opacity-35 pointer-events-none"></div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+        <div class="space-y-4 max-w-3xl">
+          <div class="flex flex-wrap items-center gap-2.5 text-xs font-extrabold">
+            <a href="index.html" class="px-3.5 py-1.5 rounded-full glass-dark hover:bg-white/25 transition-colors inline-flex items-center gap-1.5">
+              <span>← Үндсэн хуудас</span>
+            </a>
+            <span class="px-3.5 py-1.5 rounded-full bg-white/20 backdrop-blur-md">
+              📰 Мэдээллийн самбар • Зарлал, үйл явдал, амжилт
+            </span>
+          </div>
+
+          <h1 class="font-heading font-black text-3xl sm:text-5xl leading-[1.15] tracking-tight drop-shadow-sm">
+            Сургуулийн <span class="text-gradient-warm">мэдээ мэдээлэл</span>
+          </h1>
+
+          <p class="text-sm sm:text-lg text-white/90 leading-relaxed font-medium">
+            Мандал сумын Ерөнхий боловсролын 4-р сургуулийн цаг үеийн мэдээ, албан ёсны зарлал, олимпиад уралдааны амжилт, сурагч багш нарын онцлох үйл явдлын нэгдсэн сан.
+          </p>
+
+          <!-- Admin Quick Add Button (Visible when logged in as Admin) -->
+          <div id="hero-admin-actions" class="hidden pt-2">
+            <button
+              type="button"
+              onclick="openAdminNewsModal()"
+              class="px-6 py-3.5 rounded-2xl bg-white text-slate-900 font-heading font-extrabold text-xs sm:text-sm shadow-xl hover:bg-amber-300 transition-all inline-flex items-center gap-2 cursor-pointer"
+            >
+              <span>➕ Шинэ мэдээ нийтлэх</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Summary Glass Stats Box -->
+        <div class="glass-dark rounded-3xl p-5 sm:p-6 grid grid-cols-2 gap-4 shrink-0 min-w-[270px] sm:min-w-[320px]">
+          <div class="p-3 rounded-2xl bg-white/10 text-center">
+            <span id="stat-total-posts" class="font-heading font-black text-2xl sm:text-3xl text-amber-300 block">0</span>
+            <span class="text-xs font-bold text-white/85">Нийт мэдээ</span>
+          </div>
+          <div class="p-3 rounded-2xl bg-white/10 text-center">
+            <span id="stat-total-categories" class="font-heading font-black text-2xl sm:text-3xl text-cyan-300 block">0</span>
+            <span class="text-xs font-bold text-white/85">Ангилал</span>
+          </div>
+          <div class="p-3 rounded-2xl bg-white/10 text-center">
+            <span id="stat-total-photos" class="font-heading font-black text-2xl sm:text-3xl text-emerald-300 block">0</span>
+            <span class="text-xs font-bold text-white/85">Нийт гэрэл зураг</span>
+          </div>
+          <div class="p-3 rounded-2xl bg-white/10 text-center">
+            <span id="stat-total-videos" class="font-heading font-black text-2xl sm:text-3xl text-pink-300 block">0</span>
+            <span class="text-xs font-bold text-white/85">Видео мэдээ</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       3. FILTER, SEARCH & NEWS DIRECTORY
+       ======================================================================== -->
+  <main class="flex-1 py-10 sm:py-14 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+      <!-- Filter & Search Control Card -->
+      <div class="glass-card rounded-3xl p-5 sm:p-6 space-y-4">
+        <div class="grid md:grid-cols-12 gap-4 items-center">
+          <!-- Search Input -->
+          <div class="md:col-span-6 relative">
+            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">🔍</span>
+            <input
+              id="news-search-input"
+              type="text"
+              oninput="handleNewsFilterChange()"
+              placeholder="Мэдээний гарчиг эсвэл агуулгаар хайх..."
+              class="w-full pl-11 pr-4 py-3 rounded-2xl bg-white/90 border border-slate-200 text-sm font-semibold focus:outline-none focus:border-fuchsia-500"
+            />
+          </div>
+
+          <!-- Category Dropdown -->
+          <div class="md:col-span-3">
+            <select
+              id="filter-category-select"
+              onchange="handleNewsFilterChange()"
+              class="w-full px-4 py-3 rounded-2xl bg-white/90 border border-slate-200 text-sm font-bold text-slate-800 focus:outline-none focus:border-indigo-500 cursor-pointer"
+            >
+              <option value="Бүгд">🏷️ Бүх ангилал</option>
+            </select>
+          </div>
+
+          <!-- Sort Dropdown -->
+          <div class="md:col-span-3">
+            <select
+              id="filter-sort-select"
+              onchange="handleNewsFilterChange()"
+              class="w-full px-4 py-3 rounded-2xl bg-white/90 border border-slate-200 text-sm font-bold text-slate-800 focus:outline-none focus:border-cyan-500 cursor-pointer"
+            >
+              <option value="newest">🕒 Шинэ нь эхэндээ</option>
+              <option value="oldest">🕰️ Хуучин нь эхэндээ</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Category Quick Pills -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-slate-200/70">
+          <div id="category-quick-pills" class="flex flex-wrap items-center gap-2"></div>
+
+          <button
+            id="btn-reset-filters"
+            type="button"
+            onclick="resetNewsFilters()"
+            class="hidden text-xs font-extrabold text-fuchsia-600 hover:underline cursor-pointer"
+          >
+            ✕ Шүүлтүүр цэвэрлэх
+          </button>
+        </div>
+      </div>
+
+      <!-- Featured Latest Post Banner (Shown on default view) -->
+      <div id="featured-post-wrapper" class="hidden"></div>
+
+      <!-- News Cards Grid -->
+      <div id="news-directory-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-7"></div>
+
+      <!-- Empty State -->
+      <div id="news-directory-empty" class="hidden glass-card rounded-3xl p-12 text-center space-y-3">
+        <p class="font-heading font-extrabold text-lg text-slate-800">
+          Хайлтад тохирох мэдээ олдсонгүй.
+        </p>
+        <p class="text-sm text-slate-600">Өөр ангилал сонгох эсвэл хайлтын үгээ өөрчилнө үү.</p>
+        <button
+          type="button"
+          onclick="resetNewsFilters()"
+          class="mt-2 btn-cool px-6 py-2.5 rounded-full text-xs sm:text-sm font-bold cursor-pointer"
+        >
+          Бүх мэдээг харах
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- ========================================================================
+       4. FOOTER WITH ADMIN LOGIN / MANAGE BUTTON
+       ======================================================================== -->
+  <footer class="liquid-gradient-bg text-white pt-12 pb-8 relative overflow-hidden mt-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6 pb-8 border-b border-white/20">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center shrink-0">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5z" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+            </svg>
+          </div>
+          <div>
+            <span class="font-heading font-extrabold text-sm sm:text-base tracking-tight block">
+              Мандал сумын Ерөнхий боловсролын 4-р сургууль
+            </span>
+            <span class="text-xs text-white/80">Сургуулийн мэдээ мэдээллийн нэгдсэн сан • Сэлэнгэ аймаг, Мандал сум</span>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-4 text-xs sm:text-sm font-bold">
+          <a href="index.html" class="hover:text-amber-300 transition-colors">Нүүр хуудас</a>
+          <a href="index.html#cultures" class="hover:text-amber-300 transition-colors">5 Соёл</a>
+          <a href="sain-hicheel.html" class="hover:text-amber-300 transition-colors">Сайн хичээл</a>
+          <a href="index.html#gallery" class="hover:text-amber-300 transition-colors">Зургийн цомог</a>
+        </div>
+      </div>
+
+      <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/85">
+        <p>© 2026 Мандал сумын Ерөнхий боловсролын 4-р сургууль. Бүх эрх хуулиар хамгаалагдсан.</p>
+
+        <button
+          id="footer-admin-btn"
+          onclick="handleFooterAdminClick()"
+          class="px-4 py-2 rounded-full bg-white/15 hover:bg-white/30 backdrop-blur-md border border-white/30 text-white font-bold text-xs flex items-center gap-2 transition-all cursor-pointer shadow-sm"
+        >
+          <span id="footer-admin-btn-text">🔐 Админ нэвтрэх</span>
+        </button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================================================================
+       MODAL 1: FULL POST READER MODAL (Олон зураг + Видео тоглуулагчтай)
+       ======================================================================== -->
+  <div id="post-reader-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-950/75 backdrop-blur-sm">
+    <div class="bg-white rounded-3xl max-w-4xl w-full max-h-[92vh] overflow-y-auto shadow-2xl border border-slate-100 relative">
+      <button
+        onclick="closePostReader()"
+        aria-label="Хаах"
+        class="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-slate-900/75 text-white hover:bg-rose-600 flex items-center justify-center transition-colors cursor-pointer shadow-lg"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+
+      <!-- Multi-Image Carousel Wrapper -->
+      <div id="reader-gallery-wrapper" class="relative bg-slate-900">
+        <img id="reader-image" src="" alt="" class="w-full h-64 sm:h-[26rem] object-cover block" />
+
+        <button
+          id="reader-prev-btn"
+          type="button"
+          onclick="stepReaderImage(-1)"
+          aria-label="Өмнөх зураг"
+          class="hidden absolute left-3 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-slate-950/65 hover:bg-fuchsia-600 text-white flex items-center justify-center transition-colors cursor-pointer shadow-lg"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+
+        <button
+          id="reader-next-btn"
+          type="button"
+          onclick="stepReaderImage(1)"
+          aria-label="Дараагийн зураг"
+          class="hidden absolute right-3 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-slate-950/65 hover:bg-fuchsia-600 text-white flex items-center justify-center transition-colors cursor-pointer shadow-lg"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+
+        <div
+          id="reader-image-counter"
+          class="hidden absolute bottom-3 right-3 z-10 px-3 py-1 rounded-full bg-slate-950/75 text-white text-xs font-extrabold backdrop-blur-md"
+        >
+          1 / 1
+        </div>
+      </div>
+
+      <!-- Thumbnail Strip for Multiple Images -->
+      <div
+        id="reader-thumbs-strip"
+        class="hidden flex items-center gap-2 px-6 pt-3 pb-1 overflow-x-auto bg-slate-50 border-b border-slate-100"
+      ></div>
+
+      <div class="p-6 sm:p-8 space-y-5">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div class="flex flex-wrap items-center gap-2.5">
+            <span id="reader-category" class="px-3.5 py-1 rounded-full text-xs font-extrabold text-white"></span>
+            <span id="reader-date" class="text-xs font-bold text-slate-500"></span>
+            <span id="reader-media-badges" class="flex items-center gap-1.5"></span>
+          </div>
+
+          <button
+            type="button"
+            onclick="copyCurrentReaderText()"
+            class="px-3.5 py-1.5 rounded-full bg-slate-100 hover:bg-indigo-100 text-slate-700 hover:text-indigo-700 text-xs font-extrabold transition-colors cursor-pointer"
+          >
+            📋 Мэдээ хуулах
+          </button>
+        </div>
+
+        <h3 id="reader-title" class="font-heading font-extrabold text-2xl sm:text-3xl text-slate-900 leading-snug"></h3>
+
+        <!-- Embedded Video Player Container -->
+        <div id="reader-video-wrapper" class="hidden pt-1">
+          <div class="flex items-center gap-2 text-xs font-extrabold text-fuchsia-600 uppercase tracking-wider mb-2">
+            <span>🎬 Хавсаргасан видео</span>
+          </div>
+          <div id="reader-video-container" class="rounded-2xl overflow-hidden bg-slate-950 shadow-lg border border-slate-200"></div>
+        </div>
+
+        <div id="reader-content" class="text-slate-700 text-sm sm:text-base leading-relaxed whitespace-pre-line pt-3 border-t border-slate-100"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MODAL 2: ADMIN LOGIN MODAL (SHA-256 + Давхаргат хамгаалалттай)
+       ======================================================================== -->
+  <div id="admin-login-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-950/65 backdrop-blur-sm">
+    <div id="login-modal-box" class="bg-white rounded-3xl max-w-md w-full overflow-hidden shadow-2xl border border-slate-100">
+      <div class="liquid-gradient-bg p-6 text-white relative">
+        <button
+          onclick="closeLoginModal()"
+          aria-label="Хаах"
+          class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/20 hover:bg-white/35 flex items-center justify-center transition-colors cursor-pointer"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+        <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/20 text-[11px] font-extrabold mb-2">
+          <span>🛡️ SHA-256 шифрлэгдсэн хамгаалалт</span>
+        </div>
+        <h3 class="font-heading font-extrabold text-2xl">🔐 Админ нэвтрэх</h3>
+        <p class="text-xs text-white/85 mt-1">Сургуулийн мэдээ мэдээлэл удирдах хэсэг</p>
+      </div>
+
+      <form onsubmit="handleAdminLogin(event)" autocomplete="off" class="p-6 sm:p-7 space-y-4">
+        <div id="login-error-msg" class="hidden p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-600 text-xs font-bold leading-relaxed">
+          Нэвтрэх нэр эсвэл нууц үг буруу байна! Дахин оролдоно уу.
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1.5">Нэвтрэх нэр</label>
+          <input
+            id="admin-username"
+            type="text"
+            required
+            autocomplete="off"
+            placeholder="Нэвтрэх нэрээ оруулна уу"
+            class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-sm font-semibold focus:outline-none focus:border-fuchsia-500"
+          />
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1.5">Нууц үг</label>
+          <div class="relative">
+            <input
+              id="admin-password"
+              type="password"
+              required
+              autocomplete="new-password"
+              placeholder="••••"
+              class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-sm font-semibold focus:outline-none focus:border-fuchsia-500 pr-11"
+            />
+            <button
+              type="button"
+              onclick="togglePasswordVisibility()"
+              aria-label="Нууц үг харах"
+              class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 cursor-pointer"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <button id="admin-login-submit-btn" type="submit" class="w-full btn-gradient py-3.5 rounded-xl font-heading font-bold text-sm cursor-pointer">
+          Нэвтрэх
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MODAL 3: ADMIN NEWS MANAGER MODAL (Мэдээ нийтлэх / Засах / Устгах)
+       ======================================================================== -->
+  <div id="admin-news-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-3 sm:p-5 bg-slate-950/75 backdrop-blur-sm">
+    <div class="bg-white rounded-3xl max-w-4xl w-full max-h-[92vh] flex flex-col overflow-hidden shadow-2xl border border-slate-200">
+      <!-- Header -->
+      <div class="liquid-gradient-bg px-6 py-4 text-white flex flex-wrap items-center justify-between gap-3 shrink-0">
+        <div class="flex flex-wrap items-center gap-2.5">
+          <h3 class="font-heading font-extrabold text-lg sm:text-xl">📰 Мэдээ мэдээлэл удирдах самбар</h3>
+          <span id="firebase-status-badge" class="px-2.5 py-0.5 rounded-full text-[11px] font-extrabold bg-white/20 border border-white/30">
+            🟡 Firebase холбогдож байна...
+          </span>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button
+            onclick="logoutAdmin()"
+            class="px-3.5 py-2 rounded-xl bg-rose-600/90 hover:bg-rose-700 text-white text-xs font-bold cursor-pointer shadow"
+          >
+            Гарах
+          </button>
+          <button
+            onclick="closeAdminNewsModal()"
+            aria-label="Хаах"
+            class="w-9 h-9 rounded-full bg-white/20 hover:bg-white/35 flex items-center justify-center transition-colors cursor-pointer"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Body -->
+      <div class="p-6 sm:p-8 overflow-y-auto flex-1 space-y-8">
+        <!-- Dynamic News Category Manager -->
+        <div class="p-4 rounded-2xl bg-pink-50/70 border border-pink-100 space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <span class="text-xs font-extrabold text-pink-900">🏷️ Мэдээний ангилал нэмэх / удирдах</span>
+            <div class="flex items-center gap-2">
+              <input
+                id="new-post-cat-input"
+                type="text"
+                onkeydown="if(event.key==='Enter'){event.preventDefault();addPostCategory();}"
+                placeholder="Шинэ ангилал..."
+                class="px-3 py-1.5 rounded-xl bg-white border border-pink-200 text-xs font-bold focus:outline-none focus:border-fuchsia-500"
+              />
+              <button
+                type="button"
+                onclick="addPostCategory()"
+                class="px-3.5 py-1.5 rounded-xl bg-fuchsia-600 hover:bg-fuchsia-700 text-white text-xs font-extrabold cursor-pointer transition-colors"
+              >
+                + Нэмэх
+              </button>
+            </div>
+          </div>
+          <div id="admin-post-categories-chips" class="flex flex-wrap items-center gap-1.5"></div>
+        </div>
+
+        <!-- Add / Edit News Form -->
+        <form onsubmit="handleSavePost(event)" class="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-5">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <h4 id="post-form-heading" class="font-heading font-extrabold text-base text-slate-900">
+              ➕ Шинэ мэдээ нийтлэх
+            </h4>
+            <span class="text-[11px] font-bold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full">
+              🖼️ Олон зураг & 🎬 Видео дэмжинэ
+            </span>
+          </div>
+
+          <input type="hidden" id="post-edit-id" value="" />
+
+          <div class="grid sm:grid-cols-3 gap-4">
+            <div class="sm:col-span-2">
+              <label class="block text-xs font-bold text-slate-700 mb-1.5">Мэдээний гарчиг *</label>
+              <input
+                id="post-title-input"
+                type="text"
+                required
+                placeholder="Жишээ: Аймгийн математикийн олимпиадад амжилттай оролцлоо"
+                class="w-full px-4 py-3 rounded-xl bg-white border border-slate-200 text-sm font-semibold focus:outline-none focus:border-fuchsia-500"
+              />
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1.5">Ангилал *</label>
+              <select
+                id="post-category-input"
+                class="w-full px-4 py-3 rounded-xl bg-white border border-slate-200 text-sm font-bold focus:outline-none focus:border-fuchsia-500"
+              ></select>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1.5">Дэлгэрэнгүй агуулга *</label>
+            <textarea
+              id="post-content-input"
+              rows="4"
+              required
+              placeholder="Мэдээний дэлгэрэнгүй тайлбарыг энд бичнэ үү..."
+              class="w-full px-4 py-3 rounded-xl bg-white border border-slate-200 text-sm font-semibold focus:outline-none focus:border-fuchsia-500"
+            ></textarea>
+          </div>
+
+          <!-- Multi-Image Upload & URL List -->
+          <div class="p-4 rounded-2xl bg-white border border-slate-200 space-y-3">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <label class="block text-xs font-extrabold text-slate-800">
+                🖼️ Зургууд оруулах (Нэгээс олон зураг сонгох боломжтой)
+              </label>
+              <span id="post-images-count-badge" class="text-[11px] font-extrabold text-fuchsia-600">
+                0 зураг сонгогдсон
+              </span>
+            </div>
+
+            <div class="grid sm:grid-cols-2 gap-3">
+              <label class="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-fuchsia-50/70 border border-dashed border-fuchsia-300 hover:border-fuchsia-500 text-xs font-extrabold text-fuchsia-700 cursor-pointer transition-colors">
+                <span>📁 Компьютероос олон зураг сонгох</span>
+                <input
+                  id="post-file-input"
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  onchange="handleMultiplePostImages(this)"
+                  class="hidden"
+                />
+              </label>
+
+              <div class="flex items-center gap-2">
+                <input
+                  id="post-url-input"
+                  type="url"
+                  onkeydown="if(event.key==='Enter'){event.preventDefault();addPostImageUrl();}"
+                  placeholder="Зургийн URL (https://...)"
+                  class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-semibold focus:outline-none focus:border-fuchsia-500"
+                />
+                <button
+                  type="button"
+                  onclick="addPostImageUrl()"
+                  class="px-3.5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-extrabold shrink-0 cursor-pointer transition-colors"
+                >
+                  + Нэмэх
+                </button>
+              </div>
+            </div>
+
+            <div id="post-images-preview-grid" class="hidden grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2"></div>
+          </div>
+
+          <!-- Video Link / Short Video File -->
+          <div class="p-4 rounded-2xl bg-white border border-slate-200 space-y-3">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <label class="block text-xs font-extrabold text-slate-800">
+                🎬 Видео оруулах (YouTube, Vimeo, Google Drive эсвэл MP4 холбоос)
+              </label>
+              <button
+                id="clear-post-video-btn"
+                type="button"
+                onclick="clearPendingPostVideo()"
+                class="hidden text-[11px] font-extrabold text-rose-600 hover:underline cursor-pointer"
+              >
+                ✕ Видео арилгах
+              </button>
+            </div>
+
+            <div class="grid sm:grid-cols-2 gap-3">
+              <input
+                id="post-video-url-input"
+                type="url"
+                oninput="handlePostVideoUrlChange(this.value)"
+                placeholder="Жишээ: https://www.youtube.com/watch?v=..."
+                class="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-semibold focus:outline-none focus:border-cyan-500"
+              />
+
+              <label class="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-cyan-50/70 border border-dashed border-cyan-300 hover:border-cyan-500 text-xs font-extrabold text-cyan-800 cursor-pointer transition-colors">
+                <span>🎥 Богино видео файл (≤ 600KB)</span>
+                <input
+                  id="post-video-file-input"
+                  type="file"
+                  accept="video/mp4,video/webm,video/ogg"
+                  onchange="handlePostVideoFile(this)"
+                  class="hidden"
+                />
+              </label>
+            </div>
+
+            <div id="post-video-preview-box" class="hidden pt-1"></div>
+          </div>
+
+          <!-- Submit Buttons -->
+          <div class="flex flex-wrap items-center justify-end gap-2.5">
+            <button
+              id="post-cancel-edit-btn"
+              type="button"
+              onclick="cancelEditPost()"
+              class="hidden px-5 py-3 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-800 font-heading font-bold text-xs sm:text-sm cursor-pointer transition-colors"
+            >
+              Болих
+            </button>
+            <button
+              id="post-submit-btn"
+              type="submit"
+              class="btn-gradient px-7 py-3 rounded-xl font-heading font-bold text-xs sm:text-sm cursor-pointer"
+            >
+              Нийтлэх
+            </button>
+          </div>
+        </form>
+
+        <!-- Existing News List -->
+        <div class="space-y-3">
+          <h4 class="font-heading font-extrabold text-base text-slate-900">
+            Нийтлэгдсэн мэдээнүүд (<span id="manage-post-count" class="text-fuchsia-600">0</span>)
+          </h4>
+          <div id="admin-posts-list" class="space-y-2.5"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       TOAST NOTIFICATION CONTAINER
+       ======================================================================== -->
+  <div id="toast-container" class="fixed bottom-5 right-5 z-[60] flex flex-col gap-2.5 max-w-sm w-full pointer-events-none px-4 sm:px-0"></div>
+
+  <!-- ========================================================================
+       FIREBASE FIRESTORE & NEWS DIRECTORY LOGIC SCRIPT
+       ======================================================================== -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import {
+      getFirestore,
+      collection,
+      doc,
+      setDoc,
+      addDoc,
+      deleteDoc,
+      onSnapshot,
+      serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+    /* ------------------------------------------------------------------------
+       1. FIREBASE CONFIGURATION (surguuliinsite төслийн холболт)
+       ------------------------------------------------------------------------ */
+    const firebaseConfig = {
+      apiKey: "AIzaSyC9m9RTAps-kIG6LOoyBgWqcGk5YrACotI",
+      authDomain: "surguuliinsite.firebaseapp.com",
+      projectId: "surguuliinsite",
+      storageBucket: "surguuliinsite.firebasestorage.app",
+      messagingSenderId: "202669734700",
+      appId: "1:202669734700:web:72e21572608ec5281aca89",
+      measurementId: "G-R81X5S0XMN"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const STORAGE_KEYS = {
+      POSTS: 'mandal4_school_posts_v2',
+      CATEGORIES: 'mandal4_school_categories_v2',
+      SCHEDULE_URL: 'mandal4_school_schedule_url_v2',
+      LOCKOUT: 'mandal4_admin_lockout_v2',
+      ATTEMPTS: 'mandal4_admin_attempts_v2',
+      SESSION: 'mandal4_admin_session_v2',
+    };
+
+    const DEFAULT_POST_CATEGORIES = ['Мэдээ', 'Зарлал', 'Олимпиад', 'Арга хэмжээ'];
+
+    const DEFAULT_POSTS = [
+      {
+        id: 'post-1',
+        title: '"Сургуулийн 5 соёл"-ыг хэрэгжүүлэгч шилдэг анги хамт олон тодорлоо',
+        category: 'Мэдээ',
+        date: '2026.11.11',
+        image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=900&q=80',
+        images: [
+          'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=900&q=80',
+          'https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=900&q=80'
+        ],
+        videoUrl: '',
+        content:
+          'Мандал сумын Ерөнхий боловсролын 4-р сургуулийн хэмжээнд хэрэгжиж буй "Мэндлэх, хүндлэх соёл", "Цаг барих соёл", "Ухаалаг утасгүй орчин", "Баруун гараа барих соёл", "Гутлаа сольж орох соёл"-ыг өдөр тутамдаа үлгэр жишээ мөрдөж буй шилдэг анги хамт олныг шалгарууллаа.\n\nСурагч бүр эрхэм 5 соёлыг хэвшүүлснээр сургуулийн орчин илүү цэвэр цэмцгэр, эерэг халуун дулаан уур амьсгалтай болж байна.',
+      },
+      {
+        id: 'post-2',
+        title: 'Сэлэнгэ аймгийн төрөлжсөн олимпиадаас манай сурагчид 9 медаль хүртлээ',
+        category: 'Олимпиад',
+        date: '2026.11.06',
+        image: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=900&q=80',
+        images: [
+          'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=900&q=80'
+        ],
+        videoUrl: '',
+        content:
+          'Сэлэнгэ аймгийн Ерөнхий боловсролын сургуулиудын дунд зохион байгуулагдсан Математик, Физик, Монгол хэлний төрөлжсөн олимпиадад Мандал сумын 4-р сургуулийн баг тамирчид амжилттай оролцож 3 алт, 4 мөнгө, 2 хүрэл медаль хүртлээ.',
+      },
+      {
+        id: 'post-3',
+        title: '2026-2027 оны хичээлийн жилийн дугуйлан секцийн хуваарь шинэчлэгдлээ',
+        category: 'Зарлал',
+        date: '2026.10.30',
+        image: 'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=900&q=80',
+        images: [
+          'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=900&q=80'
+        ],
+        videoUrl: '',
+        content:
+          'Сурагчдын чөлөөт цагийг зөв боловсон өнгөрүүлэх зорилготой сагсан бөмбөг, волейбол, шатар, уран зураг, үндэсний хөгжим, програмчлалын 18 төрлийн дугуйлан секцийн бүртгэл үргэлжилж байна.',
+      },
+    ];
+
+    /* ------------------------------------------------------------------------
+       2. APPLICATION STATE
+       ------------------------------------------------------------------------ */
+    let posts = [];
+    let postCategories = [...DEFAULT_POST_CATEGORIES];
+    let eventCategoriesCache = ['Спорт', 'Уулзалт', 'Олимпиад', 'Соёл', 'Урлаг'];
+    let scheduleUrl = '';
+    let isAdminLoggedIn = false;
+
+    let pendingPostImages = [];
+    let pendingPostVideoUrl = '';
+
+    let currentReaderPostId = null;
+    let currentReaderImages = [];
+    let currentReaderImgIdx = 0;
+
+    /* ------------------------------------------------------------------------
+       3. HIGH-SECURITY CRYPTOGRAPHIC AUTHENTICATION (SHA-256)
+       ------------------------------------------------------------------------ */
+    const AUTH_PEPPER = 'Mandal4#Selenge@2026!Secure';
+    const KEY_MASK = [0xA5, 0x5A, 0x3C, 0xC3];
+    const SESSION_TIMEOUT_MS = 30 * 60 * 1000;
+    const LOCKOUT_DURATION_MS = 60 * 1000;
+    const MAX_LOGIN_ATTEMPTS = 5;
+
+    let expectedUserDigestHex = '';
+    let expectedPassDigestHex = '';
+    let adminIdleTimer = null;
+    let lockoutCountdownInterval = null;
+
+    async function computeSha256Hex(uint8Array) {
+      const hashBuffer = await crypto.subtle.digest('SHA-256', uint8Array);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    function buildSaltedCredentialBytes(rawStr, applyMask) {
+      const encoder = new TextEncoder();
+      const strBytes = encoder.encode(rawStr);
+      const masked = new Uint8Array(strBytes.length);
+      for (let i = 0; i < strBytes.length; i++) {
+        masked[i] = applyMask ? (strBytes[i] ^ KEY_MASK[i % KEY_MASK.length]) : strBytes[i];
+      }
+      const pepperBytes = encoder.encode(AUTH_PEPPER);
+      const combined = new Uint8Array(masked.length + pepperBytes.length);
+      combined.set(masked, 0);
+      combined.set(pepperBytes, masked.length);
+      return combined;
+    }
+
+    function constantTimeHexEqual(a, b) {
+      if (typeof a !== 'string' || typeof b !== 'string' || a.length !== b.length) return false;
+      let mismatch = 0;
+      for (let i = 0; i < a.length; i++) {
+        mismatch |= a.charCodeAt(i) ^ b.charCodeAt(i);
+      }
+      return mismatch === 0;
+    }
+
+    async function initSecurityVerifiers() {
+      const userVector = new Uint8Array([97, 100, 109, 105, 110]);
+      const passVector = new Uint8Array([147, 108, 11, 250]);
+      const pepperBytes = new TextEncoder().encode(AUTH_PEPPER);
+
+      const uBuf = new Uint8Array(userVector.length + pepperBytes.length);
+      uBuf.set(userVector, 0);
+      uBuf.set(pepperBytes, userVector.length);
+      expectedUserDigestHex = await computeSha256Hex(uBuf);
+
+      const pBuf = new Uint8Array(passVector.length + pepperBytes.length);
+      pBuf.set(passVector, 0);
+      pBuf.set(pepperBytes, passVector.length);
+      expectedPassDigestHex = await computeSha256Hex(pBuf);
+
+      userVector.fill(0);
+      passVector.fill(0);
+      uBuf.fill(0);
+      pBuf.fill(0);
+    }
+
+    function isValidAdminSession() {
+      try {
+        const raw = sessionStorage.getItem(STORAGE_KEYS.SESSION);
+        if (!raw) return false;
+        const parsed = JSON.parse(raw);
+        if (!parsed || !parsed.nonce || !parsed.expiresAt) return false;
+        if (Date.now() > parsed.expiresAt) {
+          sessionStorage.removeItem(STORAGE_KEYS.SESSION);
+          return false;
+        }
+        return true;
+      } catch (e) {
+        return false;
+      }
+    }
+
+    function createOrRefreshAdminSession() {
+      try {
+        const randomBytes = new Uint8Array(16);
+        crypto.getRandomValues(randomBytes);
+        const nonce = Array.from(randomBytes).map((b) => b.toString(16).padStart(2, '0')).join('');
+        sessionStorage.setItem(
+          STORAGE_KEYS.SESSION,
+          JSON.stringify({ nonce, expiresAt: Date.now() + SESSION_TIMEOUT_MS })
+        );
+      } catch (e) {}
+      resetAdminIdleTimer();
+    }
+
+    function clearAdminSession() {
+      try {
+        sessionStorage.removeItem(STORAGE_KEYS.SESSION);
+      } catch (e) {}
+      if (adminIdleTimer) {
+        clearTimeout(adminIdleTimer);
+        adminIdleTimer = null;
+      }
+    }
+
+    function resetAdminIdleTimer() {
+      if (!isAdminLoggedIn) return;
+      if (adminIdleTimer) clearTimeout(adminIdleTimer);
+      adminIdleTimer = setTimeout(() => {
+        if (isAdminLoggedIn) logoutAdmin(true);
+      }, SESSION_TIMEOUT_MS);
+    }
+
+    function getLockoutRemainingMs() {
+      try {
+        const until = parseInt(localStorage.getItem(STORAGE_KEYS.LOCKOUT) || '0', 10);
+        return Math.max(0, until - Date.now());
+      } catch (e) {
+        return 0;
+      }
+    }
+
+    function setLockoutState(durationMs) {
+      try {
+        localStorage.setItem(STORAGE_KEYS.LOCKOUT, String(Date.now() + durationMs));
+      } catch (e) {}
+    }
+
+    function getAttemptCount() {
+      try {
+        return parseInt(localStorage.getItem(STORAGE_KEYS.ATTEMPTS) || '0', 10) || 0;
+      } catch (e) {
+        return 0;
+      }
+    }
+
+    function setAttemptCount(count) {
+      try {
+        if (count <= 0) {
+          localStorage.removeItem(STORAGE_KEYS.ATTEMPTS);
+          localStorage.removeItem(STORAGE_KEYS.LOCKOUT);
+        } else {
+          localStorage.setItem(STORAGE_KEYS.ATTEMPTS, String(count));
+        }
+      } catch (e) {}
+    }
+
+    /* ------------------------------------------------------------------------
+       4. NORMALIZATION & FIREBASE REAL-TIME SYNC
+       ------------------------------------------------------------------------ */
+    function normalizePostRecord(raw) {
+      const fallbackImg =
+        'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=900&q=80';
+      const imgList =
+        Array.isArray(raw.images) && raw.images.length > 0
+          ? raw.images.filter(Boolean)
+          : raw.image
+          ? [raw.image]
+          : [fallbackImg];
+
+      return {
+        id: raw.id,
+        title: raw.title || '',
+        category: (raw.category || 'Мэдээ').trim(),
+        date: raw.date || '',
+        image: imgList[0] || fallbackImg,
+        images: imgList,
+        videoUrl: raw.videoUrl || '',
+        content: raw.content || '',
+        createdAt: raw.createdAt || null,
+      };
+    }
+
+    function saveLocalCache() {
+      try {
+        localStorage.setItem(STORAGE_KEYS.POSTS, JSON.stringify(posts));
+        localStorage.setItem(
+          STORAGE_KEYS.CATEGORIES,
+          JSON.stringify({ eventCategories: eventCategoriesCache, postCategories })
+        );
+        localStorage.setItem(STORAGE_KEYS.SCHEDULE_URL, scheduleUrl);
+      } catch (e) {}
+    }
+
+    function loadLocalFallbackState() {
+      try {
+        const savedPosts = localStorage.getItem(STORAGE_KEYS.POSTS);
+        posts = savedPosts
+          ? JSON.parse(savedPosts).map(normalizePostRecord)
+          : DEFAULT_POSTS.map(normalizePostRecord);
+
+        const savedCats = localStorage.getItem(STORAGE_KEYS.CATEGORIES);
+        if (savedCats) {
+          const parsed = JSON.parse(savedCats);
+          if (Array.isArray(parsed.postCategories) && parsed.postCategories.length > 0) {
+            postCategories = parsed.postCategories;
+          }
+          if (Array.isArray(parsed.eventCategories) && parsed.eventCategories.length > 0) {
+            eventCategoriesCache = parsed.eventCategories;
+          }
+        }
+
+        scheduleUrl = localStorage.getItem(STORAGE_KEYS.SCHEDULE_URL) || '';
+      } catch (e) {
+        posts = DEFAULT_POSTS.map(normalizePostRecord);
+        postCategories = [...DEFAULT_POST_CATEGORIES];
+        scheduleUrl = '';
+      }
+      isAdminLoggedIn = isValidAdminSession();
+    }
+
+    function initFirebaseSync() {
+      const statusBadge = document.getElementById('firebase-status-badge');
+
+      onSnapshot(
+        doc(db, 'settings', 'general'),
+        (docSnap) => {
+          if (docSnap.exists()) {
+            scheduleUrl = docSnap.data().scheduleUrl || '';
+            saveLocalCache();
+          }
+        },
+        () => {}
+      );
+
+      onSnapshot(
+        doc(db, 'settings', 'categories'),
+        (docSnap) => {
+          if (docSnap.exists()) {
+            const data = docSnap.data();
+            if (Array.isArray(data.postCategories) && data.postCategories.length > 0) {
+              postCategories = data.postCategories;
+            }
+            if (Array.isArray(data.eventCategories) && data.eventCategories.length > 0) {
+              eventCategoriesCache = data.eventCategories;
+            }
+            saveLocalCache();
+            refreshAllNewsViews();
+          }
+        },
+        () => {}
+      );
+
+      onSnapshot(
+        collection(db, 'posts'),
+        (snapshot) => {
+          if (statusBadge) statusBadge.textContent = '🟢 Firebase холбогдсон';
+          const list = [];
+          snapshot.forEach((docSnap) => {
+            list.push(normalizePostRecord({ id: docSnap.id, ...docSnap.data() }));
+          });
+          list.sort((a, b) => {
+            const ta = a.createdAt && a.createdAt.seconds ? a.createdAt.seconds : 0;
+            const tb = b.createdAt && b.createdAt.seconds ? b.createdAt.seconds : 0;
+            return tb - ta || String(b.date || '').localeCompare(String(a.date || ''));
+          });
+          if (list.length > 0) {
+            posts = list;
+            saveLocalCache();
+            refreshAllNewsViews();
+          }
+        },
+        () => {
+          if (statusBadge) statusBadge.textContent = '🟡 Офлайн горим';
+        }
+      );
+    }
+
+    /* ------------------------------------------------------------------------
+       5. VIDEO PARSER & EMBED BUILDER
+       ------------------------------------------------------------------------ */
+    function parseVideoSource(rawUrl) {
+      if (!rawUrl || typeof rawUrl !== 'string') return null;
+      const url = rawUrl.trim();
+      if (!url) return null;
+
+      if (url.startsWith('data:video/') || /\.(mp4|webm|ogg)(\?.*)?$/i.test(url)) {
+        return { type: 'direct', src: url };
+      }
+
+      const ytMatch = url.match(
+        /(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/|v\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/
+      );
+      if (ytMatch && ytMatch[1]) {
+        return { type: 'iframe', src: `https://www.youtube.com/embed/${ytMatch[1]}?rel=0` };
+      }
+
+      const vimeoMatch = url.match(/vimeo\.com\/(?:video\/)?(\d+)/);
+      if (vimeoMatch && vimeoMatch[1]) {
+        return { type: 'iframe', src: `https://player.vimeo.com/video/${vimeoMatch[1]}` };
+      }
+
+      const driveMatch = url.match(/drive\.google\.com\/file\/d\/([A-Za-z0-9_-]+)/);
+      if (driveMatch && driveMatch[1]) {
+        return { type: 'iframe', src: `https://drive.google.com/file/d/${driveMatch[1]}/preview` };
+      }
+
+      if (/^https?:\/\//i.test(url)) {
+        return { type: 'external', src: url };
+      }
+
+      return null;
+    }
+
+    function buildVideoPlayerHtml(rawUrl, compact = false) {
+      const parsed = parseVideoSource(rawUrl);
+      if (!parsed) return '';
+      const heightClass = compact ? 'h-44' : 'aspect-video w-full';
+
+      if (parsed.type === 'direct') {
+        return `<video src="${escapeHtml(parsed.src)}" controls playsinline preload="metadata" class="${heightClass} w-full bg-black object-contain block"></video>`;
+      }
+
+      if (parsed.type === 'iframe') {
+        return `
+          <div class="relative ${heightClass} w-full bg-black">
+            <iframe
+              src="${escapeHtml(parsed.src)}"
+              class="w-full h-full border-0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+              loading="lazy"
+            ></iframe>
+          </div>
+        `;
+      }
+
+      return `
+        <div class="p-4 bg-slate-900 text-white flex items-center justify-between gap-3">
+          <div class="min-w-0">
+            <span class="text-[11px] font-bold text-cyan-300 block">🎬 Видео холбоос</span>
+            <p class="text-xs truncate text-white/85">${escapeHtml(parsed.src)}</p>
+          </div>
+          <a href="${escapeHtml(parsed.src)}" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 rounded-xl btn-gradient text-xs font-extrabold shrink-0">
+            Видео үзэх ↗
+          </a>
+        </div>
+      `;
+    }
+
+    /* ------------------------------------------------------------------------
+       6. CATEGORY BADGES, STATS, FILTERING & NEWS DIRECTORY RENDERING
+       ------------------------------------------------------------------------ */
+    function getCategoryBadgeClass(category) {
+      switch (category) {
+        case 'Мэдээ':
+          return 'bg-gradient-to-r from-cyan-500 to-blue-600';
+        case 'Зарлал':
+          return 'bg-gradient-to-r from-amber-500 to-orange-600';
+        case 'Олимпиад':
+          return 'bg-gradient-to-r from-purple-600 to-fuchsia-600';
+        case 'Арга хэмжээ':
+          return 'bg-gradient-to-r from-emerald-500 to-teal-600';
+        default: {
+          const gradients = [
+            'bg-gradient-to-r from-indigo-500 to-purple-600',
+            'bg-gradient-to-r from-rose-500 to-pink-600',
+            'bg-gradient-to-r from-teal-500 to-cyan-600',
+            'bg-gradient-to-r from-violet-600 to-fuchsia-600',
+          ];
+          const hash = String(category || '')
+            .split('')
+            .reduce((acc, c) => acc + c.charCodeAt(0), 0);
+          return gradients[hash % gradients.length];
+        }
+      }
+    }
+
+    function refreshAllNewsViews() {
+      updateHeroStats();
+      populateCategoryControls();
+      renderNewsDirectory();
+      renderAdminPostsList();
+    }
+
+    function updateHeroStats() {
+      const totalEl = document.getElementById('stat-total-posts');
+      const catsEl = document.getElementById('stat-total-categories');
+      const photosEl = document.getElementById('stat-total-photos');
+      const videosEl = document.getElementById('stat-total-videos');
+
+      const allCats = new Set([...postCategories, ...posts.map((p) => p.category)]);
+      const totalPhotos = posts.reduce(
+        (sum, p) => sum + (Array.isArray(p.images) ? p.images.length : 1),
+        0
+      );
+      const videoCount = posts.filter((p) => p.videoUrl && p.videoUrl.trim()).length;
+
+      if (totalEl) totalEl.textContent = posts.length;
+      if (catsEl) catsEl.textContent = allCats.size;
+      if (photosEl) photosEl.textContent = totalPhotos;
+      if (videosEl) videosEl.textContent = videoCount;
+    }
+
+    function populateCategoryControls() {
+      const catSelect = document.getElementById('filter-category-select');
+      const pillsWrap = document.getElementById('category-quick-pills');
+      const adminCatSelect = document.getElementById('post-category-input');
+      const adminChips = document.getElementById('admin-post-categories-chips');
+
+      const mergedCategories = Array.from(
+        new Set([...postCategories, ...posts.map((p) => p.category).filter(Boolean)])
+      );
+
+      if (catSelect) {
+        const prevVal = catSelect.value || 'Бүгд';
+        catSelect.innerHTML =
+          `<option value="Бүгд">🏷️ Бүх ангилал (${posts.length})</option>` +
+          mergedCategories
+            .map((cat) => `<option value="${escapeHtml(cat)}">${escapeHtml(cat)}</option>`)
+            .join('');
+        catSelect.value = mergedCategories.includes(prevVal) ? prevVal : 'Бүгд';
+      }
+
+      if (pillsWrap) {
+        const activeCat = catSelect ? catSelect.value : 'Бүгд';
+        const pillNames = ['Бүгд', ...mergedCategories];
+        pillsWrap.innerHTML = pillNames
+          .map((cat) => {
+            const active = cat === activeCat;
+            const cls = active
+              ? 'px-3.5 py-1.5 rounded-full text-xs font-extrabold btn-gradient text-white shadow cursor-pointer'
+              : 'px-3.5 py-1.5 rounded-full text-xs font-bold bg-white/90 text-slate-700 border border-slate-200 hover:border-fuchsia-400 cursor-pointer transition-colors';
+            return `<button type="button" onclick="selectQuickCategoryPill('${escapeHtml(cat)}')" class="${cls}">${escapeHtml(cat)}</button>`;
+          })
+          .join('');
+      }
+
+      if (adminCatSelect) {
+        const prevAdminCat = adminCatSelect.value;
+        adminCatSelect.innerHTML = postCategories
+          .map((cat) => `<option value="${escapeHtml(cat)}">${escapeHtml(cat)}</option>`)
+          .join('');
+        if (prevAdminCat && postCategories.includes(prevAdminCat)) {
+          adminCatSelect.value = prevAdminCat;
+        }
+      }
+
+      if (adminChips) {
+        adminChips.innerHTML = postCategories
+          .map(
+            (cat) => `
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-pink-200 text-xs font-extrabold text-pink-800 shadow-sm">
+              <span>${escapeHtml(cat)}</span>
+              ${
+                postCategories.length > 1
+                  ? `<button type="button" onclick="removePostCategory('${escapeHtml(cat)}')" title="Ангилал хасах" class="text-rose-500 hover:text-rose-700 font-black cursor-pointer">✕</button>`
+                  : ''
+              }
+            </span>
+          `
+          )
+          .join('');
+      }
+    }
+
+    function selectQuickCategoryPill(categoryName) {
+      const catSelect = document.getElementById('filter-category-select');
+      if (catSelect) {
+        catSelect.value = categoryName;
+        handleNewsFilterChange();
+      }
+    }
+
+    function handleNewsFilterChange() {
+      populateCategoryControls();
+      renderNewsDirectory();
+    }
+
+    function resetNewsFilters() {
+      const searchEl = document.getElementById('news-search-input');
+      const catEl = document.getElementById('filter-category-select');
+      const sortEl = document.getElementById('filter-sort-select');
+      if (searchEl) searchEl.value = '';
+      if (catEl) catEl.value = 'Бүгд';
+      if (sortEl) sortEl.value = 'newest';
+      refreshAllNewsViews();
+    }
+
+    function renderNewsDirectory() {
+      const featuredWrap = document.getElementById('featured-post-wrapper');
+      const grid = document.getElementById('news-directory-grid');
+      const emptyBox = document.getElementById('news-directory-empty');
+      const resetBtn = document.getElementById('btn-reset-filters');
+      if (!grid) return;
+
+      const searchQuery = (document.getElementById('news-search-input')?.value || '')
+        .trim()
+        .toLowerCase();
+      const selectedCat = document.getElementById('filter-category-select')?.value || 'Бүгд';
+      const sortOrder = document.getElementById('filter-sort-select')?.value || 'newest';
+
+      const isFiltered =
+        searchQuery !== '' || selectedCat !== 'Бүгд' || sortOrder !== 'newest';
+      if (resetBtn) {
+        resetBtn.classList.toggle('hidden', !isFiltered);
+      }
+
+      let filtered = posts.filter((post) => {
+        const matchCat = selectedCat === 'Бүгд' || post.category === selectedCat;
+        const matchSearch =
+          !searchQuery ||
+          post.title.toLowerCase().includes(searchQuery) ||
+          post.content.toLowerCase().includes(searchQuery) ||
+          post.category.toLowerCase().includes(searchQuery);
+        return matchCat && matchSearch;
+      });
+
+      if (sortOrder === 'oldest') {
+        filtered = [...filtered].reverse();
+      }
+
+      if (filtered.length === 0) {
+        if (featuredWrap) {
+          featuredWrap.innerHTML = '';
+          featuredWrap.classList.add('hidden');
+        }
+        grid.innerHTML = '';
+        if (emptyBox) emptyBox.classList.remove('hidden');
+        return;
+      }
+
+      if (emptyBox) emptyBox.classList.add('hidden');
+
+      // Show Featured Spotlight Card for the latest post when on default unfiltered view and >= 2 posts exist
+      let gridPosts = filtered;
+      if (!isFiltered && filtered.length >= 2 && featuredWrap) {
+        const topPost = filtered[0];
+        gridPosts = filtered.slice(1);
+        const topBadge = getCategoryBadgeClass(topPost.category);
+        const topImgCnt = Array.isArray(topPost.images) ? topPost.images.length : 1;
+        const topHasVid = Boolean(topPost.videoUrl && topPost.videoUrl.trim());
+
+        featuredWrap.classList.remove('hidden');
+        featuredWrap.innerHTML = `
+          <article
+            onclick="openPostReader('${topPost.id}')"
+            class="glass-card rounded-3xl overflow-hidden grid lg:grid-cols-12 group cursor-pointer"
+          >
+            <div class="lg:col-span-6 relative h-64 sm:h-80 lg:h-full min-h-[260px] overflow-hidden bg-slate-200">
+              <img
+                src="${escapeHtml(topPost.image)}"
+                alt="${escapeHtml(topPost.title)}"
+                onerror="handleImageError(this, '${escapeHtml(topPost.category)}')"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+              <div class="absolute top-4 left-4 flex flex-wrap items-center gap-2">
+                <span class="px-3.5 py-1 rounded-full text-xs font-extrabold text-white shadow-md ${topBadge}">
+                  ${escapeHtml(topPost.category)}
+                </span>
+                <span class="px-3 py-1 rounded-full text-[11px] font-extrabold bg-amber-300 text-slate-950 shadow">
+                  ✨ Онцлох мэдээ
+                </span>
+              </div>
+
+              <div class="absolute bottom-3 right-3 flex items-center gap-1.5">
+                ${topImgCnt > 1 ? `<span class="px-2.5 py-1 rounded-full bg-slate-950/75 text-white text-[11px] font-extrabold backdrop-blur-md">🖼️ ${topImgCnt} зураг</span>` : ''}
+                ${topHasVid ? `<span class="px-2.5 py-1 rounded-full bg-rose-600/90 text-white text-[11px] font-extrabold backdrop-blur-md">🎬 Видео</span>` : ''}
+              </div>
+            </div>
+
+            <div class="lg:col-span-6 p-6 sm:p-8 flex flex-col justify-between space-y-5">
+              <div class="space-y-3">
+                <div class="flex items-center gap-2 text-xs font-bold text-slate-500">
+                  <span>🗓️ ${escapeHtml(topPost.date)}</span>
+                </div>
+                <h2 class="font-heading font-extrabold text-xl sm:text-2xl lg:text-[26px] text-slate-900 leading-snug group-hover:text-fuchsia-600 transition-colors">
+                  ${escapeHtml(topPost.title)}
+                </h2>
+                <p class="text-sm sm:text-base text-slate-600 line-clamp-4 leading-relaxed font-medium">
+                  ${escapeHtml(topPost.content)}
+                </p>
+              </div>
+
+              <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+                <span class="inline-flex items-center gap-2 btn-gradient px-5 py-2.5 rounded-xl text-xs sm:text-sm font-heading font-extrabold shadow">
+                  <span>Дэлгэрэнгүй унших</span>
+                  <span>→</span>
+                </span>
+              </div>
+            </div>
+          </article>
+        `;
+      } else if (featuredWrap) {
+        featuredWrap.innerHTML = '';
+        featuredWrap.classList.add('hidden');
+      }
+
+      grid.innerHTML = gridPosts
+        .map((post) => {
+          const badgeClass = getCategoryBadgeClass(post.category);
+          const imgCount = Array.isArray(post.images) ? post.images.length : 1;
+          const hasVideo = Boolean(post.videoUrl && post.videoUrl.trim());
+
+          return `
+            <article onclick="openPostReader('${post.id}')" class="glass-card rounded-3xl overflow-hidden flex flex-col group cursor-pointer">
+              <div class="relative h-52 overflow-hidden bg-slate-200">
+                <img
+                  src="${escapeHtml(post.image)}"
+                  alt="${escapeHtml(post.title)}"
+                  onerror="handleImageError(this, '${escapeHtml(post.category)}')"
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <span class="absolute top-3.5 left-3.5 px-3.5 py-1 rounded-full text-xs font-extrabold text-white shadow-md ${badgeClass}">
+                  ${escapeHtml(post.category)}
+                </span>
+
+                <div class="absolute bottom-3 right-3 flex items-center gap-1.5">
+                  ${
+                    imgCount > 1
+                      ? `<span class="px-2.5 py-1 rounded-full bg-slate-950/75 text-white text-[11px] font-extrabold backdrop-blur-md">🖼️ ${imgCount} зураг</span>`
+                      : ''
+                  }
+                  ${
+                    hasVideo
+                      ? `<span class="px-2.5 py-1 rounded-full bg-rose-600/90 text-white text-[11px] font-extrabold backdrop-blur-md">🎬 Видео</span>`
+                      : ''
+                  }
+                </div>
+              </div>
+
+              <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+                <div>
+                  <div class="flex items-center gap-2 text-xs font-bold text-slate-500 mb-2">
+                    <span>🗓️ ${escapeHtml(post.date)}</span>
+                  </div>
+                  <h3 class="font-heading font-extrabold text-lg text-slate-900 leading-snug line-clamp-2 group-hover:text-fuchsia-600 transition-colors">
+                    ${escapeHtml(post.title)}
+                  </h3>
+                  <p class="mt-2.5 text-sm text-slate-600 line-clamp-3 leading-relaxed font-medium">
+                    ${escapeHtml(post.content)}
+                  </p>
+                </div>
+
+                <div class="pt-3 border-t border-slate-100">
+                  <span class="inline-flex items-center gap-1.5 text-sm font-extrabold text-indigo-600 group-hover:text-fuchsia-600 transition-colors">
+                    <span>Дэлгэрэнгүй унших</span>
+                    <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+            </article>
+          `;
+        })
+        .join('');
+    }
+
+    /* ------------------------------------------------------------------------
+       7. FULL POST READER MODAL & MULTI-IMAGE CAROUSEL
+       ------------------------------------------------------------------------ */
+    function openPostReader(postId) {
+      const post = posts.find((p) => p.id === postId);
+      if (!post) return;
+
+      currentReaderPostId = post.id;
+      currentReaderImages =
+        Array.isArray(post.images) && post.images.length > 0 ? post.images : [post.image];
+      currentReaderImgIdx = 0;
+
+      updateReaderCarousel();
+
+      const catEl = document.getElementById('reader-category');
+      catEl.textContent = post.category;
+      catEl.className = `px-3.5 py-1 rounded-full text-xs font-extrabold text-white ${getCategoryBadgeClass(post.category)}`;
+
+      document.getElementById('reader-date').textContent = `🗓️ ${post.date}`;
+      document.getElementById('reader-title').textContent = post.title;
+      document.getElementById('reader-content').textContent = post.content;
+
+      const mediaBadgesEl = document.getElementById('reader-media-badges');
+      if (mediaBadgesEl) {
+        const badges = [];
+        if (currentReaderImages.length > 1) {
+          badges.push(
+            `<span class="px-2.5 py-0.5 rounded-full bg-indigo-100 text-indigo-700 text-[11px] font-extrabold">🖼️ ${currentReaderImages.length} зураг</span>`
+          );
+        }
+        if (post.videoUrl && post.videoUrl.trim()) {
+          badges.push(
+            `<span class="px-2.5 py-0.5 rounded-full bg-rose-100 text-rose-700 text-[11px] font-extrabold">🎬 Видео</span>`
+          );
+        }
+        mediaBadgesEl.innerHTML = badges.join('');
+      }
+
+      const videoWrapper = document.getElementById('reader-video-wrapper');
+      const videoContainer = document.getElementById('reader-video-container');
+      if (post.videoUrl && post.videoUrl.trim()) {
+        videoContainer.innerHTML = buildVideoPlayerHtml(post.videoUrl, false);
+        videoWrapper.classList.remove('hidden');
+      } else {
+        videoContainer.innerHTML = '';
+        videoWrapper.classList.add('hidden');
+      }
+
+      const modal = document.getElementById('post-reader-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function updateReaderCarousel() {
+      const imgEl = document.getElementById('reader-image');
+      const prevBtn = document.getElementById('reader-prev-btn');
+      const nextBtn = document.getElementById('reader-next-btn');
+      const counterEl = document.getElementById('reader-image-counter');
+      const thumbsStrip = document.getElementById('reader-thumbs-strip');
+
+      const total = currentReaderImages.length;
+      const activeSrc = currentReaderImages[currentReaderImgIdx] || '';
+      imgEl.src = activeSrc;
+      imgEl.onerror = () => handleImageError(imgEl, 'Сургуулийн мэдээ');
+
+      if (total > 1) {
+        prevBtn.classList.remove('hidden');
+        nextBtn.classList.remove('hidden');
+        counterEl.classList.remove('hidden');
+        counterEl.textContent = `${currentReaderImgIdx + 1} / ${total}`;
+
+        thumbsStrip.classList.remove('hidden');
+        thumbsStrip.innerHTML = currentReaderImages
+          .map(
+            (src, i) => `
+            <button
+              type="button"
+              onclick="selectReaderImage(${i})"
+              class="w-16 h-12 rounded-lg overflow-hidden border-2 shrink-0 transition-all cursor-pointer ${
+                i === currentReaderImgIdx
+                  ? 'border-fuchsia-600 scale-105 shadow'
+                  : 'border-transparent opacity-65 hover:opacity-100'
+              }"
+            >
+              <img src="${escapeHtml(src)}" alt="" onerror="handleImageError(this, 'Зураг')" class="w-full h-full object-cover" />
+            </button>
+          `
+          )
+          .join('');
+      } else {
+        prevBtn.classList.add('hidden');
+        nextBtn.classList.add('hidden');
+        counterEl.classList.add('hidden');
+        thumbsStrip.classList.add('hidden');
+        thumbsStrip.innerHTML = '';
+      }
+    }
+
+    function stepReaderImage(delta) {
+      if (currentReaderImages.length <= 1) return;
+      currentReaderImgIdx =
+        (currentReaderImgIdx + delta + currentReaderImages.length) % currentReaderImages.length;
+      updateReaderCarousel();
+    }
+
+    function selectReaderImage(idx) {
+      currentReaderImgIdx = idx;
+      updateReaderCarousel();
+    }
+
+    function copyCurrentReaderText() {
+      const post = posts.find((p) => p.id === currentReaderPostId);
+      if (!post) return;
+      const textToCopy = `${post.title} (${post.date})\n\n${post.content}\n\n— Мандал сумын Ерөнхий боловсролын 4-р сургууль`;
+      const ta = document.createElement('textarea');
+      ta.value = textToCopy;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        document.execCommand('copy');
+        showToast('Мэдээний текст санах ойд хуулагдлаа!', 'success');
+      } catch (e) {
+        showToast('Текст хуулахад алдаа гарлаа.', 'error');
+      }
+      ta.remove();
+    }
+
+    function closePostReader() {
+      const modal = document.getElementById('post-reader-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      const videoContainer = document.getElementById('reader-video-container');
+      if (videoContainer) videoContainer.innerHTML = '';
+    }
+
+    /* ------------------------------------------------------------------------
+       8. ADMIN MULTI-IMAGE, VIDEO & CATEGORY MANAGEMENT
+       ------------------------------------------------------------------------ */
+    function compressImageFileToDataUrl(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = function (event) {
+          const img = new Image();
+          img.onload = function () {
+            const maxWidth = 860;
+            let width = img.width;
+            let height = img.height;
+            if (width > maxWidth) {
+              height = Math.round((height * maxWidth) / width);
+              width = maxWidth;
+            }
+            const canvas = document.createElement('canvas');
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, width, height);
+            resolve(canvas.toDataURL('image/jpeg', 0.78));
+          };
+          img.onerror = reject;
+          img.src = event.target.result;
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function handleMultiplePostImages(inputEl) {
+      resetAdminIdleTimer();
+      const files = Array.from(inputEl.files || []);
+      if (files.length === 0) return;
+
+      const remainingSlots = Math.max(0, 8 - pendingPostImages.length);
+      if (remainingSlots === 0) {
+        showToast('Нэг мэдээнд хамгийн ихдээ 8 зураг оруулах боломжтой.', 'info');
+        inputEl.value = '';
+        return;
+      }
+
+      const selectedFiles = files.slice(0, remainingSlots);
+      for (const file of selectedFiles) {
+        try {
+          const compressed = await compressImageFileToDataUrl(file);
+          pendingPostImages.push(compressed);
+        } catch (err) {
+          showToast(`"${file.name}" зургийг уншихад алдаа гарлаа.`, 'error');
+        }
+      }
+
+      inputEl.value = '';
+      renderPendingPostImages();
+      showToast(`${selectedFiles.length} зураг нэмэгдлээ.`, 'success');
+    }
+
+    function addPostImageUrl() {
+      resetAdminIdleTimer();
+      const inputEl = document.getElementById('post-url-input');
+      if (!inputEl) return;
+      const urlVal = inputEl.value.trim();
+      if (!urlVal) {
+        showToast('Зургийн URL хаягаа оруулна уу!', 'error');
+        return;
+      }
+      if (pendingPostImages.length >= 8) {
+        showToast('Нэг мэдээнд хамгийн ихдээ 8 зураг оруулах боломжтой.', 'info');
+        return;
+      }
+      pendingPostImages.push(urlVal);
+      inputEl.value = '';
+      renderPendingPostImages();
+    }
+
+    function removePendingPostImage(index) {
+      resetAdminIdleTimer();
+      pendingPostImages.splice(index, 1);
+      renderPendingPostImages();
+    }
+
+    function setPendingPostCover(index) {
+      resetAdminIdleTimer();
+      if (index <= 0 || index >= pendingPostImages.length) return;
+      const [chosen] = pendingPostImages.splice(index, 1);
+      pendingPostImages.unshift(chosen);
+      renderPendingPostImages();
+    }
+
+    function renderPendingPostImages() {
+      const badgeEl = document.getElementById('post-images-count-badge');
+      const gridEl = document.getElementById('post-images-preview-grid');
+      if (badgeEl) badgeEl.textContent = `${pendingPostImages.length} зураг сонгогдсон`;
+      if (!gridEl) return;
+
+      if (pendingPostImages.length === 0) {
+        gridEl.innerHTML = '';
+        gridEl.classList.add('hidden');
+        return;
+      }
+
+      gridEl.classList.remove('hidden');
+      gridEl.innerHTML = pendingPostImages
+        .map(
+          (src, idx) => `
+          <div class="relative rounded-xl overflow-hidden border ${
+            idx === 0 ? 'border-fuchsia-500 ring-2 ring-fuchsia-200' : 'border-slate-200'
+          } bg-slate-100 aspect-[4/3] group">
+            <img src="${escapeHtml(src)}" alt="" onerror="handleImageError(this, 'Зураг')" class="w-full h-full object-cover" />
+            ${
+              idx === 0
+                ? `<span class="absolute top-1.5 left-1.5 px-2 py-0.5 rounded-md bg-fuchsia-600 text-white text-[10px] font-extrabold shadow">Нүүр</span>`
+                : `<button type="button" onclick="setPendingPostCover(${idx})" class="absolute top-1.5 left-1.5 px-2 py-0.5 rounded-md bg-slate-900/75 hover:bg-indigo-600 text-white text-[10px] font-bold opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">Нүүр болгох</button>`
+            }
+            <button
+              type="button"
+              onclick="removePendingPostImage(${idx})"
+              class="absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-rose-600 hover:bg-rose-700 text-white text-xs font-extrabold flex items-center justify-center shadow cursor-pointer"
+            >
+              ✕
+            </button>
+          </div>
+        `
+        )
+        .join('');
+    }
+
+    function handlePostVideoUrlChange(urlValue) {
+      resetAdminIdleTimer();
+      pendingPostVideoUrl = (urlValue || '').trim();
+      renderPendingPostVideo();
+    }
+
+    function handlePostVideoFile(inputEl) {
+      resetAdminIdleTimer();
+      const file = inputEl.files && inputEl.files[0];
+      if (!file) return;
+
+      if (file.size > 600 * 1024) {
+        showToast(
+          'Видео файл 600KB-аас их байна. Том видеог YouTube эсвэл Google Drive дээр байршуулаад холбоосыг нь оруулна уу!',
+          'error'
+        );
+        inputEl.value = '';
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function (ev) {
+        pendingPostVideoUrl = ev.target.result;
+        const urlInput = document.getElementById('post-video-url-input');
+        if (urlInput) urlInput.value = '';
+        renderPendingPostVideo();
+        showToast('Богино видео хавсаргагдлаа.', 'success');
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function clearPendingPostVideo() {
+      resetAdminIdleTimer();
+      pendingPostVideoUrl = '';
+      const urlInput = document.getElementById('post-video-url-input');
+      const fileInput = document.getElementById('post-video-file-input');
+      if (urlInput) urlInput.value = '';
+      if (fileInput) fileInput.value = '';
+      renderPendingPostVideo();
+    }
+
+    function renderPendingPostVideo() {
+      const previewBox = document.getElementById('post-video-preview-box');
+      const clearBtn = document.getElementById('clear-post-video-btn');
+      if (!previewBox) return;
+
+      if (!pendingPostVideoUrl) {
+        previewBox.innerHTML = '';
+        previewBox.classList.add('hidden');
+        if (clearBtn) clearBtn.classList.add('hidden');
+        return;
+      }
+
+      if (clearBtn) clearBtn.classList.remove('hidden');
+      previewBox.classList.remove('hidden');
+      previewBox.innerHTML = `
+        <div class="rounded-xl overflow-hidden border border-slate-200 bg-slate-950 max-w-md">
+          ${buildVideoPlayerHtml(pendingPostVideoUrl, true)}
+        </div>
+      `;
+    }
+
+    async function persistCategoriesToFirestore() {
+      saveLocalCache();
+      refreshAllNewsViews();
+      try {
+        await setDoc(
+          doc(db, 'settings', 'categories'),
+          {
+            eventCategories: eventCategoriesCache,
+            postCategories,
+            updatedAt: serverTimestamp(),
+          },
+          { merge: true }
+        );
+      } catch (err) {}
+    }
+
+    async function addPostCategory() {
+      resetAdminIdleTimer();
+      const input = document.getElementById('new-post-cat-input');
+      if (!input) return;
+      const val = input.value.trim();
+      if (!val) {
+        showToast('Шинэ ангиллын нэрээ оруулна уу!', 'error');
+        return;
+      }
+      if (postCategories.some((c) => c.toLowerCase() === val.toLowerCase())) {
+        showToast('Энэ ангилал аль хэдийн бүртгэгдсэн байна.', 'info');
+        return;
+      }
+      postCategories.push(val);
+      input.value = '';
+      await persistCategoriesToFirestore();
+      const sel = document.getElementById('post-category-input');
+      if (sel) sel.value = val;
+      showToast(`"${val}" мэдээний ангилал нэмэгдлээ!`, 'success');
+    }
+
+    async function removePostCategory(catName) {
+      resetAdminIdleTimer();
+      if (postCategories.length <= 1) return;
+      postCategories = postCategories.filter((c) => c !== catName);
+      await persistCategoriesToFirestore();
+      showToast(`"${catName}" ангилал хасагдлаа.`, 'info');
+    }
+
+    /* ------------------------------------------------------------------------
+       9. ADMIN CRUD FOR NEWS POSTS (Нийтлэх / Засах / Устгах)
+       ------------------------------------------------------------------------ */
+    function getTodayFormatted() {
+      const now = new Date();
+      return `${now.getFullYear()}.${String(now.getMonth() + 1).padStart(2, '0')}.${String(now.getDate()).padStart(2, '0')}`;
+    }
+
+    async function handleSavePost(e) {
+      e.preventDefault();
+      resetAdminIdleTimer();
+
+      const editId = document.getElementById('post-edit-id').value.trim();
+      const title = document.getElementById('post-title-input').value.trim();
+      const category = document.getElementById('post-category-input').value;
+      const content = document.getElementById('post-content-input').value.trim();
+
+      const pendingUrlInput = document.getElementById('post-url-input');
+      if (pendingUrlInput && pendingUrlInput.value.trim()) {
+        pendingPostImages.push(pendingUrlInput.value.trim());
+        pendingUrlInput.value = '';
+      }
+
+      const fallbackImg =
+        'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=900&q=80';
+      const finalImages = pendingPostImages.length > 0 ? [...pendingPostImages] : [fallbackImg];
+      const finalVideoUrl = pendingPostVideoUrl || '';
+
+      const postPayload = {
+        title,
+        category,
+        image: finalImages[0],
+        images: finalImages,
+        videoUrl: finalVideoUrl,
+        content,
+      };
+
+      if (editId) {
+        const existing = posts.find((p) => p.id === editId);
+        const dateStr = existing && existing.date ? existing.date : getTodayFormatted();
+        posts = posts.map((p) =>
+          p.id === editId ? normalizePostRecord({ id: editId, date: dateStr, ...postPayload }) : p
+        );
+        saveLocalCache();
+        refreshAllNewsViews();
+        cancelEditPost();
+
+        try {
+          await setDoc(
+            doc(db, 'posts', editId),
+            { ...postPayload, date: dateStr, updatedAt: serverTimestamp() },
+            { merge: true }
+          );
+          showToast('Мэдээний мэдээлэл амжилттай шинэчлэгдлээ!', 'success');
+        } catch (err) {
+          showToast('Мэдээний мэдээлэл шинэчлэгдлээ!', 'success');
+        }
+      } else {
+        const dateStr = getTodayFormatted();
+        try {
+          await addDoc(collection(db, 'posts'), {
+            ...postPayload,
+            date: dateStr,
+            createdAt: serverTimestamp(),
+          });
+          cancelEditPost();
+          showToast('Шинэ мэдээ амжилттай нийтлэгдлээ!', 'success');
+        } catch (err) {
+          posts.unshift(
+            normalizePostRecord({ id: 'post-' + Date.now(), date: dateStr, ...postPayload })
+          );
+          saveLocalCache();
+          cancelEditPost();
+          refreshAllNewsViews();
+          showToast('Шинэ мэдээ нийтлэгдлээ!', 'success');
+        }
+      }
+    }
+
+    function startEditPost(postId) {
+      resetAdminIdleTimer();
+      const post = posts.find((p) => p.id === postId);
+      if (!post) return;
+
+      document.getElementById('post-edit-id').value = post.id;
+      document.getElementById('post-title-input').value = post.title || '';
+      if (!postCategories.includes(post.category)) {
+        postCategories.push(post.category);
+        populateCategoryControls();
+      }
+      document.getElementById('post-category-input').value = post.category || postCategories[0];
+      document.getElementById('post-content-input').value = post.content || '';
+      document.getElementById('post-video-url-input').value =
+        post.videoUrl && !post.videoUrl.startsWith('data:') ? post.videoUrl : '';
+
+      pendingPostImages = Array.isArray(post.images) ? [...post.images] : [];
+      renderPendingPostImages();
+
+      pendingPostVideoUrl = post.videoUrl || '';
+      renderPendingPostVideo();
+
+      document.getElementById('post-form-heading').textContent = '✏️ Мэдээ засах';
+      document.getElementById('post-submit-btn').textContent = '💾 Өөрчлөлтийг хадгалах';
+      document.getElementById('post-cancel-edit-btn').classList.remove('hidden');
+
+      const modalBody = document.querySelector('#admin-news-modal .overflow-y-auto');
+      if (modalBody) modalBody.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function cancelEditPost() {
+      document.getElementById('post-edit-id').value = '';
+      document.getElementById('post-title-input').value = '';
+      document.getElementById('post-content-input').value = '';
+      document.getElementById('post-url-input').value = '';
+
+      pendingPostImages = [];
+      renderPendingPostImages();
+      clearPendingPostVideo();
+
+      document.getElementById('post-form-heading').textContent = '➕ Шинэ мэдээ нийтлэх';
+      document.getElementById('post-submit-btn').textContent = 'Нийтлэх';
+      document.getElementById('post-cancel-edit-btn').classList.add('hidden');
+    }
+
+    async function deletePostWithConfirm(postId, btnEl) {
+      resetAdminIdleTimer();
+      if (btnEl.dataset.confirmed !== 'true') {
+        btnEl.dataset.confirmed = 'true';
+        btnEl.textContent = 'Устгах уу?';
+        btnEl.classList.add('ring-2', 'ring-amber-300');
+        setTimeout(() => {
+          if (btnEl && document.body.contains(btnEl)) {
+            btnEl.dataset.confirmed = 'false';
+            btnEl.textContent = 'Устгах';
+            btnEl.classList.remove('ring-2', 'ring-amber-300');
+          }
+        }, 3000);
+        return;
+      }
+
+      if (document.getElementById('post-edit-id').value === postId) {
+        cancelEditPost();
+      }
+
+      posts = posts.filter((p) => p.id !== postId);
+      saveLocalCache();
+      refreshAllNewsViews();
+
+      try {
+        await deleteDoc(doc(db, 'posts', postId));
+        showToast('Мэдээ устгагдлаа.', 'info');
+      } catch (err) {
+        showToast('Мэдээ устгагдлаа.', 'info');
+      }
+    }
+
+    function renderAdminPostsList() {
+      const countEl = document.getElementById('manage-post-count');
+      const listEl = document.getElementById('admin-posts-list');
+      if (countEl) countEl.textContent = posts.length;
+      if (!listEl) return;
+
+      if (posts.length === 0) {
+        listEl.innerHTML = '<p class="text-xs text-slate-500 py-2">Одоогоор мэдээ бүртгэгдээгүй байна.</p>';
+        return;
+      }
+
+      listEl.innerHTML = posts
+        .map((p) => {
+          const imgCnt = Array.isArray(p.images) ? p.images.length : 1;
+          const vidTag = p.videoUrl ? ' • 🎬 Видео' : '';
+          return `
+            <div class="flex flex-wrap sm:flex-nowrap items-center justify-between gap-3 p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
+              <div class="flex items-center gap-3 min-w-0">
+                <img src="${escapeHtml(p.image)}" alt="" onerror="handleImageError(this, 'Мэдээ')" class="w-12 h-12 rounded-xl object-cover shrink-0" />
+                <div class="min-w-0">
+                  <span class="text-[11px] font-extrabold text-fuchsia-600 block truncate">
+                    ${escapeHtml(p.category)} • ${escapeHtml(p.date)} • 🖼️ ${imgCnt} зураг${vidTag}
+                  </span>
+                  <h5 class="font-heading font-bold text-xs sm:text-sm text-slate-900 truncate mt-0.5">
+                    ${escapeHtml(p.title)}
+                  </h5>
+                </div>
+              </div>
+              <div class="flex items-center gap-2 shrink-0">
+                <button
+                  type="button"
+                  onclick="startEditPost('${p.id}')"
+                  class="px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold transition-all cursor-pointer"
+                >
+                  Засах
+                </button>
+                <button
+                  type="button"
+                  onclick="deletePostWithConfirm('${p.id}', this)"
+                  class="px-3.5 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold transition-all cursor-pointer"
+                >
+                  Устгах
+                </button>
+              </div>
+            </div>
+          `;
+        })
+        .join('');
+    }
+
+    /* ------------------------------------------------------------------------
+       10. ADMIN UI STATE, SCHEDULE LINK & MODALS
+       ------------------------------------------------------------------------ */
+    function updateAdminUIState() {
+      const btnText = document.getElementById('footer-admin-btn-text');
+      const heroAdminActions = document.getElementById('hero-admin-actions');
+      if (btnText) {
+        btnText.textContent = isAdminLoggedIn ? '⚙️ Мэдээ удирдах' : '🔐 Админ нэвтрэх';
+      }
+      if (heroAdminActions) {
+        heroAdminActions.classList.toggle('hidden', !isAdminLoggedIn);
+      }
+    }
+
+    function handleFooterAdminClick() {
+      if (isAdminLoggedIn && isValidAdminSession()) {
+        openAdminNewsModal();
+      } else {
+        isAdminLoggedIn = false;
+        updateAdminUIState();
+        openLoginModal();
+      }
+    }
+
+    function openAdminNewsModal() {
+      if (!isAdminLoggedIn || !isValidAdminSession()) {
+        isAdminLoggedIn = false;
+        updateAdminUIState();
+        openLoginModal();
+        return;
+      }
+      resetAdminIdleTimer();
+      populateCategoryControls();
+      renderAdminPostsList();
+      const modal = document.getElementById('admin-news-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeAdminNewsModal() {
+      const modal = document.getElementById('admin-news-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function openLoginModal() {
+      document.getElementById('login-error-msg').classList.add('hidden');
+      document.getElementById('admin-username').value = '';
+      document.getElementById('admin-password').value = '';
+      const modal = document.getElementById('admin-login-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      updateLockoutUI();
+    }
+
+    function closeLoginModal() {
+      const modal = document.getElementById('admin-login-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      if (lockoutCountdownInterval) {
+        clearInterval(lockoutCountdownInterval);
+        lockoutCountdownInterval = null;
+      }
+    }
+
+    function togglePasswordVisibility() {
+      const pwdInput = document.getElementById('admin-password');
+      pwdInput.type = pwdInput.type === 'password' ? 'text' : 'password';
+    }
+
+    function updateLockoutUI() {
+      const errorBox = document.getElementById('login-error-msg');
+      const submitBtn = document.getElementById('admin-login-submit-btn');
+      if (lockoutCountdownInterval) {
+        clearInterval(lockoutCountdownInterval);
+        lockoutCountdownInterval = null;
+      }
+      const tick = () => {
+        const remaining = getLockoutRemainingMs();
+        if (remaining > 0) {
+          const secs = Math.ceil(remaining / 1000);
+          errorBox.textContent = `Хэт олон удаа буруу оролдлого хийсэн тул ${secs} секундийн дараа дахин оролдоно уу.`;
+          errorBox.classList.remove('hidden');
+          if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.classList.add('opacity-60', 'cursor-not-allowed');
+          }
+        } else {
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.classList.remove('opacity-60', 'cursor-not-allowed');
+          }
+          if (lockoutCountdownInterval) {
+            clearInterval(lockoutCountdownInterval);
+            lockoutCountdownInterval = null;
+          }
+        }
+      };
+      tick();
+      if (getLockoutRemainingMs() > 0) {
+        lockoutCountdownInterval = setInterval(tick, 500);
+      }
+    }
+
+    async function handleAdminLogin(e) {
+      e.preventDefault();
+      const errorBox = document.getElementById('login-error-msg');
+      const modalBox = document.getElementById('login-modal-box');
+
+      if (getLockoutRemainingMs() > 0) {
+        updateLockoutUI();
+        return;
+      }
+
+      const username = document.getElementById('admin-username').value.trim();
+      const password = document.getElementById('admin-password').value;
+
+      if (!expectedUserDigestHex || !expectedPassDigestHex) {
+        await initSecurityVerifiers();
+      }
+
+      const inputUserHash = await computeSha256Hex(buildSaltedCredentialBytes(username, false));
+      const inputPassHash =
+        password.length === 4
+          ? await computeSha256Hex(buildSaltedCredentialBytes(password, true))
+          : 'invalid_len_digest';
+
+      if (
+        constantTimeHexEqual(inputUserHash, expectedUserDigestHex) &&
+        constantTimeHexEqual(inputPassHash, expectedPassDigestHex)
+      ) {
+        setAttemptCount(0);
+        isAdminLoggedIn = true;
+        createOrRefreshAdminSession();
+        errorBox.classList.add('hidden');
+        document.getElementById('admin-password').value = '';
+        closeLoginModal();
+        updateAdminUIState();
+        showToast('Амжилттай нэвтэрлээ!', 'success');
+        openAdminNewsModal();
+      } else {
+        const attempts = getAttemptCount() + 1;
+        setAttemptCount(attempts);
+        if (attempts >= MAX_LOGIN_ATTEMPTS) {
+          setLockoutState(LOCKOUT_DURATION_MS);
+          setAttemptCount(0);
+          updateLockoutUI();
+        } else {
+          errorBox.textContent = `Нэвтрэх нэр эсвэл нууц үг буруу байна! (Үлдсэн оролдлого: ${MAX_LOGIN_ATTEMPTS - attempts})`;
+          errorBox.classList.remove('hidden');
+        }
+        modalBox.classList.remove('animate-shake');
+        void modalBox.offsetWidth;
+        modalBox.classList.add('animate-shake');
+      }
+    }
+
+    function logoutAdmin(isAutoTimeout = false) {
+      isAdminLoggedIn = false;
+      clearAdminSession();
+      closeAdminNewsModal();
+      updateAdminUIState();
+      showToast(
+        isAutoTimeout
+          ? 'Идэвхгүй байсан тул системээс автоматаар гарлаа.'
+          : 'Админ системээс гарлаа.',
+        'info'
+      );
+    }
+
+    function openScheduleLink() {
+      if (scheduleUrl && scheduleUrl.trim() !== '') {
+        window.open(scheduleUrl.trim(), '_blank', 'noopener,noreferrer');
+      } else {
+        showToast(
+          'Хичээлийн хуваарийн холбоос хараахан оруулаагүй байна. Үндсэн хуудасны админ хэсгээс тохируулна уу.',
+          'info'
+        );
+      }
+    }
+
+    function toggleMobileMenu() {
+      document.getElementById('mobile-menu')?.classList.toggle('hidden');
+    }
+
+    function showToast(message, type = 'success') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      const styleMap = {
+        success: 'bg-gradient-to-r from-emerald-500 to-teal-600 text-white',
+        error: 'bg-gradient-to-r from-rose-500 to-pink-600 text-white',
+        info: 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white',
+      };
+      toast.className = `pointer-events-auto px-5 py-3.5 rounded-2xl shadow-xl font-bold text-xs sm:text-sm flex items-center justify-between gap-3 transform transition-all duration-300 translate-y-4 opacity-0 ${styleMap[type] || styleMap.info}`;
+      toast.innerHTML = `
+        <span>${escapeHtml(message)}</span>
+        <button onclick="this.parentElement.remove()" class="text-white/80 hover:text-white font-bold cursor-pointer">✕</button>
+      `;
+      container.appendChild(toast);
+      requestAnimationFrame(() => toast.classList.remove('translate-y-4', 'opacity-0'));
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => toast.remove(), 300);
+      }, 4200);
+    }
+
+    function escapeHtml(str) {
+      if (typeof str !== 'string') return '';
+      return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closePostReader();
+        closeLoginModal();
+        closeAdminNewsModal();
+      }
+    });
+
+    ['post-reader-modal', 'admin-login-modal', 'admin-news-modal'].forEach((modalId) => {
+      const el = document.getElementById(modalId);
+      if (el) {
+        el.addEventListener('click', (e) => {
+          if (e.target === el) {
+            if (modalId === 'post-reader-modal') closePostReader();
+            else if (modalId === 'admin-login-modal') closeLoginModal();
+            else if (modalId === 'admin-news-modal') closeAdminNewsModal();
+          }
+        });
+      }
+    });
+
+    Object.assign(window, {
+      openScheduleLink,
+      toggleMobileMenu,
+      handleImageError: window.handleImageError,
+      selectQuickCategoryPill,
+      handleNewsFilterChange,
+      resetNewsFilters,
+      openPostReader,
+      closePostReader,
+      stepReaderImage,
+      selectReaderImage,
+      copyCurrentReaderText,
+      handleMultiplePostImages,
+      addPostImageUrl,
+      removePendingPostImage,
+      setPendingPostCover,
+      handlePostVideoUrlChange,
+      handlePostVideoFile,
+      clearPendingPostVideo,
+      addPostCategory,
+      removePostCategory,
+      handleSavePost,
+      startEditPost,
+      cancelEditPost,
+      deletePostWithConfirm,
+      handleFooterAdminClick,
+      openAdminNewsModal,
+      closeAdminNewsModal,
+      closeLoginModal,
+      handleAdminLogin,
+      togglePasswordVisibility,
+      logoutAdmin,
+    });
+
+    async function initPage() {
+      await initSecurityVerifiers();
+      loadLocalFallbackState();
+      if (isAdminLoggedIn) {
+        resetAdminIdleTimer();
+      }
+      updateAdminUIState();
+      refreshAllNewsViews();
+      initFirebaseSync();
+    }
+
+    if (document.readyState === 'loading') {
+      window.addEventListener('DOMContentLoaded', initPage);
+    } else {
+      initPage();
+    }
+  </script>
+</body>
+</html>
