@@ -5291,14 +5291,15 @@ service cloud.firestore {
       return getIsoDateFromDateObj(dt);
     }
 
-    function getEmptyClassRecord(classId) {
-      const defTotal = Number(attendanceClassTotals[classId] || 0);
+    function getEmptyClassRecord(classId, forEdit = false) {
+      const defTotal = forEdit ? Number(attendanceClassTotals[classId] || 0) : 0;
       return {
         total: defTotal,
         sick: 0,
         excused: 0,
         absent: 0,
         remote: 0,
+        recorded: false,
         names: { sick: [], excused: [], absent: [], remote: [] },
       };
     }
@@ -5306,14 +5307,16 @@ service cloud.firestore {
     function getClassRecordForDate(dateIso, classId) {
       const dayObj = attendanceByDate[dateIso];
       const rec = dayObj && dayObj[classId] ? dayObj[classId] : null;
-      const base = getEmptyClassRecord(classId);
-      if (!rec) return base;
+      if (!rec) return getEmptyClassRecord(classId, false);
+      const isRecorded = rec.recorded === false ? false : (rec.recorded === true || Number(rec.total || 0) > 0);
+      if (!isRecorded) return getEmptyClassRecord(classId, false);
       return {
-        total: rec.total !== undefined ? Number(rec.total) : base.total,
+        total: Number(rec.total || 0),
         sick: Number(rec.sick || 0),
         excused: Number(rec.excused || 0),
         absent: Number(rec.absent || 0),
         remote: Number(rec.remote || 0),
+        recorded: true,
         names: {
           sick: Array.isArray(rec.names?.sick) ? [...rec.names.sick] : [],
           excused: Array.isArray(rec.names?.excused) ? [...rec.names.excused] : [],
@@ -5324,7 +5327,9 @@ service cloud.firestore {
     }
 
     function calcPresentCount(rec) {
+      if (!rec || rec.recorded === false) return 0;
       const total = Number(rec.total || 0);
+      if (total <= 0) return 0;
       const missing = Number(rec.sick || 0) + Number(rec.excused || 0) + Number(rec.absent || 0) + Number(rec.remote || 0);
       return Math.max(0, total - missing);
     }
@@ -5343,7 +5348,12 @@ service cloud.firestore {
     function prepareAttendanceDraftForCurrentDate() {
       attDraftDay = {};
       ATT_ALL_CLASSES.forEach((c) => {
-        attDraftDay[c.id] = getClassRecordForDate(attCurrentDate, c.id);
+        const existing = getClassRecordForDate(attCurrentDate, c.id);
+        if (existing.recorded) {
+          attDraftDay[c.id] = { ...existing, dirty: false };
+        } else {
+          attDraftDay[c.id] = { ...getEmptyClassRecord(c.id, true), dirty: false };
+        }
       });
       const savedT = attendanceTeachersByDate[attCurrentDate] || {};
       attDraftTeachers = {
@@ -5482,6 +5492,7 @@ service cloud.firestore {
       let sumTotal = 0, sumPresent = 0, sumSick = 0, sumExcused = 0, sumAbsent = 0, sumRemote = 0;
       classes.forEach((c) => {
         const r = sourceFn(c.id);
+        if (!r || r.recorded === false) return;
         sumTotal += r.total;
         sumPresent += calcPresentCount(r);
         sumSick += r.sick;
@@ -5556,7 +5567,7 @@ service cloud.firestore {
           <td class="py-2.5 px-2.5 text-center font-bold text-slate-700">${r.total}</td>
           <td class="py-2.5 px-2.5 text-center font-extrabold text-emerald-700">${present}</td>
           ${ATT_REASONS.map(makeReasonCell).join('')}
-          <td class="py-2.5 px-2.5 text-center font-extrabold ${pctColor}">${r.total > 0 ? pct + '%' : '—'}</td>
+          <td class="py-2.5 px-2.5 text-center font-extrabold ${pctColor}">${r.recorded && r.total > 0 ? pct + '%' : '0%'}</td>
         </tr>`;
       }).join('');
     }
@@ -5632,7 +5643,7 @@ service cloud.firestore {
           <div class="flex items-center gap-2">
             <span class="px-3 py-1.5 rounded-xl bg-slate-900 text-white font-heading font-extrabold text-sm">${c.label}</span>
             <span class="px-2.5 py-1 rounded-xl bg-emerald-50 border border-emerald-200 text-xs font-extrabold text-emerald-700">
-              Ирсэн: <strong id="att-d-pres-${c.id}">${present}</strong> <span id="att-d-pct-${c.id}" class="text-[11px] text-emerald-600">(${r.total > 0 ? pct + '%' : '—'})</span>
+              Ирсэн: <strong id="att-d-pres-${c.id}">${present}</strong> <span id="att-d-pct-${c.id}" class="text-[11px] text-emerald-600">(${r.recorded && r.total > 0 ? pct + '%' : '0%'})</span>
             </span>
           </div>
           <div class="flex items-center gap-1.5">
@@ -5746,10 +5757,12 @@ service cloud.firestore {
     }
 
     function updateDraftField(classId, field, rawVal) {
-      if (!attDraftDay[classId]) attDraftDay[classId] = getEmptyClassRecord(classId);
+      if (!attDraftDay[classId]) attDraftDay[classId] = getEmptyClassRecord(classId, true);
       const maxVal = field === 'total' ? 80 : 50;
       const val = Math.max(0, Math.min(maxVal, parseInt(rawVal || '0', 10) || 0));
       attDraftDay[classId][field] = val;
+      attDraftDay[classId].dirty = true;
+      attDraftDay[classId].recorded = Number(attDraftDay[classId].total || 0) > 0;
 
       if (field === 'absent') {
         const arr = attDraftDay[classId].names.absent || [];
@@ -5768,7 +5781,7 @@ service cloud.firestore {
       const dPres = document.getElementById(`att-d-pres-${classId}`);
       const dPct = document.getElementById(`att-d-pct-${classId}`);
       if (dPres) dPres.textContent = present;
-      if (dPct) dPct.textContent = `(${r.total > 0 ? classPct + '%' : '—'})`;
+      if (dPct) dPct.textContent = `(${r.recorded && r.total > 0 ? classPct + '%' : '0%'})`;
 
       if (field === 'absent') {
         const wrap = document.getElementById(`att-names-wrap-${classId}`);
@@ -5784,7 +5797,8 @@ service cloud.firestore {
       const classes = getFilteredClasses();
       let sumTotal = 0, sumPresent = 0, sumSick = 0, sumExcused = 0, sumAbsent = 0, sumRemote = 0;
       classes.forEach((c) => {
-        const rec = attDraftDay[c.id] || getEmptyClassRecord(c.id);
+        const rec = attDraftDay[c.id] || getEmptyClassRecord(c.id, false);
+        if (!rec || rec.recorded === false) return;
         sumTotal += rec.total;
         sumPresent += calcPresentCount(rec);
         sumSick += rec.sick;
@@ -5892,21 +5906,38 @@ service cloud.firestore {
       }
       const cleanClasses = {};
       ATT_ALL_CLASSES.forEach((c) => {
-        const r = attDraftDay[c.id] || getEmptyClassRecord(c.id);
-        if (r.total > 0) attendanceClassTotals[c.id] = r.total;
-        cleanClasses[c.id] = {
-          total: Number(r.total || 0),
-          sick: Number(r.sick || 0),
-          excused: Number(r.excused || 0),
-          absent: Number(r.absent || 0),
-          remote: Number(r.remote || 0),
-          names: {
-            sick: [],
-            excused: [],
-            absent: (r.names.absent || []).slice(0, r.absent).map((s) => String(s || '').trim()),
-            remote: [],
-          },
-        };
+        const r = attDraftDay[c.id] || getEmptyClassRecord(c.id, false);
+        const inActiveShift = attEditShift === 'all'
+          || (attEditShift === 'morning' && isMorningShiftClass(c))
+          || (attEditShift === 'afternoon' && !isMorningShiftClass(c));
+        const shouldRecord = Boolean((r.recorded || r.dirty || inActiveShift) && Number(r.total || 0) > 0);
+        if (shouldRecord) {
+          attendanceClassTotals[c.id] = Number(r.total);
+          cleanClasses[c.id] = {
+            total: Number(r.total || 0),
+            sick: Number(r.sick || 0),
+            excused: Number(r.excused || 0),
+            absent: Number(r.absent || 0),
+            remote: Number(r.remote || 0),
+            recorded: true,
+            names: {
+              sick: [],
+              excused: [],
+              absent: (r.names.absent || []).slice(0, r.absent).map((s) => String(s || '').trim()),
+              remote: [],
+            },
+          };
+        } else {
+          cleanClasses[c.id] = {
+            total: 0,
+            sick: 0,
+            excused: 0,
+            absent: 0,
+            remote: 0,
+            recorded: false,
+            names: { sick: [], excused: [], absent: [], remote: [] },
+          };
+        }
       });
 
       const cleanTeachers = {
@@ -5984,6 +6015,7 @@ service cloud.firestore {
       ATT_ALL_CLASSES.forEach((c) => {
         if (c.grade >= minGrade && c.grade <= maxGrade) {
           const r = sourceFn(c.id);
+          if (!r || r.recorded === false) return;
           total += r.total;
           present += calcPresentCount(r);
           sick += r.sick;
@@ -6051,6 +6083,7 @@ service cloud.firestore {
       let total = 0, present = 0, sick = 0, excused = 0, absent = 0, remote = 0;
       classList.forEach((c) => {
         const r = sourceFn(c.id);
+        if (!r || r.recorded === false) return;
         total += r.total;
         present += calcPresentCount(r);
         sick += r.sick;
@@ -6389,7 +6422,7 @@ service cloud.firestore {
           String(st.excused),
           String(st.absent),
           String(st.remote),
-          st.total > 0 ? `${st.pct}%` : '—',
+          st.total > 0 ? `${st.pct}%` : '0%',
         ];
 
         let rx = padX;
@@ -6432,7 +6465,7 @@ service cloud.firestore {
         String(allStats.excused),
         String(allStats.absent),
         String(allStats.remote),
-        allStats.total > 0 ? `${allStats.pct}%` : '—',
+        allStats.total > 0 ? `${allStats.pct}%` : '0%',
       ];
       let tx = padX;
       totVals.forEach((v, i) => {
@@ -6596,7 +6629,7 @@ ${bodyHtml}
             <td>${r.excused}</td>
             <td>${r.absent}</td>
             <td>${r.remote}</td>
-            <td>${r.total > 0 ? pct + '%' : '—'}</td>
+            <td>${r.recorded && r.total > 0 ? pct + '%' : '0%'}</td>
           </tr>`;
         }).join('');
 
@@ -6672,7 +6705,7 @@ ${bodyHtml}
             <td>${r.excused}</td>
             <td>${r.absent}</td>
             <td>${r.remote}</td>
-            <td>${r.total > 0 ? pct + '%' : '—'}</td>
+            <td>${r.recorded && r.total > 0 ? pct + '%' : '0%'}</td>
             <td class="left">${escapeHtml(details || '—')}</td>
           </tr>`;
         }).join('');
@@ -6730,7 +6763,7 @@ ${bodyHtml}
             <td>${cExc}</td>
             <td>${cAbs}</td>
             <td>${cRem}</td>
-            <td>${cTotal > 0 ? pct + '%' : '—'}</td>
+            <td>${cTotal > 0 ? pct + '%' : '0%'}</td>
           </tr>`;
         }).join('');
 
@@ -7139,23 +7172,23 @@ ${bodyHtml}
 
 
   <!-- ========================================================================
-       FLOATING SPINNING VINYL SCHOOL ANTHEM PLAYER (10s DELAY, mandal4.mp3)
+       FLOATING SPINNING VINYL SCHOOL ANTHEM PLAYER (MANUAL CLICK ONLY, mandal4.mp3)
        ======================================================================== -->
-  <audio id="school-anthem-audio" src="mandal4.mp3" preload="auto"></audio>
+  <audio id="school-anthem-audio" src="mandal4.mp3" preload="none"></audio>
 
   <div id="school-vinyl-widget" role="region" aria-label="Сургуулийн дуу тоглуулагч">
-    <div id="vinyl-status-pill" onclick="handleVinylClick()" class="flex items-center gap-1.5 sm:gap-2 px-2.5 py-1.5 sm:px-3.5 sm:py-2 rounded-full bg-slate-900/85 text-white text-[10px] sm:text-[11px] font-bold shadow-lg border border-white/20 backdrop-blur-md cursor-pointer leading-tight">
-      <span id="vinyl-dot" class="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-emerald-400 animate-pulse shrink-0"></span>
-      <span id="vinyl-status-text-mobile" class="sm:hidden">Зогсоох бол дар</span>
-      <span id="vinyl-status-text" class="hidden sm:inline">Сургуулийн дуу • Зогсоох бол пянз дээр дарна уу</span>
+    <div id="vinyl-status-pill" class="flex items-center gap-1.5 sm:gap-2 px-2.5 py-1.5 sm:px-3.5 sm:py-2 rounded-full bg-slate-900/85 text-white text-[10px] sm:text-[11px] font-bold shadow-lg border border-white/20 backdrop-blur-md leading-tight select-none pointer-events-none">
+      <span id="vinyl-dot" class="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-amber-400 shrink-0"></span>
+      <span id="vinyl-status-text-mobile" class="sm:hidden">Дуу сонсох бол пянз дар</span>
+      <span id="vinyl-status-text" class="hidden sm:inline">Сургуулийн дуу • Сонсох бол пянз дээр дарна уу</span>
     </div>
 
     <div class="relative">
       <button
         id="vinyl-disc-btn"
         type="button"
-        onclick="handleVinylClick()"
-        title="Дууг зогсоож пянзыг хаах"
+        onclick="handleVinylClick(event)"
+        title="Сургуулийн дуу тоглуулах / зогсоох"
         aria-label="Сургуулийн дууны пянз"
         class="vinyl-disc-btn flex items-center justify-center"
       >
@@ -7192,40 +7225,27 @@ ${bodyHtml}
       if (!audio || !widget) return;
 
       var vinylDismissed = false;
-      var vinylShown = false;
       var isPlaying = false;
-      var waitingForGesture = false;
-      var audioUnlocked = false;
-      var unlockEvents = ['click', 'touchend', 'keydown'];
 
       function setPlayingUI(playing) {
         isPlaying = playing;
         if (playing) {
           widget.classList.add('vinyl-playing');
           if (statusText) statusText.textContent = 'Сургуулийн дуу • Зогсоох бол пянз дээр дарна уу';
-          if (statusTextMobile) statusTextMobile.textContent = 'Зогсоох бол дар';
+          if (statusTextMobile) statusTextMobile.textContent = 'Зогсоох бол пянз дар';
           if (statusDot) statusDot.className = 'w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-emerald-400 animate-pulse shrink-0';
         } else {
           widget.classList.remove('vinyl-playing');
-          if (statusText) statusText.textContent = 'Сургуулийн дуу • Сонсох бол энд дарна уу';
-          if (statusTextMobile) statusTextMobile.textContent = 'Сонсох бол энд дар';
-          if (statusDot) statusDot.className = 'w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-amber-400 animate-pulse shrink-0';
+          if (statusText) statusText.textContent = 'Сургуулийн дуу • Сонсох бол пянз дээр дарна уу';
+          if (statusTextMobile) statusTextMobile.textContent = 'Дуу сонсох бол пянз дар';
+          if (statusDot) statusDot.className = 'w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-amber-400 shrink-0';
         }
-      }
-
-      function removeUnlockListeners(fn) {
-        unlockEvents.forEach(function (evName) {
-          document.removeEventListener(evName, fn, true);
-        });
       }
 
       window.dismissSchoolVinyl = function (ev) {
         if (ev && ev.stopPropagation) ev.stopPropagation();
         if (vinylDismissed) return;
         vinylDismissed = true;
-        waitingForGesture = false;
-        removeUnlockListeners(primeAudioEarly);
-        removeUnlockListeners(unlockAfterShown);
         try {
           audio.pause();
           audio.currentTime = 0;
@@ -7238,96 +7258,41 @@ ${bodyHtml}
         }, 460);
       };
 
-      window.handleVinylClick = function () {
+      window.handleVinylClick = function (ev) {
+        if (ev && ev.stopPropagation) ev.stopPropagation();
         if (vinylDismissed) return;
-        if (isPlaying || !waitingForGesture) {
-          window.dismissSchoolVinyl();
+        if (isPlaying) {
+          try {
+            audio.pause();
+          } catch (e) {}
+          setPlayingUI(false);
         } else {
-          tryPlayAnthem();
-        }
-      };
-
-      function unlockAfterShown(ev) {
-        if (vinylDismissed || !waitingForGesture) {
-          removeUnlockListeners(unlockAfterShown);
-          return;
-        }
-        if (widget.contains(ev.target)) return;
-        tryPlayAnthem();
-      }
-
-      function tryPlayAnthem() {
-        if (vinylDismissed) return;
-        audio.muted = false;
-        audio.volume = 1;
-        var p = audio.play();
-        if (p && typeof p.then === 'function') {
-          p.then(function () {
-            audioUnlocked = true;
-            waitingForGesture = false;
-            removeUnlockListeners(unlockAfterShown);
-            setPlayingUI(true);
-          }).catch(function () {
-            waitingForGesture = true;
-            setPlayingUI(false);
-            unlockEvents.forEach(function (evName) {
-              document.addEventListener(evName, unlockAfterShown, true);
-            });
-          });
-        } else {
-          audioUnlocked = true;
-          waitingForGesture = false;
-          setPlayingUI(true);
-        }
-      }
-
-      // Silently unlock audio on the very first real click/tap/key during the first 10s
-      function primeAudioEarly() {
-        if (audioUnlocked || vinylShown || vinylDismissed) {
-          removeUnlockListeners(primeAudioEarly);
-          return;
-        }
-        try {
-          audio.muted = true;
+          audio.muted = false;
+          audio.volume = 1;
           var p = audio.play();
           if (p && typeof p.then === 'function') {
             p.then(function () {
-              audio.pause();
-              audio.currentTime = 0;
-              audio.muted = false;
-              audioUnlocked = true;
-              removeUnlockListeners(primeAudioEarly);
+              setPlayingUI(true);
             }).catch(function () {
-              audio.muted = false;
+              setPlayingUI(false);
             });
           } else {
-            audio.pause();
-            audio.currentTime = 0;
-            audio.muted = false;
-            audioUnlocked = true;
-            removeUnlockListeners(primeAudioEarly);
+            setPlayingUI(true);
           }
-        } catch (e) {
-          audio.muted = false;
         }
-      }
-
-      unlockEvents.forEach(function (evName) {
-        document.addEventListener(evName, primeAudioEarly, true);
-      });
+      };
 
       audio.addEventListener('ended', function () {
-        window.dismissSchoolVinyl();
+        setPlayingUI(false);
+        try { audio.currentTime = 0; } catch (e) {}
       });
 
-      // Appear and play mandal4.mp3 10 seconds after entering the site
+      // Show vinyl player smoothly after welcome splash, NEVER autoplay
+      setPlayingUI(false);
       setTimeout(function () {
         if (vinylDismissed) return;
-        vinylShown = true;
-        removeUnlockListeners(primeAudioEarly);
         widget.classList.add('vinyl-visible');
-        tryPlayAnthem();
-      }, 10000);
+      }, 3200);
     })();
   </script>
 </body>
