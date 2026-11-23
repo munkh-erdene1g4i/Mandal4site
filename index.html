@@ -1110,6 +1110,100 @@
         transform: rotate(var(--hat-rot, -10deg));
       }
     }
+  
+    /* ==========================================================================
+       SOFT ANIMATED MISSION SHOWCASE (above director's greeting)
+       ========================================================================== */
+    .mission-aurora {
+      background: linear-gradient(120deg, #eef2ff 0%, #fdf2f8 28%, #ecfeff 56%, #f0fdf4 80%, #eef2ff 100%);
+      background-size: 300% 300%;
+      animation: auroraShift 16s ease-in-out infinite;
+      box-shadow: 0 18px 40px -22px rgba(99, 102, 241, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    }
+    @keyframes auroraShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .ms-blob { position: absolute; border-radius: 9999px; filter: blur(38px); opacity: 0.55; pointer-events: none; will-change: transform; }
+    .ms-blob-1 { width: 220px; height: 220px; left: -60px; top: -70px; background: #c7d2fe; animation: msDrift1 14s ease-in-out infinite; }
+    .ms-blob-2 { width: 200px; height: 200px; right: -50px; top: 10px; background: #fbcfe8; animation: msDrift2 17s ease-in-out infinite; }
+    .ms-blob-3 { width: 240px; height: 240px; left: 38%; bottom: -130px; background: #a5f3fc; animation: msDrift1 20s ease-in-out infinite reverse; }
+    @keyframes msDrift1 { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(40px, 26px) scale(1.15); } }
+    @keyframes msDrift2 { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(-36px, 30px) scale(1.1); } }
+
+    .ms-sparkle {
+      position: absolute; bottom: 8%; width: 8px; height: 8px; border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 0 12px 3px rgba(167, 139, 250, 0.55);
+      pointer-events: none; opacity: 0;
+      animation: msFloatUp 7s ease-in infinite;
+    }
+    @keyframes msFloatUp {
+      0% { transform: translateY(20px) scale(0.5); opacity: 0; }
+      20% { opacity: 1; }
+      100% { transform: translateY(-150px) scale(1.1); opacity: 0; }
+    }
+
+    .ms-badge {
+      position: relative; overflow: hidden;
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.45rem 1.1rem; border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.68);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+      color: #6d28d9; font-size: 11px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase;
+      box-shadow: 0 8px 20px -10px rgba(124, 58, 237, 0.45);
+    }
+    .ms-badge::after {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.9) 50%, transparent 70%);
+      transform: translateX(-130%);
+      animation: msBadgeSheen 4.5s ease-in-out infinite;
+    }
+    @keyframes msBadgeSheen { 0%, 55% { transform: translateX(-130%); } 100% { transform: translateX(130%); } }
+    .ms-badge-star { animation: msSpin 8s linear infinite; }
+    @keyframes msSpin { to { transform: rotate(360deg); } }
+
+    .ms-word {
+      display: inline-block;
+      background: linear-gradient(90deg, #6366f1, #d946ef, #06b6d4, #6366f1);
+      background-size: 300% 100%;
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent; color: transparent;
+      animation: msWave 4.8s ease-in-out infinite, msHue 9s linear infinite;
+    }
+    @keyframes msWave { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+    @keyframes msHue { 0% { background-position: 0% 50%; } 100% { background-position: 300% 50%; } }
+
+    .obj-glass {
+      background: rgba(255, 255, 255, 0.58) !important;
+      -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.92) !important;
+      box-shadow: 0 8px 24px -14px rgba(99, 102, 241, 0.35);
+    }
+    .obj-glass.obj-active {
+      transform: translateY(-4px);
+      background: rgba(255, 255, 255, 0.88) !important;
+      box-shadow: 0 18px 34px -16px rgba(139, 92, 246, 0.45), 0 0 0 1.5px rgba(167, 139, 250, 0.5);
+    }
+    .obj-glass::before {
+      content: ""; position: absolute; inset: 0; pointer-events: none;
+      background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, 0.8) 50%, transparent 70%);
+      transform: translateX(-130%);
+    }
+    .obj-glass.obj-active::before { animation: objSheen 1.5s ease forwards; }
+    @keyframes objSheen { to { transform: translateX(130%); } }
+    .obj-icon { animation: msBob 4s ease-in-out infinite; }
+    @keyframes msBob { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-3px) rotate(-5deg); } }
+    .obj-num {
+      position: absolute; right: 12px; top: 2px; font-family: 'Montserrat', sans-serif;
+      font-size: 56px; font-weight: 900; line-height: 1; color: rgba(165, 180, 252, 0.3); pointer-events: none;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .mission-aurora, .ms-blob, .ms-sparkle, .ms-badge::after, .ms-badge-star, .ms-word, .obj-icon, .obj-glass::before { animation: none !important; }
+    }
   </style>
 </head>
 <body class="antialiased selection:bg-fuchsia-500 selection:text-white">
@@ -1389,6 +1483,71 @@
   <section id="about" class="py-10 sm:py-14 relative z-10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="glass-card rounded-[2rem] p-6 sm:p-10 shadow-xl reveal space-y-7">
+        <!-- Animated School Mission & Objectives Showcase (above director's greeting) -->
+        <div id="mission-showcase" class="mission-aurora relative rounded-[1.75rem] overflow-hidden p-5 sm:p-8 border border-white/80">
+          <span class="ms-blob ms-blob-1"></span>
+          <span class="ms-blob ms-blob-2"></span>
+          <span class="ms-blob ms-blob-3"></span>
+          <span class="ms-sparkle" style="left:8%;animation-delay:0s;animation-duration:7s"></span><span class="ms-sparkle" style="left:22%;animation-delay:2.2s;animation-duration:8s"></span><span class="ms-sparkle" style="left:38%;animation-delay:4.1s;animation-duration:6.5s"></span><span class="ms-sparkle" style="left:55%;animation-delay:1.1s;animation-duration:7.5s"></span><span class="ms-sparkle" style="left:70%;animation-delay:3.3s;animation-duration:8s"></span><span class="ms-sparkle" style="left:86%;animation-delay:5.2s;animation-duration:6.8s"></span><span class="ms-sparkle" style="left:94%;animation-delay:0.6s;animation-duration:7.2s"></span>
+
+          <div class="relative z-10">
+            <div class="flex flex-col items-center text-center gap-4">
+              <div class="ms-badge">
+                <svg class="ms-badge-star w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <span>Эрхэм зорилго</span>
+              </div>
+              <p class="font-heading font-extrabold text-base sm:text-xl lg:text-2xl leading-snug max-w-3xl">
+                <span class="text-indigo-300 font-black mr-1">«</span><span class="ms-word" style="animation-delay:0.0s,0.0s">Шинийг</span> <span class="ms-word" style="animation-delay:0.18s,0.18s">сэтгэж,</span> <span class="ms-word" style="animation-delay:0.36s,0.36s">бүтээлчээр</span> <span class="ms-word" style="animation-delay:0.54s,0.54s">манлайлах</span> <span class="ms-word" style="animation-delay:0.72s,0.72s">—</span> <span class="ms-word" style="animation-delay:0.9s,0.9s">эрдэм</span> <span class="ms-word" style="animation-delay:1.08s,1.08s">мэдлэгтэй,</span> <span class="ms-word" style="animation-delay:1.26s,1.26s">эрхэм</span> <span class="ms-word" style="animation-delay:1.44s,1.44s">5</span> <span class="ms-word" style="animation-delay:1.62s,1.62s">соёлыг</span> <span class="ms-word" style="animation-delay:1.8s,1.8s">дээдлэгч,</span> <span class="ms-word" style="animation-delay:1.98s,1.98s">хариуцлагатай</span> <span class="ms-word" style="animation-delay:2.16s,2.16s">иргэнийг</span> <span class="ms-word" style="animation-delay:2.34s,2.34s">төлөвшүүлнэ.</span><span class="text-indigo-300 font-black ml-1">»</span>
+              </p>
+            </div>
+
+            <div id="school-objectives-grid" class="grid sm:grid-cols-3 gap-3.5 mt-6">
+            <div onclick="setActiveObjective(0)" class="objective-card obj-glass obj-active rounded-2xl p-4 cursor-pointer">
+              <span class="obj-num">01</span>
+              <div class="flex items-center gap-2.5 mb-2 relative">
+                <div class="obj-icon w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-400 to-sky-400 text-white flex items-center justify-center shrink-0 shadow-sm" style="animation-delay:0.0s">
+                  <svg class="w-[18px] h-[18px]" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                </div>
+                <div>
+                  <span class="text-[10px] font-extrabold uppercase tracking-wider text-indigo-500 block leading-none">Зорилт 01</span>
+                  <h3 class="font-heading font-extrabold text-xs sm:text-sm text-slate-800 mt-0.5">Чанартай сургалт</h3>
+                </div>
+              </div>
+              <p class="text-xs text-slate-600 leading-relaxed relative">Хүүхэд бүрийн авьяасыг нээх, судалгаа ба цахим технологид суурилсан чанартай сургалтыг хэрэгжүүлнэ.</p>
+              <div class="objective-progress"></div>
+            </div>
+            <div onclick="setActiveObjective(1)" class="objective-card obj-glass rounded-2xl p-4 cursor-pointer">
+              <span class="obj-num">02</span>
+              <div class="flex items-center gap-2.5 mb-2 relative">
+                <div class="obj-icon w-9 h-9 rounded-xl bg-gradient-to-br from-fuchsia-400 to-rose-400 text-white flex items-center justify-center shrink-0 shadow-sm" style="animation-delay:0.6s">
+                  <svg class="w-[18px] h-[18px]" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                </div>
+                <div>
+                  <span class="text-[10px] font-extrabold uppercase tracking-wider text-fuchsia-500 block leading-none">Зорилт 02</span>
+                  <h3 class="font-heading font-extrabold text-xs sm:text-sm text-slate-800 mt-0.5">Эрхэм 5 соёл</h3>
+                </div>
+              </div>
+              <p class="text-xs text-slate-600 leading-relaxed relative">Хүндэтгэлтэй харилцаа, цаг баримтлал, ухаалаг утасгүй цэвэр орчныг сургуулийн өдөр тутмын соёл болгоно.</p>
+              <div class="objective-progress"></div>
+            </div>
+            <div onclick="setActiveObjective(2)" class="objective-card obj-glass rounded-2xl p-4 cursor-pointer">
+              <span class="obj-num">03</span>
+              <div class="flex items-center gap-2.5 mb-2 relative">
+                <div class="obj-icon w-9 h-9 rounded-xl bg-gradient-to-br from-cyan-400 to-teal-400 text-white flex items-center justify-center shrink-0 shadow-sm" style="animation-delay:1.2s">
+                  <svg class="w-[18px] h-[18px]" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                </div>
+                <div>
+                  <span class="text-[10px] font-extrabold uppercase tracking-wider text-teal-500 block leading-none">Зорилт 03</span>
+                  <h3 class="font-heading font-extrabold text-xs sm:text-sm text-slate-800 mt-0.5">Хамтын хөгжил</h3>
+                </div>
+              </div>
+              <p class="text-xs text-slate-600 leading-relaxed relative">Багш, сурагч, эцэг эхийн нээлттэй түншлэлээр хүүхдэд ээлтэй, аюулгүй хөгжлийн орчныг бүрдүүлнэ.</p>
+              <div class="objective-progress"></div>
+            </div>
+            </div>
+          </div>
+        </div>
+
         <div class="flex flex-col md:flex-row items-center gap-8">
           <div class="shrink-0 animate-float-slow">
             <div class="gold-shimmer-ring w-40 h-40 md:w-48 md:h-48">
@@ -1403,74 +1562,6 @@
             <button onclick="openDirectorModal()" class="btn-cool px-6 py-3 rounded-full text-xs font-bold inline-flex items-center gap-2 cursor-pointer shadow-md">
               Дэлгэрэнгүй унших
             </button>
-          </div>
-        </div>
-
-        <!-- Animated School Mission & Objectives Showcase -->
-        <div class="pt-6 border-t border-slate-200/80 space-y-4">
-          <!-- Mission Banner -->
-          <div class="relative rounded-2xl bg-gradient-to-r from-indigo-50/90 via-white to-fuchsia-50/90 border border-indigo-100/90 p-4 sm:p-5 overflow-hidden">
-            <div class="mission-shimmer-line absolute top-0 left-0 right-0 h-[3px]"></div>
-            <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-5">
-              <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-indigo-600 to-fuchsia-600 text-white text-[11px] font-heading font-extrabold uppercase tracking-wider shrink-0 self-start sm:self-center shadow-sm">
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                <span>Эрхэм зорилго</span>
-              </div>
-              <p class="font-heading font-bold text-sm sm:text-[15px] text-slate-800 leading-snug">
-                «Шинийг сэтгэж, бүтээлчээр манлайлах — эрдэм мэдлэгтэй, эрхэм 5 соёлыг дээдлэгч, хариуцлагатай иргэнийг төлөвшүүлнэ.»
-              </p>
-            </div>
-          </div>
-
-          <!-- 3 Compact Animated Objectives -->
-          <div id="school-objectives-grid" class="grid sm:grid-cols-3 gap-3.5">
-            <div onclick="setActiveObjective(0)" class="objective-card obj-active rounded-2xl bg-white/80 border border-slate-200/80 p-4 cursor-pointer">
-              <div class="flex items-center gap-2.5 mb-2">
-                <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-indigo-500 to-blue-600 text-white flex items-center justify-center shrink-0 shadow-xs">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
-                </div>
-                <div>
-                  <span class="text-[10px] font-extrabold uppercase tracking-wider text-indigo-600 block leading-none">Зорилт 01</span>
-                  <h3 class="font-heading font-extrabold text-xs sm:text-sm text-slate-900 mt-0.5">Чанартай сургалт</h3>
-                </div>
-              </div>
-              <p class="text-xs text-slate-600 leading-relaxed">
-                Хүүхэд бүрийн авьяасыг нээх, судалгаа ба цахим технологид суурилсан чанартай сургалтыг хэрэгжүүлнэ.
-              </p>
-              <div class="objective-progress"></div>
-            </div>
-
-            <div onclick="setActiveObjective(1)" class="objective-card rounded-2xl bg-white/80 border border-slate-200/80 p-4 cursor-pointer">
-              <div class="flex items-center gap-2.5 mb-2">
-                <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-fuchsia-500 to-rose-500 text-white flex items-center justify-center shrink-0 shadow-xs">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
-                </div>
-                <div>
-                  <span class="text-[10px] font-extrabold uppercase tracking-wider text-fuchsia-600 block leading-none">Зорилт 02</span>
-                  <h3 class="font-heading font-extrabold text-xs sm:text-sm text-slate-900 mt-0.5">Эрхэм 5 соёл</h3>
-                </div>
-              </div>
-              <p class="text-xs text-slate-600 leading-relaxed">
-                Хүндэтгэлтэй харилцаа, цаг баримтлал, ухаалаг утасгүй цэвэр орчныг сургуулийн өдөр тутмын соёл болгоно.
-              </p>
-              <div class="objective-progress"></div>
-            </div>
-
-            <div onclick="setActiveObjective(2)" class="objective-card rounded-2xl bg-white/80 border border-slate-200/80 p-4 cursor-pointer">
-              <div class="flex items-center gap-2.5 mb-2">
-                <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-cyan-500 to-teal-600 text-white flex items-center justify-center shrink-0 shadow-xs">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                </div>
-                <div>
-                  <span class="text-[10px] font-extrabold uppercase tracking-wider text-teal-600 block leading-none">Зорилт 03</span>
-                  <h3 class="font-heading font-extrabold text-xs sm:text-sm text-slate-900 mt-0.5">Хамтын хөгжил</h3>
-                </div>
-              </div>
-              <p class="text-xs text-slate-600 leading-relaxed">
-                Багш, сурагч, эцэг эхийн нээлттэй түншлэлээр хүүхдэд ээлтэй, аюулгүй хөгжлийн орчныг бүрдүүлнэ.
-              </p>
-              <div class="objective-progress"></div>
-            </div>
           </div>
         </div>
       </div>
@@ -3261,7 +3352,7 @@ service cloud.firestore {
 
       <!-- Summary Cards -->
       <div id="att-summary-strip" class="px-4 sm:px-6 pt-4 pb-2 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 shrink-0">
-        <div class="p-3 rounded-2xl bg-slate-100 border border-slate-200 text-center">
+        <div id="att-sum-total-card" class="p-3 rounded-2xl bg-slate-100 border border-slate-200 text-center">
           <span class="text-[11px] font-bold text-slate-500 block">Ирвэл зохих</span>
           <span id="att-sum-total" class="font-heading font-black text-xl text-slate-900">0</span>
         </div>
@@ -5873,6 +5964,9 @@ service cloud.firestore {
         if (saveBtn) { saveBtn.disabled = false; saveBtn.classList.remove('opacity-50', 'cursor-not-allowed'); }
       }
 
+      const sumTotalCard = document.getElementById('att-sum-total-card');
+      if (sumTotalCard) sumTotalCard.classList.toggle('hidden', attIsEditMode);
+
       const pastDay = isPastDateIso(attCurrentDate);
       const openEditBtn = document.getElementById('att-open-edit-btn');
       const openEditBtnText = document.getElementById('att-open-edit-btn-text');
@@ -6020,6 +6114,18 @@ service cloud.firestore {
       }
     }
 
+    function toggleTotalEditor(classId) {
+      const ed = document.getElementById(`att-total-editor-${classId}`);
+      if (!ed) return;
+      const open = ed.classList.contains('hidden');
+      ed.classList.toggle('hidden', !open);
+      ed.classList.toggle('flex', open);
+      if (open) {
+        const inp = document.getElementById(`att-inp-total-${classId}`);
+        if (inp) { inp.focus(); inp.select(); }
+      }
+    }
+
     function stepDraftField(classId, field, delta) {
       if (!attDraftDay[classId]) attDraftDay[classId] = getEmptyClassRecord(classId);
       const maxVal = field === 'total' ? 80 : 50;
@@ -6058,11 +6164,19 @@ service cloud.firestore {
             </span>
           </div>
           <div class="flex items-center gap-1.5">
-            <span class="text-[11px] font-extrabold text-slate-500">Зохих:</span>
-            <button type="button" onclick="stepDraftField('${c.id}', 'total', -1)" aria-label="Зохих хасах" class="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 active:scale-95 text-slate-700 font-black text-base flex items-center justify-center cursor-pointer select-none">−</button>
-            <input id="att-inp-total-${c.id}" type="number" inputmode="numeric" pattern="[0-9]*" min="0" max="80" value="${r.total}" onfocus="this.select()" oninput="updateDraftField('${c.id}', 'total', this.value)" class="w-12 h-8 rounded-lg bg-slate-50 border border-slate-300 text-center text-base sm:text-xs font-black text-slate-900 focus:outline-none focus:border-indigo-500" />
-            <button type="button" onclick="stepDraftField('${c.id}', 'total', 1)" aria-label="Зохих нэмэх" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-900 active:scale-95 text-white font-black text-base flex items-center justify-center cursor-pointer select-none">+</button>
+            <span class="text-[11px] font-extrabold text-slate-500">Сурагчийн тоо:</span>
+            <strong id="att-total-view-${c.id}" class="min-w-[1.5rem] text-center text-sm font-black text-slate-900">${r.total}</strong>
+            <button type="button" onclick="toggleTotalEditor('${c.id}')" aria-label="Сурагчийн тоог засах" title="Сурагчийн тоог засах" class="w-8 h-8 rounded-lg bg-slate-100 hover:bg-indigo-100 hover:text-indigo-700 text-slate-500 flex items-center justify-center cursor-pointer active:scale-95 transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125"/></svg></button>
           </div>
+        </div>
+
+        <!-- Hidden student-count editor (opens with the pencil icon) -->
+        <div id="att-total-editor-${c.id}" class="hidden items-center justify-end gap-1.5 flex-wrap p-2 rounded-xl bg-indigo-50/70 border border-indigo-100">
+          <span class="text-[11px] font-extrabold text-indigo-700 mr-auto">Ангийн сурагчийн тоог засах</span>
+          <button type="button" onclick="stepDraftField('${c.id}', 'total', -1)" aria-label="Сурагчийн тоо хасах" class="w-8 h-8 rounded-lg bg-white border border-slate-200 hover:bg-slate-100 active:scale-95 text-slate-700 font-black text-base flex items-center justify-center cursor-pointer select-none">−</button>
+          <input id="att-inp-total-${c.id}" type="number" inputmode="numeric" pattern="[0-9]*" min="0" max="80" value="${r.total}" onfocus="this.select()" oninput="updateDraftField('${c.id}', 'total', this.value)" class="w-14 h-8 rounded-lg bg-white border border-slate-300 text-center text-base sm:text-xs font-black text-slate-900 focus:outline-none focus:border-indigo-500" />
+          <button type="button" onclick="stepDraftField('${c.id}', 'total', 1)" aria-label="Сурагчийн тоо нэмэх" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-900 active:scale-95 text-white font-black text-base flex items-center justify-center cursor-pointer select-none">+</button>
+          <button type="button" onclick="toggleTotalEditor('${c.id}')" aria-label="Болсон" class="px-3 h-8 rounded-lg bg-emerald-500 hover:bg-emerald-600 text-white text-[11px] font-extrabold cursor-pointer active:scale-95">Болсон</button>
         </div>
 
         <!-- Mobile 2x2 / Desktop 4-col Touch Steppers -->
@@ -6192,6 +6306,8 @@ service cloud.firestore {
       const dPres = document.getElementById(`att-d-pres-${classId}`);
       const dPct = document.getElementById(`att-d-pct-${classId}`);
       if (dPres) dPres.textContent = present;
+      const totView = document.getElementById(`att-total-view-${classId}`);
+      if (totView) totView.textContent = r.total;
       if (dPct) dPct.textContent = `(${r.recorded && r.total > 0 ? classPct + '%' : '0%'})`;
 
       if (field === 'absent') {
@@ -6564,7 +6680,7 @@ service cloud.firestore {
           splitRight: 'ДУНД, АХЛАХ (7–12)',
           filePrefix: 'irts-ugluu',
           toastLabel: 'Өглөөний ээлжийн',
-          gradStops: ['#78350f', '#c2410c', '#db2777', '#4f46e5'],
+          gradStops: ['#fde7c8', '#fbcfe0', '#e9d5ff', '#c7d2fe'], ink: '#7c2d12',
         },
         afternoon: {
           subtitle: 'ӨДРИЙН ЭЭЛЖИЙН ИРЦИЙН МЭДЭЭЛЭЛ',
@@ -6574,7 +6690,7 @@ service cloud.firestore {
           splitRight: 'ДУНД АНГИ (6-Р АНГИ)',
           filePrefix: 'irts-udur',
           toastLabel: 'Өдрийн ээлжийн',
-          gradStops: ['#1e3a8a', '#4f46e5', '#7e22ce', '#0891b2'],
+          gradStops: ['#c7d7fe', '#ddd6fe', '#f5d0fe', '#a5f3fc'], ink: '#312e81',
         },
         all: {
           subtitle: 'СУРАГЧДЫН ӨДРИЙН ИРЦИЙН НЭГДСЭН МЭДЭЭЛЭЛ',
@@ -6584,7 +6700,7 @@ service cloud.firestore {
           splitRight: 'ДУНД, АХЛАХ (6–12)',
           filePrefix: 'irts-negdsen',
           toastLabel: 'Нэгдсэн',
-          gradStops: ['#312e81', '#7e22ce', '#db2777', '#0891b2'],
+          gradStops: ['#c7d2fe', '#e9d5ff', '#fbcfe8', '#a5f3fc'], ink: '#3b0764',
         },
       }[mode] || {};
 
@@ -6601,11 +6717,69 @@ service cloud.firestore {
       canvas.height = H;
       const ctx = canvas.getContext('2d');
 
-      // 1. Clean Light Background
-      ctx.fillStyle = '#f8fafc';
-      ctx.fillRect(0, 0, W, H);
+      const ink = modeConfig.ink || '#312e81';
 
-      // 2. Compact Vibrant Header Banner
+      // 1. Soft pastel background with blurred colour blobs
+      const bgGrad = ctx.createLinearGradient(0, 0, W, H);
+      bgGrad.addColorStop(0, '#f5f3ff');
+      bgGrad.addColorStop(0.5, '#fdf2f8');
+      bgGrad.addColorStop(1, '#ecfeff');
+      ctx.fillStyle = bgGrad;
+      ctx.fillRect(0, 0, W, H);
+      const blob = (bx, by, br, col) => {
+        const g = ctx.createRadialGradient(bx, by, 0, bx, by, br);
+        g.addColorStop(0, col);
+        g.addColorStop(1, 'rgba(255,255,255,0)');
+        ctx.fillStyle = g;
+        ctx.fillRect(bx - br, by - br, br * 2, br * 2);
+      };
+      blob(110, 330, 380, 'rgba(165,180,252,0.50)');
+      blob(1090, 450, 400, 'rgba(249,168,212,0.42)');
+      blob(300, H - 170, 360, 'rgba(125,211,252,0.42)');
+      blob(960, H - 90, 320, 'rgba(196,181,253,0.40)');
+
+      // Frosted glass panel helper (soft shadow + sheen + glossy highlight + white rim)
+      const glass = (x, y, w, h, r, tint) => {
+        ctx.save();
+        ctx.shadowColor = 'rgba(99, 102, 241, 0.16)';
+        ctx.shadowBlur = 26;
+        ctx.shadowOffsetY = 10;
+        drawRoundedRect(ctx, x, y, w, h, r);
+        ctx.fillStyle = 'rgba(255,255,255,0.5)';
+        ctx.fill();
+        ctx.restore();
+
+        drawRoundedRect(ctx, x, y, w, h, r);
+        const sg = ctx.createLinearGradient(x, y, x + w, y + h);
+        sg.addColorStop(0, 'rgba(255,255,255,0.82)');
+        sg.addColorStop(0.55, 'rgba(255,255,255,0.46)');
+        sg.addColorStop(1, 'rgba(255,255,255,0.66)');
+        ctx.fillStyle = sg;
+        ctx.fill();
+
+        if (tint) {
+          drawRoundedRect(ctx, x, y, w, h, r);
+          ctx.fillStyle = tint;
+          ctx.fill();
+        }
+
+        ctx.save();
+        drawRoundedRect(ctx, x, y, w, h, r);
+        ctx.clip();
+        const hg = ctx.createLinearGradient(0, y, 0, y + h * 0.5);
+        hg.addColorStop(0, 'rgba(255,255,255,0.55)');
+        hg.addColorStop(1, 'rgba(255,255,255,0)');
+        ctx.fillStyle = hg;
+        ctx.fillRect(x, y, w, h * 0.5);
+        ctx.restore();
+
+        drawRoundedRect(ctx, x, y, w, h, r);
+        ctx.lineWidth = 1.8;
+        ctx.strokeStyle = 'rgba(255,255,255,0.95)';
+        ctx.stroke();
+      };
+
+      // 2. Soft pastel glass header
       const hdrH = 195;
       const hdrGrad = ctx.createLinearGradient(0, 0, W, hdrH);
       hdrGrad.addColorStop(0, modeConfig.gradStops[0]);
@@ -6615,18 +6789,28 @@ service cloud.firestore {
       ctx.fillStyle = hdrGrad;
       ctx.fillRect(0, 0, W, hdrH);
 
-      // School Emblem Badge (Left)
+      // light bokeh circles for the glass feel
+      [[980, 40, 120, 0.35], [1110, 150, 90, 0.28], [760, 170, 70, 0.22]].forEach(([bx, by, br, a]) => {
+        ctx.fillStyle = `rgba(255,255,255,${a})`;
+        ctx.beginPath();
+        ctx.arc(bx, by, br, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      const hdrSheen = ctx.createLinearGradient(0, 0, 0, hdrH);
+      hdrSheen.addColorStop(0, 'rgba(255,255,255,0.55)');
+      hdrSheen.addColorStop(1, 'rgba(255,255,255,0.05)');
+      ctx.fillStyle = hdrSheen;
+      ctx.fillRect(0, 0, W, hdrH);
+      ctx.fillStyle = 'rgba(255,255,255,0.9)';
+      ctx.fillRect(0, hdrH - 2, W, 2);
+
+      // School Emblem Badge (Left) - frosted glass
       const lx = 32, ly = 36, lw = 116, lh = 116;
-      drawRoundedRect(ctx, lx, ly, lw, lh, 26);
-      ctx.fillStyle = 'rgba(255,255,255,0.22)';
-      ctx.fill();
-      ctx.lineWidth = 3;
-      ctx.strokeStyle = 'rgba(255,255,255,0.65)';
-      ctx.stroke();
+      glass(lx, ly, lw, lh, 26, 'rgba(255,255,255,0.15)');
 
       ctx.save();
       ctx.translate(lx + lw / 2, ly + lh / 2 - 6);
-      ctx.fillStyle = '#ffffff';
+      ctx.fillStyle = ink;
       ctx.beginPath();
       ctx.moveTo(0, -30);
       ctx.lineTo(38, -12);
@@ -6642,89 +6826,77 @@ service cloud.firestore {
       ctx.lineTo(0, 9);
       ctx.closePath();
       ctx.fill();
-      ctx.strokeStyle = '#fde047';
+      ctx.strokeStyle = '#f59e0b';
       ctx.lineWidth = 3.5;
       ctx.beginPath();
       ctx.moveTo(32, -10);
       ctx.lineTo(32, 18);
       ctx.stroke();
-      ctx.fillStyle = '#fde047';
+      ctx.fillStyle = '#f59e0b';
       ctx.beginPath(); ctx.arc(32, 20, 4.5, 0, Math.PI * 2); ctx.fill();
       ctx.restore();
 
       // School Name & Report Title
-      ctx.fillStyle = '#fde047';
+      ctx.fillStyle = ink;
+      ctx.globalAlpha = 0.75;
       ctx.font = '800 20px Montserrat, Arial, sans-serif';
       ctx.fillText('СЭЛЭНГЭ АЙМАГ • МАНДАЛ СУМ', 172, 54);
+      ctx.globalAlpha = 1;
 
-      ctx.fillStyle = '#ffffff';
+      ctx.fillStyle = ink;
       ctx.font = '900 34px Montserrat, Arial, sans-serif';
       ctx.fillText('ЕРӨНХИЙ БОЛОВСРОЛЫН 4-Р СУРГУУЛЬ', 172, 96);
 
-      ctx.fillStyle = 'rgba(255,255,255,0.95)';
+      ctx.fillStyle = '#475569';
       ctx.font = '800 24px Montserrat, Arial, sans-serif';
       ctx.fillText(modeConfig.subtitle, 172, 132);
 
-      // Date Pill
+      // Date Pill (glass)
       const dateText = `${dIso}  •  ${getWeekdayNameMn(dIso)}`;
-      drawRoundedRect(ctx, 172, 144, 460, 40, 20);
-      ctx.fillStyle = 'rgba(15, 23, 42, 0.38)';
-      ctx.fill();
-      ctx.strokeStyle = 'rgba(255,255,255,0.5)';
-      ctx.lineWidth = 1.5;
-      ctx.stroke();
-      ctx.fillStyle = '#ffffff';
+      glass(172, 144, 460, 40, 20, 'rgba(255,255,255,0.2)');
+      ctx.fillStyle = ink;
       ctx.font = '800 22px Nunito, Arial, sans-serif';
       ctx.fillText(dateText, 194, 172);
 
-      // 3. Overall Summary Cards (6 compact cards)
+      // 3. Overall Summary Cards (6 soft glass cards)
       const sumY = 212;
       const cards = [
-        { label: 'ЗОХИХ', val: String(allStats.total), bg: '#ffffff', border: '#94a3b8', color: '#0f172a' },
-        { label: `ИРСЭН ${allStats.pct}%`, val: String(allStats.present), bg: '#ecfdf5', border: '#34d399', color: '#047857' },
-        { label: 'ӨВЧТЭЙ', val: String(allStats.sick), bg: '#fff1f2', border: '#fb7185', color: '#be123c' },
-        { label: 'ЧӨЛӨӨТЭЙ', val: String(allStats.excused), bg: '#fffbeb', border: '#fbbf24', color: '#b45309' },
-        { label: 'ТАСАЛСАН', val: String(allStats.absent), bg: '#fef2f2', border: '#f87171', color: '#b91c1c' },
-        { label: 'ЗАЙНААС', val: String(allStats.remote), bg: '#ecfeff', border: '#22d3ee', color: '#0e7490' },
+        { label: 'ЗОХИХ', val: String(allStats.total), tint: 'rgba(148,163,184,0.14)', color: '#334155', accent: '#94a3b8' },
+        { label: `ИРСЭН ${allStats.pct}%`, val: String(allStats.present), tint: 'rgba(52,211,153,0.18)', color: '#059669', accent: '#6ee7b7' },
+        { label: 'ӨВЧТЭЙ', val: String(allStats.sick), tint: 'rgba(251,113,133,0.15)', color: '#e11d48', accent: '#fda4af' },
+        { label: 'ЧӨЛӨӨТЭЙ', val: String(allStats.excused), tint: 'rgba(251,191,36,0.18)', color: '#d97706', accent: '#fcd34d' },
+        { label: 'ТАСАЛСАН', val: String(allStats.absent), tint: 'rgba(248,113,113,0.15)', color: '#dc2626', accent: '#fca5a5' },
+        { label: 'ЗАЙНААС', val: String(allStats.remote), tint: 'rgba(34,211,238,0.16)', color: '#0891b2', accent: '#67e8f9' },
       ];
       const gap = 10;
       const cardW = (contentW - gap * 5) / 6;
       cards.forEach((c, idx) => {
         const cx = padX + idx * (cardW + gap);
-        drawRoundedRect(ctx, cx, sumY, cardW, 124, 16);
-        ctx.fillStyle = c.bg;
-        ctx.fill();
-        ctx.lineWidth = 2.5;
-        ctx.strokeStyle = c.border;
-        ctx.stroke();
+        glass(cx, sumY, cardW, 124, 18, c.tint);
 
         ctx.fillStyle = c.color;
         ctx.textAlign = 'center';
-        ctx.font = '900 18px Montserrat, Arial, sans-serif';
+        ctx.font = '900 17px Montserrat, Arial, sans-serif';
         ctx.fillText(c.label, cx + cardW / 2, sumY + 36);
-        ctx.font = '900 50px Montserrat, Arial, sans-serif';
-        ctx.fillText(c.val, cx + cardW / 2, sumY + 100);
+        ctx.font = '900 48px Montserrat, Arial, sans-serif';
+        ctx.fillText(c.val, cx + cardW / 2, sumY + 94);
+
+        drawRoundedRect(ctx, cx + 20, sumY + 108, cardW - 40, 5, 2.5);
+        ctx.fillStyle = c.accent;
+        ctx.fill();
       });
       ctx.textAlign = 'left';
 
-      // 4. Separate Primary & Secondary Split Cards
+      // 4. Primary & Secondary Split Cards (glass)
       const splitY = 352;
       const splitGap = 14;
       const splitW = (contentW - splitGap) / 2;
       const splitH = 172;
 
-      const drawSplitCard = (x, title, stats, accentColor, bgStart, bgEnd, borderColor) => {
-        const g = ctx.createLinearGradient(x, splitY, x + splitW, splitY + splitH);
-        g.addColorStop(0, bgStart);
-        g.addColorStop(1, bgEnd);
-        drawRoundedRect(ctx, x, splitY, splitW, splitH, 18);
-        ctx.fillStyle = g;
-        ctx.fill();
-        ctx.lineWidth = 2.5;
-        ctx.strokeStyle = borderColor;
-        ctx.stroke();
+      const drawSplitCard = (x, title, stats, accentColor, tint) => {
+        glass(x, splitY, splitW, splitH, 20, tint);
 
-        ctx.fillStyle = '#0f172a';
+        ctx.fillStyle = '#1e293b';
         ctx.font = '900 23px Montserrat, Arial, sans-serif';
         ctx.fillText(title, x + 18, splitY + 38);
 
@@ -6739,7 +6911,7 @@ service cloud.firestore {
 
         const barX = x + 18, barY = splitY + 54, barW = splitW - 36, barH = 10;
         drawRoundedRect(ctx, barX, barY, barW, barH, 5);
-        ctx.fillStyle = 'rgba(15,23,42,0.12)';
+        ctx.fillStyle = 'rgba(100,116,139,0.16)';
         ctx.fill();
         const fillW = Math.max(0, Math.min(barW, (stats.pct / 100) * barW));
         if (fillW > 0) {
@@ -6749,23 +6921,26 @@ service cloud.firestore {
         }
 
         const subItems = [
-          { lbl: 'Зохих', v: stats.total, col: '#0f172a' },
-          { lbl: 'Ирсэн', v: stats.present, col: '#047857' },
-          { lbl: 'Өвчтэй', v: stats.sick, col: '#be123c' },
-          { lbl: 'Чөлөө', v: stats.excused, col: '#b45309' },
-          { lbl: 'Тас', v: stats.absent, col: '#b91c1c' },
-          { lbl: 'Зайнаас', v: stats.remote, col: '#0e7490' },
+          { lbl: 'Зохих', v: stats.total, col: '#334155' },
+          { lbl: 'Ирсэн', v: stats.present, col: '#059669' },
+          { lbl: 'Өвчтэй', v: stats.sick, col: '#e11d48' },
+          { lbl: 'Чөлөө', v: stats.excused, col: '#d97706' },
+          { lbl: 'Тас', v: stats.absent, col: '#dc2626' },
+          { lbl: 'Зайнаас', v: stats.remote, col: '#0891b2' },
         ];
         const subGap = 6;
         const subW = (splitW - 36 - subGap * 5) / 6;
         subItems.forEach((it, i) => {
           const sx = x + 18 + i * (subW + subGap);
           const sy = splitY + 74;
-          drawRoundedRect(ctx, sx, sy, subW, 84, 12);
-          ctx.fillStyle = 'rgba(255,255,255,0.92)';
+          drawRoundedRect(ctx, sx, sy, subW, 84, 14);
+          ctx.fillStyle = 'rgba(255,255,255,0.62)';
           ctx.fill();
+          ctx.lineWidth = 1.5;
+          ctx.strokeStyle = 'rgba(255,255,255,0.95)';
+          ctx.stroke();
           ctx.textAlign = 'center';
-          ctx.fillStyle = '#475569';
+          ctx.fillStyle = '#64748b';
           ctx.font = '800 14px Nunito, Arial, sans-serif';
           ctx.fillText(it.lbl, sx + subW / 2, sy + 26);
           ctx.fillStyle = it.col;
@@ -6775,36 +6950,35 @@ service cloud.firestore {
         ctx.textAlign = 'left';
       };
 
-      drawSplitCard(padX, modeConfig.splitLeft, s15, '#4f46e5', '#eef2ff', '#ecfeff', '#818cf8');
-      drawSplitCard(padX + splitW + splitGap, modeConfig.splitRight, s612, '#c026d3', '#fdf4ff', '#fff1f2', '#e879f9');
+      drawSplitCard(padX, modeConfig.splitLeft, s15, '#818cf8', 'rgba(165,180,252,0.18)');
+      drawSplitCard(padX + splitW + splitGap, modeConfig.splitRight, s612, '#d48bef', 'rgba(249,168,212,0.18)');
 
-      // 5. Detailed Table
+      // 5. Detailed Table (glass panel)
       const tblY = 556;
       const tblW = contentW;
-      ctx.fillStyle = '#0f172a';
+      ctx.fillStyle = ink;
       ctx.font = '900 22px Montserrat, Arial, sans-serif';
       ctx.fillText(modeConfig.tableTitle, padX, tblY);
 
       const colWidths = [224, 128, 128, 124, 124, 124, 132, 168]; // sum = 1152
       const headers = ['Анги', 'Зохих', 'Ирсэн', 'Өвчтэй', 'Чөлөө', 'Тас', 'Зайнаас', 'Ирц %'];
 
-      drawRoundedRect(ctx, padX, tTop, tblW, rowH * totalRows, 16);
-      ctx.fillStyle = '#ffffff';
-      ctx.fill();
-      ctx.lineWidth = 2.5;
-      ctx.strokeStyle = '#94a3b8';
-      ctx.stroke();
+      glass(padX, tTop, tblW, rowH * totalRows, 18, 'rgba(255,255,255,0.10)');
 
       ctx.save();
-      drawRoundedRect(ctx, padX, tTop, tblW, rowH * totalRows, 16);
+      drawRoundedRect(ctx, padX, tTop, tblW, rowH * totalRows, 18);
       ctx.clip();
 
-      // Table Header Row
-      ctx.fillStyle = '#0f172a';
+      // Table Header Row (soft pastel gradient)
+      const thGrad = ctx.createLinearGradient(padX, tTop, padX + tblW, tTop);
+      thGrad.addColorStop(0, 'rgba(199,210,254,0.85)');
+      thGrad.addColorStop(0.5, 'rgba(251,207,232,0.8)');
+      thGrad.addColorStop(1, 'rgba(165,243,252,0.85)');
+      ctx.fillStyle = thGrad;
       ctx.fillRect(padX, tTop, tblW, rowH);
       let cx = padX;
       headers.forEach((h, i) => {
-        ctx.fillStyle = i === 2 ? '#6ee7b7' : (i === 3 ? '#fda4af' : (i === 4 ? '#fcd34d' : (i === 5 ? '#fca5a5' : (i === 6 ? '#67e8f9' : '#ffffff'))));
+        ctx.fillStyle = i === 2 ? '#047857' : (i === 3 ? '#be123c' : (i === 4 ? '#b45309' : (i === 5 ? '#b91c1c' : (i === 6 ? '#0e7490' : '#1e1b4b'))));
         ctx.font = '900 22px Montserrat, Arial, sans-serif';
         ctx.textAlign = i === 0 ? 'left' : 'center';
         ctx.fillText(h, i === 0 ? cx + 20 : cx + colWidths[i] / 2, tTop + 39);
@@ -6815,11 +6989,11 @@ service cloud.firestore {
       tableRowsData.forEach((rowObj, idx) => {
         const ry = tTop + rowH * (idx + 1);
         const st = rowObj.st;
-        ctx.fillStyle = idx % 2 === 0 ? '#ffffff' : '#f1f5f9';
+        ctx.fillStyle = idx % 2 === 0 ? 'rgba(255,255,255,0.42)' : 'rgba(224,231,255,0.42)';
         ctx.fillRect(padX, ry, tblW, rowH);
 
-        ctx.strokeStyle = rowObj.isDivider ? '#64748b' : '#cbd5e1';
-        ctx.lineWidth = rowObj.isDivider ? 3 : 1;
+        ctx.strokeStyle = rowObj.isDivider ? 'rgba(129,140,248,0.65)' : 'rgba(148,163,184,0.30)';
+        ctx.lineWidth = rowObj.isDivider ? 2.5 : 1;
         ctx.beginPath();
         ctx.moveTo(padX, ry);
         ctx.lineTo(padX + tblW, ry);
@@ -6840,16 +7014,16 @@ service cloud.firestore {
         vals.forEach((v, i) => {
           ctx.textAlign = i === 0 ? 'left' : 'center';
           if (i === 0) {
-            ctx.fillStyle = rowObj.isPrimary ? '#3730a3' : '#86198f';
+            ctx.fillStyle = rowObj.isPrimary ? '#4f46e5' : '#a21caf';
             ctx.font = '900 24px Nunito, Arial, sans-serif';
           } else if (i === 2) {
-            ctx.fillStyle = '#047857';
+            ctx.fillStyle = '#059669';
             ctx.font = '900 29px Montserrat, Arial, sans-serif';
           } else if (i === 7) {
-            ctx.fillStyle = st.total === 0 ? '#94a3b8' : (st.pct >= 95 ? '#059669' : (st.pct >= 85 ? '#d97706' : '#dc2626'));
+            ctx.fillStyle = st.total === 0 ? '#94a3b8' : (st.pct >= 95 ? '#10b981' : (st.pct >= 85 ? '#f59e0b' : '#ef4444'));
             ctx.font = '900 27px Montserrat, Arial, sans-serif';
           } else {
-            ctx.fillStyle = (i >= 3 && i <= 6 && Number(v) === 0) ? '#cbd5e1' : '#1e293b';
+            ctx.fillStyle = (i >= 3 && i <= 6 && Number(v) === 0) ? '#cbd5e1' : '#334155';
             ctx.font = (i === 1) ? '800 27px Montserrat, Arial, sans-serif' : '900 28px Montserrat, Arial, sans-serif';
           }
           ctx.fillText(v, i === 0 ? rx + 20 : rx + colWidths[i] / 2, ry + 40);
@@ -6859,10 +7033,10 @@ service cloud.firestore {
 
       // Total Row
       const totY = tTop + rowH * (tableRowsData.length + 1);
-      ctx.fillStyle = '#dbeafe';
+      ctx.fillStyle = 'rgba(199,210,254,0.60)';
       ctx.fillRect(padX, totY, tblW, rowH);
-      ctx.strokeStyle = '#334155';
-      ctx.lineWidth = 2.5;
+      ctx.strokeStyle = 'rgba(99,102,241,0.55)';
+      ctx.lineWidth = 2;
       ctx.beginPath();
       ctx.moveTo(padX, totY);
       ctx.lineTo(padX + tblW, totY);
@@ -6881,13 +7055,19 @@ service cloud.firestore {
       let tx = padX;
       totVals.forEach((v, i) => {
         ctx.textAlign = i === 0 ? 'left' : 'center';
-        ctx.fillStyle = i === 2 ? '#047857' : '#0f172a';
+        ctx.fillStyle = i === 2 ? '#059669' : '#1e1b4b';
         ctx.font = i === 0 ? '900 23px Montserrat, Arial, sans-serif' : '900 29px Montserrat, Arial, sans-serif';
         ctx.fillText(v, i === 0 ? tx + 20 : tx + colWidths[i] / 2, totY + 41);
         tx += colWidths[i];
       });
 
       ctx.restore();
+
+      // glass rim on top of the table
+      drawRoundedRect(ctx, padX, tTop, tblW, rowH * totalRows, 18);
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = 'rgba(255,255,255,0.95)';
+      ctx.stroke();
 
       // 6. Footer (with shift teacher if available)
       const tObj = attIsEditMode ? attDraftTeachers : (attendanceTeachersByDate[dIso] || {});
@@ -6898,7 +7078,7 @@ service cloud.firestore {
         teacherInfo = `  •  Бүртгэсэн багш: ${tObj.afternoon.trim()}`;
       }
       ctx.textAlign = 'center';
-      ctx.fillStyle = '#475569';
+      ctx.fillStyle = '#64748b';
       ctx.font = '800 18px Nunito, Arial, sans-serif';
       ctx.fillText(`Мандал сумын Ерөнхий боловсролын 4-р сургууль  •  ${dIso}${teacherInfo}`, W / 2, H - 28);
 
@@ -7235,7 +7415,7 @@ ${bodyHtml}
     });
 
     Object.assign(window, {
-      openAttendanceModal, closeAttendanceModal, openAttendanceImageModal, closeAttendanceImageModal, downloadAttendanceImage, setAttendanceEditShift, jumpToEditGrade, stepDraftField, setAttendanceToToday, shiftAttendanceWorkday, handleAttendanceDateChange, renderAttendanceContent, openAttendanceCodePrompt, closeAttendanceCodePrompt, verifyAttendanceCode, exitAttendanceEditMode, saveCurrentAttendanceDay, updateDraftField, updateDraftStudentName, updateDraftTeacher, openAttendanceNamesModal, closeAttendanceNamesModal, openAttendancePrintModal, closeAttendancePrintModal, selectPrintReportType, executeAttendancePrint,
+      openAttendanceModal, closeAttendanceModal, openAttendanceImageModal, closeAttendanceImageModal, downloadAttendanceImage, setAttendanceEditShift, jumpToEditGrade, stepDraftField, toggleTotalEditor, setAttendanceToToday, shiftAttendanceWorkday, handleAttendanceDateChange, renderAttendanceContent, openAttendanceCodePrompt, closeAttendanceCodePrompt, verifyAttendanceCode, exitAttendanceEditMode, saveCurrentAttendanceDay, updateDraftField, updateDraftStudentName, updateDraftTeacher, openAttendanceNamesModal, closeAttendanceNamesModal, openAttendancePrintModal, closeAttendancePrintModal, selectPrintReportType, executeAttendancePrint,
 
       openDirectorModal, closeDirectorModal, setActiveObjective, downloadEventsExcelTemplate, handleEventsExcelUpload,
       openScheduleLink, toggleMobileMenu, toggleGalleryDeck, updateFirebaseStorageMeter, handleSchoolPhotoFallback: window.handleSchoolPhotoFallback, handleImageError: window.handleImageError, clearSelectedCalendarDate, changeCalendarMonth, scrollEventsHorizontal, filterPosts, filterLessons, openLessonViewer, closeLessonViewer, handleSaveGoodLesson, startEditGoodLesson, cancelEditGoodLesson, deleteGoodLessonWithConfirm, refreshGoodLessonsFromFirestore, addEventCategory, removeEventCategory, addPostCategory, removePostCategory, handleFooterAdminClick, closePostReader, stepReaderImage, selectReaderImage, closeLightbox, navigateLightbox, setLightboxMediaMode, stepLightboxInnerPhoto, selectLightboxInnerPhoto, closeLoginModal, handleAdminLogin, togglePasswordVisibility, logoutAdmin, closeAdminDashboard, switchAdminTab, handleSaveScheduleUrl, testScheduleUrl, clearScheduleUrl, handleAddCalendarEvent, startEditEvent, cancelEditEvent, handleAddPost, startEditPost, cancelEditPost, handleMultipleMediaFiles, addMediaImageUrl, removePendingMediaImage, setPendingMediaCover, handleMediaVideoUrlChange, handleMediaVideoFile, clearPendingMediaVideo, handleAddGalleryPhoto, selectCalendarDate, openPostReader, openLightbox, deleteEventWithConfirm, deletePostWithConfirm, deletePhotoWithConfirm, copyFirestoreRules
