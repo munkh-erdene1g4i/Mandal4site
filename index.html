@@ -6710,7 +6710,42 @@ service cloud.firestore {
       const rowH = 60;
       const tTop = 570;
       const totalRows = tableRowsData.length + 2; // header + data rows + total row
-      const H = tTop + rowH * totalRows + 78;
+      const tableBottom = tTop + rowH * totalRows;
+
+      // ---- Тасалсан сурагчдын нэр (ангитай нь, доод хэсэгт жижгээр) ----
+      const absentGroups = [];
+      targetClasses.forEach((c) => {
+        const r = sourceFn(c.id);
+        if (!r || r.recorded === false) return;
+        const nms = (r.names?.absent || []).slice(0, r.absent).map((x) => String(x || '').trim()).filter(Boolean);
+        if (nms.length) absentGroups.push({ label: c.label, names: nms });
+      });
+      const absFontLabel = '900 15px Nunito, Arial, sans-serif';
+      const absFontName = '700 15px Nunito, Arial, sans-serif';
+      const absLineH = 22;
+      const absMaxW = contentW - 16;
+      const absTokens = [];
+      let absLineCount = 0;
+      if (absentGroups.length) {
+        const mctx = document.createElement('canvas').getContext('2d');
+        let lineIdx = 0, lineX = 0;
+        const place = (text, bold, extraGap) => {
+          mctx.font = bold ? absFontLabel : absFontName;
+          const w = mctx.measureText(text).width;
+          const gap = lineX === 0 ? 0 : 6 + extraGap;
+          if (lineX > 0 && lineX + gap + w > absMaxW) { lineIdx++; lineX = 0; }
+          const x = lineX === 0 ? 0 : lineX + gap;
+          absTokens.push({ text, bold, x, line: lineIdx });
+          lineX = x + w;
+        };
+        absentGroups.forEach((g, gi) => {
+          place(`${g.label}:`, true, gi === 0 ? 0 : 12);
+          g.names.forEach((nm, ni) => place(ni < g.names.length - 1 ? `${nm},` : nm, false, 0));
+        });
+        absLineCount = lineIdx + 1;
+      }
+      const absH = absentGroups.length ? 24 + absLineCount * absLineH : 0;
+      const H = tableBottom + 78 + absH;
 
       const canvas = document.createElement('canvas');
       canvas.width = W;
@@ -7068,6 +7103,27 @@ service cloud.firestore {
       ctx.lineWidth = 2;
       ctx.strokeStyle = 'rgba(255,255,255,0.95)';
       ctx.stroke();
+
+      // 5b. Тасалсан сурагчдын нэр (жижиг үсгээр, ангитай нь)
+      if (absentGroups.length) {
+        ctx.strokeStyle = 'rgba(148,163,184,0.45)';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(padX, tableBottom + 18);
+        ctx.lineTo(padX + contentW, tableBottom + 18);
+        ctx.stroke();
+
+        ctx.textAlign = 'left';
+        ctx.fillStyle = '#b91c1c';
+        ctx.font = '900 14px Montserrat, Arial, sans-serif';
+        ctx.fillText(`ТАСАЛСАН СУРАГЧИД (${absentGroups.reduce((n, g) => n + g.names.length, 0)})`, padX + 8, tableBottom + 40);
+
+        absTokens.forEach((t) => {
+          ctx.font = t.bold ? absFontLabel : absFontName;
+          ctx.fillStyle = t.bold ? '#4f46e5' : '#475569';
+          ctx.fillText(t.text, padX + 8 + t.x, tableBottom + 40 + 24 + t.line * absLineH - 2);
+        });
+      }
 
       // 6. Footer (with shift teacher if available)
       const tObj = attIsEditMode ? attDraftTeachers : (attendanceTeachersByDate[dIso] || {});
