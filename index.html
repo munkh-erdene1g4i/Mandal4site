@@ -1456,6 +1456,38 @@
     .mv-c3d .mv-num { color: #c4b5fd; }
     .mv-c3d .mv-card .mv-glow { background: radial-gradient(circle, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0) 68%); opacity: 0.55; }
     @media (prefers-reduced-motion: reduce) { .mission-v2 .mv-c3d .mv-card { animation: none !important; opacity: 1 !important; translate: none !important; } }
+
+    /* ---------- v8: гэгээлэг, тод цайвар өнгө ---------- */
+    .mission-v2 {
+      background:
+        radial-gradient(60% 55% at 8% 0%, rgba(125, 211, 252, 0.45) 0%, rgba(125, 211, 252, 0) 70%),
+        radial-gradient(55% 55% at 95% 5%, rgba(253, 224, 71, 0.38) 0%, rgba(253, 224, 71, 0) 70%),
+        radial-gradient(60% 60% at 85% 100%, rgba(249, 168, 212, 0.38) 0%, rgba(249, 168, 212, 0) 70%),
+        radial-gradient(60% 60% at 10% 100%, rgba(134, 239, 172, 0.38) 0%, rgba(134, 239, 172, 0) 70%),
+        #ffffff;
+      box-shadow: 0 24px 50px -32px rgba(99, 102, 241, 0.45), inset 0 0 0 1px rgba(255, 255, 255, 0.9);
+    }
+    .mission-v2 .mv-hl { background: linear-gradient(100deg, #2563eb 0%, #7c3aed 50%, #db2777 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .mission-v2 .mv-underline { background: linear-gradient(90deg, #38bdf8, #a78bfa, #f472b6, #fbbf24); height: 5px; }
+    .mv-c3d .mv-card {
+      background: linear-gradient(125deg, #cdeeff 0%, #e2dcff 20%, #ffd9ee 40%, #ffefbf 60%, #cff7e3 80%, #cdeeff 100%);
+      background-size: 320% 320%;
+      border: 1.5px solid rgba(255, 255, 255, 0.95);
+    }
+    .mv-c3d .mv-card::after {
+      content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+      background: radial-gradient(90% 70% at 15% 0%, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0) 60%);
+    }
+    .mv-c3d.mv-shown .mv-card { box-shadow: 0 22px 44px -26px rgba(124, 58, 237, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.95), 0 0 34px -8px rgba(255, 255, 255, 0.95), inset 0 1px 0 #fff; }
+    .mv-c3d .mv-row, .mv-c3d .mv-text, .mv-c3d .mv-dots { position: relative; z-index: 1; }
+    .mv-c3d.mv-shown .mv-ico { background: linear-gradient(135deg, #38bdf8, #8b5cf6 55%, #ec4899); box-shadow: 0 8px 18px -8px rgba(139, 92, 246, 0.8); }
+    .mv-c3d.mv-shown .mv-ring-fg { stroke: #8b5cf6; }
+    .mv-c3d .mv-title { color: #0f1e45; }
+    .mv-c3d .mv-text { color: #1f2a44; }
+    .mv-c3d .mv-kicker { color: #7c3aed; }
+    .mv-c3d .mv-num { color: #ffffff; opacity: 0.75 !important; text-shadow: 0 2px 8px rgba(124, 58, 237, 0.25); }
+    .mv-quote-text { color: #1e3a8a; }
+    .mv-motto-l2 { background: linear-gradient(100deg, #2563eb 0%, #7c3aed 55%, #db2777 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
     #mission-showcase.ms-off *, #mission-showcase.ms-off *::before, #mission-showcase.ms-off *::after { animation-play-state: paused !important; }
     @media (max-width: 639px) { .mv-b3, .mv-s3, .mv-s4 { display: none; } }
     @media (prefers-reduced-motion: reduce) {
@@ -1575,6 +1607,34 @@
       }
       .xm-grab, .xm-pclose { display: none; }
     }
+
+
+    /* Бүх сэтгэгдэл товч + жагсаалт */
+    .xm-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+    .xm-allbtn { display: inline-flex; align-items: center; gap: 7px; height: 42px; padding: 0 14px; border-radius: 9999px; cursor: pointer; color: #0f3d2a;
+      background: linear-gradient(135deg, #fef9c3, #fde68a); border: 0; font-weight: 800; font-size: 13px; font-family: 'Montserrat', sans-serif; box-shadow: 0 8px 20px -10px rgba(0, 0, 0, 0.5); white-space: nowrap; }
+    .xm-allbtn:active { transform: scale(0.96); }
+    .xm-alln { min-width: 22px; height: 22px; padding: 0 6px; border-radius: 9999px; background: #0f3d2a; color: #fef9c3; font-size: 11px; display: inline-flex; align-items: center; justify-content: center; }
+    @media (max-width: 480px) { .xm-alltxt { display: none; } .xm-allbtn { padding: 0 11px; } .xm-sub { display: none; } }
+    .xm-list { position: fixed; inset: 0; z-index: 25; display: flex; align-items: flex-end; justify-content: center; background: rgba(3, 15, 30, 0.55);
+      opacity: 0; visibility: hidden; transition: opacity 0.25s ease, visibility 0s linear 0.25s; }
+    .xm-list.open { opacity: 1; visibility: visible; transition: opacity 0.25s ease, visibility 0s; }
+    .xm-lbox { width: 100%; max-width: 560px; max-height: 86dvh; display: flex; flex-direction: column; gap: 10px; color: #0f172a; background: #fff;
+      border-radius: 26px 26px 0 0; padding: 14px 16px calc(14px + env(safe-area-inset-bottom)); transform: translateY(30px); transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1); }
+    .xm-list.open .xm-lbox { transform: none; }
+    @media (min-width: 640px) { .xm-list { align-items: center; padding: 20px; } .xm-lbox { border-radius: 24px; max-height: 82vh; } .xm-lbox .xm-grab { display: none; } }
+    .xm-lbox .xm-ph { margin-bottom: 0; }
+    .xm-litems { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; display: flex; flex-direction: column; gap: 8px; padding: 2px 2px 4px; }
+    .xm-litem { display: flex; gap: 12px; align-items: flex-start; width: 100%; text-align: left; padding: 10px 12px; border-radius: 16px; cursor: pointer;
+      background: #f8fafc; border: 1px solid #e2e8f0; font-family: inherit; color: inherit; }
+    .xm-litem:hover { background: #f0fdf4; border-color: #bbf7d0; }
+    .xm-lorn { width: 40px; height: 48px; flex-shrink: 0; border-radius: 12px; background: linear-gradient(180deg, #0f3358, #14525f); display: flex; align-items: center; justify-content: center; }
+    .xm-ltxt { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+    .xm-ltxt b { font-size: 13px; font-weight: 800; color: #0f766e; }
+    .xm-ltxt > span { font-size: 14px; font-weight: 600; line-height: 1.45; color: #1e293b; white-space: pre-line; overflow-wrap: anywhere; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+    .xm-ltxt small { font-size: 11.5px; font-weight: 700; color: #64748b; }
+    .xm-lempty { padding: 28px 12px; text-align: center; font-size: 13px; font-weight: 700; color: #64748b; }
+    .xm-reader { z-index: 30; }
 
     .xm-snow { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 1; }
     .xm-snow i {
@@ -1761,6 +1821,23 @@
     @keyframes fbBob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
     @keyframes fbPing { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.35); opacity: 0.75; } }
     @media (max-width: 639px) { .fb-fab { flex-direction: column; gap: 4px; } .fb-fab-label { display: block; padding: 2px 8px; font-size: 10px; line-height: 1.4; white-space: nowrap; } .fb-fab-env { width: 50px; height: 50px; border-radius: 16px; } }
+
+
+    /* Алтлаг 3D дугтуй товч */
+    .fb-fab-env { perspective: 300px; background: radial-gradient(120% 100% at 30% 15%, #ffffff 0%, #fffaf0 45%, #fdf0cf 100%);
+      box-shadow: 0 14px 28px -12px rgba(161, 98, 7, 0.55), 0 0 0 1.5px rgba(234, 179, 8, 0.55), inset 0 2px 0 #ffffff, inset 0 -3px 6px rgba(202, 138, 4, 0.18); }
+    .fb-fab-env svg { width: 42px; height: 33px; filter: drop-shadow(0 3px 3px rgba(146, 64, 14, 0.35)); animation: fbTilt3d 5s ease-in-out infinite; transform-style: preserve-3d; }
+    @keyframes fbTilt3d { 0%, 100% { transform: rotateY(-14deg) rotateX(6deg); } 50% { transform: rotateY(14deg) rotateX(-4deg); } }
+    .fb-fab-dot { background: #dc2626; }
+    .fb-fab-label { color: #92400e; border-color: #f5d27a; background: linear-gradient(180deg, #fffdf5, #fff4d6); }
+    @media (max-width: 639px) {
+      .fb-fab { left: 10px; gap: 3px; }
+      .fb-fab-env { width: 42px; height: 42px; border-radius: 13px; }
+      .fb-fab-env svg { width: 30px; height: 24px; }
+      .fb-fab-dot { top: 5px; right: 5px; width: 7px; height: 7px; }
+      .fb-fab-label { font-size: 9px; padding: 1px 6px; }
+    }
+    @media (prefers-reduced-motion: reduce) { .fb-fab-env svg { animation: none; } }
 
     .fb-modal { position: fixed; inset: 0; z-index: 72; display: none; align-items: center; justify-content: center; padding: 16px; overflow: hidden;
       background: radial-gradient(80% 60% at 50% 30%, #f8fafc, #e6ecf5); }
@@ -2935,7 +3012,7 @@
       <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/85">
         <div class="flex flex-col gap-1">
           <p>© 2026 Мандал сумын Ерөнхий боловсролын 4-р сургууль. Бүх эрх хуулиар хамгаалагдсан.</p>
-          <span class="text-[10px] text-white/50">хувилбар 3.28</span>
+          <span class="text-[10px] text-white/50">хувилбар 3.29</span>
         </div>
 
         <button
@@ -3364,7 +3441,7 @@
         </p>
         <pre id="firestore-rules-snippet" class="p-2.5 rounded-xl bg-slate-900 text-emerald-300 font-mono text-[11px] overflow-x-auto max-h-56 overflow-y-auto select-all">rules_version = '2';
 
-// Мандал 4-р сургуулийн сайт — Firestore Rules (хувилбар 3.28)
+// Мандал 4-р сургуулийн сайт — Firestore Rules (хувилбар 3.29)
 service cloud.firestore {
   match /databases/{database}/documents {
 
@@ -4791,9 +4868,15 @@ service cloud.firestore {
         <div class="xm-title">Талархлын гацуур</div>
         <div class="xm-sub">Чимэглэл бүр дээр талархлын үг нуугдаж байна — дарж уншаарай</div>
       </div>
-      <button type="button" class="xm-close" onclick="closeXmasTree()" aria-label="Хаах">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
-      </button>
+      <div class="xm-actions">
+        <button type="button" class="xm-allbtn" onclick="xmList(true)" aria-label="Бүх сэтгэгдлийг харах">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/><path d="M8 9h8M8 13h5"/></svg>
+          <span class="xm-alltxt">Бүх сэтгэгдэл</span><span id="xm-all-n" class="xm-alln">0</span>
+        </button>
+        <button type="button" class="xm-close" onclick="closeXmasTree()" aria-label="Хаах">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
     </div>
 
     <div class="xm-body">
@@ -4837,6 +4920,18 @@ service cloud.firestore {
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
       Талархал өлгөх
     </button>
+
+    <div id="xm-list" class="xm-list" onclick="if(event.target===this)xmList(false)">
+      <div class="xm-lbox" role="dialog" aria-label="Бүх талархал">
+        <div class="xm-grab"></div>
+        <div class="xm-ph">
+          <h3>Бүх талархал <span id="xm-list-n" style="color:#0f766e"></span></h3>
+          <button type="button" class="xm-pclose" style="display:block" onclick="xmList(false)" aria-label="Хаах">✕</button>
+        </div>
+        <input id="xm-list-q" class="xm-in" type="search" placeholder="Хайх: хэнд, хэнээс, үг..." aria-label="Талархал хайх" />
+        <div id="xm-list-items" class="xm-litems"></div>
+      </div>
+    </div>
 
     <div id="xm-reader" class="xm-reader" onclick="if(event.target===this)xmCloseReader()">
       <div class="xm-card" role="document">
@@ -4982,10 +5077,10 @@ service cloud.firestore {
     }
     function buildSlots() {
       var out = [], row = 0;
-      for (var y = 136; y <= 626; y += 54, row++) {
-        var hw = hwAt(y) - 32;
+      for (var y = 128; y <= 630; y += 40, row++) {
+        var hw = hwAt(y) - 26;
         if (hw < 6) continue;
-        var n = Math.floor(2 * hw / 58) + 1;
+        var n = Math.floor(2 * hw / 42) + 1;
         for (var i = 0; i < n; i++) {
           var x = n === 1 ? CX : CX - hw + 2 * hw * (i / (n - 1));
           var jx = ((i * 37 + row * 53) % 11) - 5, jy = ((i * 29 + row * 17) % 9) - 4;
@@ -5058,16 +5153,16 @@ service cloud.firestore {
     function esc(s) { return String(s == null ? '' : s); }
 
     function allWishes() {
-      return remote.concat(extra).sort(function (a, b) { return (a.ts || 0) - (b.ts || 0); }).slice(-90);
+      return remote.concat(extra).sort(function (a, b) { return (a.ts || 0) - (b.ts || 0); }).slice(-260);
     }
     function svgEl(str) { var g = document.createElementNS(NS, 'g'); g.innerHTML = str; return g.firstElementChild; }
 
     function orn(w, idx, animateIn, rep) {
       var s = SLOTS[(w.slot || 0) % SLOTS.length] || SLOTS[0];
-      s = { x: s.x + (rep ? ((rep * 23) % 33) - 16 : 0), y: s.y + (rep ? (rep % 2 ? 22 : -8) : 0) };
+      s = { x: s.x + (rep ? ((rep * 17) % 25) - 12 : 0), y: s.y + (rep ? (rep % 2 ? 16 : -6) : 0) };
       var dur = (3.4 + ((idx * 7) % 10) * 0.18).toFixed(2), begin = (-((idx * 13) % 20) * 0.19).toFixed(2);
       var amp = 3 + (idx % 3);
-      var html = '<g class="xo" data-id="' + w.id.replace(/[^\w-]/g, '') + '" tabindex="0" role="button" aria-label="' + esc(w.to).replace(/"/g, '') + ' — талархал унших" transform="translate(' + s.x + ' ' + s.y + ') scale(1.22)">' +
+      var html = '<g class="xo" data-id="' + w.id.replace(/[^\w-]/g, '') + '" tabindex="0" role="button" aria-label="' + esc(w.to).replace(/"/g, '') + ' — талархал унших" transform="translate(' + s.x + ' ' + s.y + ') scale(0.86)">' +
         '<g><animateTransform attributeName="transform" type="rotate" values="-' + amp + ' 0 0;' + amp + ' 0 0;-' + amp + ' 0 0" keyTimes="0;.5;1" calcMode="spline" keySplines=".45 0 .55 1;.45 0 .55 1" dur="' + dur + 's" begin="' + begin + 's" repeatCount="indefinite"/>' +
         '<circle cx="0" cy="22" r="27" fill="transparent"/>' +
         '<g class="' + (animateIn ? 'xo-in' : '') + '" style="--d:' + (animateIn === 'stagger' ? (idx * 0.04).toFixed(2) : '0') + 's"><g class="xo-pop">' +
@@ -5091,7 +5186,31 @@ service cloud.firestore {
       });
       if (list.length) firstBatch = false;
       $('xm-count').textContent = 'Чимэглэл: ' + list.length;
+      var an = $('xm-all-n'); if (an) an.textContent = list.length;
+      if ($('xm-list') && $('xm-list').classList.contains('open')) renderList();
     }
+
+    /* ---------- бүх сэтгэгдлийн жагсаалт ---------- */
+    function h(v) { return String(v == null ? '' : v).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+    function fmtDate(ts) { if (!ts) return ''; var d = new Date(ts); if (isNaN(d)) return ''; return d.getFullYear() + ' оны ' + (d.getMonth() + 1) + '-р сарын ' + d.getDate(); }
+    function renderList() {
+      var box = $('xm-list-items'); if (!box) return;
+      var q = ($('xm-list-q').value || '').trim().toLowerCase();
+      var list = allWishes().slice().reverse();
+      $('xm-list-n').textContent = '(' + list.length + ')';
+      if (q) list = list.filter(function (w) { return (w.to + ' ' + w.from + ' ' + w.message).toLowerCase().indexOf(q) >= 0; });
+      if (!list.length) { box.innerHTML = '<div class="xm-lempty">' + (q ? 'Хайлтад тохирох талархал алга.' : 'Одоогоор талархал өлгөөгүй байна. Эхнийх нь болоорой!') + '</div>'; return; }
+      box.innerHTML = list.map(function (w) {
+        return '<button type="button" class="xm-litem" data-lid="' + h(w.id) + '">' +
+          '<span class="xm-lorn">' + ornSvg(w.style, /^#[0-9a-fA-F]{6}$/.test(w.color) ? w.color : '#e11d48', 34, 44) + '</span>' +
+          '<span class="xm-ltxt"><b>Хэнд: ' + h(w.to) + '</b><span>' + h(w.message) + '</span><small>— ' + h(w.from || 'Нэргүй') + (w.ts ? ' • ' + h(fmtDate(w.ts)) : '') + '</small></span></button>';
+      }).join('');
+    }
+    window.xmList = function (open) {
+      var l = $('xm-list'); if (!l) return;
+      l.classList.toggle('open', !!open);
+      if (open) { renderList(); setTimeout(function () { try { $('xm-list-items').scrollTop = 0; } catch (e) {} }, 0); }
+    };
 
     /* ---------- data: Firestore (shared) with local fallback ---------- */
     function subscribe(tries) {
@@ -5102,7 +5221,7 @@ service cloud.firestore {
         return;
       }
       try {
-        unsub = fb.onSnapshot(fb.query(fb.collection(fb.db, 'tree_wishes'), fb.limit(150)), function (snap) {
+        unsub = fb.onSnapshot(fb.query(fb.collection(fb.db, 'tree_wishes'), fb.limit(300)), function (snap) {
           var a = [];
           snap.forEach(function (d) {
             var v = d.data() || {};
@@ -5115,14 +5234,14 @@ service cloud.firestore {
 
     /* ---------- reader ---------- */
     function openReader(id) {
-      var r = rendered[id]; if (!r) return; var w = r.w;
+      var r = rendered[id]; var w = r ? r.w : null;
+      if (!w) { allWishes().forEach(function (x) { if (x.id === id) w = x; }); }
+      if (!w) return;
       $('xm-card-orn').innerHTML = ornSvg(w.style, w.color, 86, 112);
       $('xm-card-to').textContent = 'Хэнд: ' + w.to;
       $('xm-card-msg').textContent = w.message;
       $('xm-card-from').textContent = w.from ? '— ' + w.from : '— Нэргүй';
-      var dt = '';
-      try { if (w.ts) dt = new Date(w.ts).toLocaleDateString('mn-MN', { year: 'numeric', month: 'long', day: 'numeric' }); } catch (e) {}
-      $('xm-card-date').textContent = dt;
+      $('xm-card-date').textContent = fmtDate(w.ts);
       $('xm-reader').classList.add('open');
     }
     window.xmCloseReader = function () { $('xm-reader').classList.remove('open'); };
@@ -5183,6 +5302,8 @@ service cloud.firestore {
       $('xm-swatches').addEventListener('click', function (e) { var b = e.target.closest('[data-color]'); if (!b) return; sel.color = b.getAttribute('data-color'); renderPicker(); });
       $('xm-msg').addEventListener('input', function () { $('xm-msg-n').textContent = this.value.length; });
       $('xm-form').addEventListener('submit', submit);
+      $('xm-list-q').addEventListener('input', renderList);
+      $('xm-list-items').addEventListener('click', function (e) { var b = e.target.closest('[data-lid]'); if (b) openReader(b.getAttribute('data-lid')); });
       var host = $('xm-orn');
       host.addEventListener('click', function (e) { var g = e.target.closest('.xo'); if (g) openReader(g.getAttribute('data-id')); });
       host.addEventListener('keydown', function (e) {
@@ -5204,7 +5325,7 @@ service cloud.firestore {
     };
     window.closeXmasTree = function () {
       var m = $('xm-modal'); if (!m) return;
-      m.classList.remove('open'); xmCloseReader(); xmPanel(false);
+      m.classList.remove('open'); xmCloseReader(); xmPanel(false); xmList(false);
       document.documentElement.style.overflow = '';
       if (retry) { clearTimeout(retry); retry = null; }
       if (unsub) { try { unsub(); } catch (e) {} unsub = null; }
@@ -5212,7 +5333,7 @@ service cloud.firestore {
     document.addEventListener('keydown', function (e) {
       if (e.key !== 'Escape') return;
       var m = $('xm-modal'); if (!m || !m.classList.contains('open')) return;
-      if ($('xm-reader').classList.contains('open')) xmCloseReader(); else closeXmasTree();
+      if ($('xm-reader').classList.contains('open')) xmCloseReader(); else if ($('xm-list').classList.contains('open')) xmList(false); else closeXmasTree();
     });
   })();
 
@@ -5291,12 +5412,22 @@ service cloud.firestore {
        ======================================================================== -->
   <button id="fb-fab" type="button" class="fb-fab" onclick="openFeedback()" aria-label="Санал хүсэлт илгээх">
     <span class="fb-fab-env" aria-hidden="true">
-      <svg viewBox="0 0 64 48" fill="none">
-        <rect x="2" y="6" width="60" height="40" rx="6" fill="#f4efe3"/>
-        <path d="M2 40L26 24M62 40L38 24" stroke="#c7b896" stroke-width="2.2" stroke-linecap="round"/>
-        <path class="fb-fab-flap" d="M4 9L32 29L60 9" fill="#e8dfca" stroke="#1e3a8a" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>
-        <rect x="2" y="6" width="60" height="40" rx="6" stroke="#1e3a8a" stroke-width="2.6"/>
-        <circle cx="32" cy="27" r="5" fill="#1e3a8a" stroke="#c9a227" stroke-width="1.4"/>
+      <svg viewBox="0 0 64 50" fill="none">
+        <defs>
+          <linearGradient id="fbgBody" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff4c7"/><stop offset=".45" stop-color="#f6d36b"/><stop offset="1" stop-color="#c8920f"/></linearGradient>
+          <linearGradient id="fbgFlap" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff9df"/><stop offset=".6" stop-color="#f3cd5c"/><stop offset="1" stop-color="#d9a21c"/></linearGradient>
+          <linearGradient id="fbgSide" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#e5b532"/><stop offset=".5" stop-color="#f8dc84"/><stop offset="1" stop-color="#e5b532"/></linearGradient>
+          <radialGradient id="fbgSeal" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#ff6b6b"/><stop offset=".6" stop-color="#c81e3a"/><stop offset="1" stop-color="#8f1028"/></radialGradient>
+        </defs>
+        <rect x="3" y="9" width="58" height="38" rx="6" fill="#8a5a00" opacity=".35" transform="translate(1.5 2.5)"/>
+        <rect x="3" y="8" width="58" height="38" rx="6" fill="url(#fbgBody)" stroke="#9a6a06" stroke-width="1.6"/>
+        <path d="M4.5 44 L26 27 M59.5 44 L38 27" stroke="#b98510" stroke-width="1.8" stroke-linecap="round"/>
+        <path d="M5 44 L32 26 L59 44 Z" fill="url(#fbgSide)" opacity=".55"/>
+        <path class="fb-fab-flap" d="M4.5 10.5 L32 31 L59.5 10.5 Z" fill="url(#fbgFlap)" stroke="#9a6a06" stroke-width="1.6" stroke-linejoin="round"/>
+        <path d="M9 11.5 L32 28.5" stroke="#fffbe8" stroke-width="1.3" stroke-linecap="round" opacity=".85"/>
+        <circle cx="32" cy="29" r="6" fill="url(#fbgSeal)" stroke="#f6d36b" stroke-width="1.3"/>
+        <path d="M32 26.6c-.8-1.1-2.6-1-2.6.5 0 1.2 1.5 2.1 2.6 2.9 1.1-.8 2.6-1.7 2.6-2.9 0-1.5-1.8-1.6-2.6-.5z" fill="#ffe7a3"/>
+        <path d="M6 12 Q8 9.5 11 9.5" stroke="#fffbe8" stroke-width="1.4" stroke-linecap="round" opacity=".9"/>
       </svg>
       <span class="fb-fab-dot"></span>
     </span>
