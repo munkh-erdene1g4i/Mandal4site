@@ -1717,7 +1717,6 @@
       background: radial-gradient(closest-side, rgba(255, 244, 196, 0.32), rgba(255, 244, 196, 0) 70%); opacity: 0.55; transition: opacity 0.4s ease, transform 0.5s ease; }
     .xm-tc:hover .xm-tc-halo, .xm-tc:focus-visible .xm-tc-halo { opacity: 1; transform: translate(-50%, -50%) scale(1); }
     .xm-tc-art { position: relative; aspect-ratio: 600 / 780 !important; width: 100% !important; overflow: visible !important; }
-    .xm-tc-art svg { filter: drop-shadow(0 18px 18px rgba(2, 10, 25, 0.35)); }
     .xm-tc-info { position: relative; margin: -6px auto 0; width: min(260px, 96%); padding: 10px 14px 12px; border-radius: 18px; text-align: center;
       background: rgba(10, 25, 50, 0.55); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.22); }
     .xm-tc-meta { justify-content: center; flex-wrap: wrap; gap: 2px 10px; }
@@ -1754,7 +1753,6 @@
     @keyframes xmBob { 50% { transform: translateY(4px); } }
     .xm-tc.pos-l { order: 0; } .xm-tc.pos-c { order: 1; z-index: 2; } .xm-tc.pos-r { order: 2; }
     .xm-tc { align-self: end; }
-    .xm-tc.pos-l .xm-tc-art, .xm-tc.pos-r .xm-tc-art { filter: saturate(0.9) brightness(0.92); }
     .xm-tc.feat .xm-tc-info { border-color: rgba(253, 230, 138, 0.6); box-shadow: 0 0 0 1px rgba(253, 230, 138, 0.25), 0 10px 30px -12px rgba(253, 230, 138, 0.45); }
     .xm-tc.feat .xm-tc-halo { opacity: 0.9; }
     .xm-mb { animation: xmMb 2.4s ease-in-out infinite; animation-delay: var(--bd, 0s); }
@@ -1787,7 +1785,7 @@
       .xm-ckick, .xm-chint { display: none; }
       .xm-chead { font-size: 20px; }
     }
-    @media (prefers-reduced-motion: reduce) { .xm-cintro, .xm-cmoon, .xm-chint svg, .xm-mb, .xm-mstar-g { animation: none !important; } }
+    @media (prefers-reduced-motion: reduce) { .xm-cintro, .xm-cmoon, .xm-chint svg { animation: none !important; } }
 
     .xm-snow { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 1; }
     .xm-snow i {
@@ -1813,21 +1811,29 @@
     .xo:focus-visible .xo-ring { opacity: 1; }
     .xo-ring { opacity: 0; }
 
-    /* ---------- чимэглэл гэрэлтэх ---------- */
-    .xo.xo-lit .xo-pop { transform: scale(1.42); transition: transform 0.45s cubic-bezier(0.2, 1.4, 0.4, 1); }
-    .xo-glow { pointer-events: none; }
-    .xo-glow * { transform-box: fill-box; transform-origin: center; }
-    .xo-gl { animation: xoGlIn 0.5s cubic-bezier(0.2, 0.9, 0.3, 1) both, xoGlPulse 1.8s ease-in-out 0.5s infinite; }
-    @keyframes xoGlIn { from { opacity: 0; transform: scale(0.2); } to { opacity: 1; transform: scale(1); } }
-    @keyframes xoGlPulse { 50% { opacity: 0.7; transform: scale(1.12); } }
-    .xo-rays { stroke: #fff4c2; stroke-width: 4; stroke-linecap: round; animation: xoRays 0.7s cubic-bezier(0.2, 0.9, 0.3, 1) both, xoSpin 9s linear 0.7s infinite; }
-    @keyframes xoRays { from { opacity: 0; transform: scale(0.4) rotate(-40deg); } to { opacity: 0.95; transform: none; } }
-    @keyframes xoSpin { to { transform: rotate(360deg); } }
-    .xo-gring { fill: none; stroke: #fde68a; stroke-width: 3; animation: xoRing 0.8s ease-out both; }
-    @keyframes xoRing { from { opacity: 1; transform: scale(1); } to { opacity: 0; transform: scale(2.6); } }
-    .xo-sp { fill: #fffbe6; animation: xoSp 0.75s cubic-bezier(0.2, 0.9, 0.3, 1) var(--sd, 0s) both; }
-    @keyframes xoSp { 0% { opacity: 0; transform: translate(0, 0) scale(0.4); } 30% { opacity: 1; } 100% { opacity: 0; transform: translate(var(--sx), var(--sy)) scale(1); } }
-    .xo.xo-unlit .xo-glow { transition: opacity 0.4s ease; opacity: 0; }
+    /* ---------- чимэглэл гэрэлтэх (HTML давхарга, зөвхөн transform/opacity) ---------- */
+    .xo-flash { position: fixed; left: 0; top: 0; width: 0; height: 0; z-index: 35; pointer-events: none; }
+    .xo-flash > * { position: absolute; left: 0; top: 0; opacity: 0; will-change: transform, opacity; }
+    .xf-gl { width: 150px; height: 150px; margin: -75px 0 0 -75px; border-radius: 9999px;
+      background: radial-gradient(closest-side, rgba(255, 252, 235, 1), rgba(253, 230, 138, 0.7) 32%, rgba(251, 191, 36, 0.22) 62%, rgba(251, 191, 36, 0) 100%); }
+    .xf-ry { width: 170px; height: 170px; margin: -85px 0 0 -85px; border-radius: 9999px;
+      background: repeating-conic-gradient(rgba(255, 246, 200, 0.9) 0deg 5deg, rgba(255, 246, 200, 0) 5deg 36deg);
+      -webkit-mask: radial-gradient(closest-side, transparent 28%, #000 36%, transparent 100%); mask: radial-gradient(closest-side, transparent 28%, #000 36%, transparent 100%); }
+    .xf-rg { width: 60px; height: 60px; margin: -30px 0 0 -30px; border-radius: 9999px; border: 3px solid #fde68a; }
+    .xo-flash b { width: 7px; height: 7px; margin: -3.5px 0 0 -3.5px; border-radius: 9999px; background: #fffbe6; box-shadow: 0 0 8px 2px rgba(253, 230, 138, 0.8); }
+    .xo-flash.go .xf-gl { animation: xfGl 0.9s cubic-bezier(0.2, 0.9, 0.3, 1) forwards; }
+    .xo-flash.go .xf-ry { animation: xfRy 0.9s cubic-bezier(0.2, 0.9, 0.3, 1) forwards; }
+    .xo-flash.go .xf-rg { animation: xfRg 0.7s ease-out forwards; }
+    .xo-flash.go b { animation: xfSp 0.75s cubic-bezier(0.2, 0.9, 0.3, 1) forwards; }
+    @keyframes xfGl { 0% { opacity: 0; transform: scale(0.2); } 35% { opacity: 1; transform: scale(1.05); } 100% { opacity: 0.85; transform: scale(1.2); } }
+    @keyframes xfRy { 0% { opacity: 0; transform: scale(0.4) rotate(-30deg); } 40% { opacity: 1; } 100% { opacity: 0.7; transform: scale(1.1) rotate(25deg); } }
+    @keyframes xfRg { 0% { opacity: 1; transform: scale(0.6); } 100% { opacity: 0; transform: scale(2.6); } }
+    @keyframes xfSp { 0% { opacity: 0; transform: rotate(var(--a)) translateX(0) scale(0.5); } 30% { opacity: 1; } 100% { opacity: 0; transform: rotate(var(--a)) translateX(64px) scale(1); } }
+    /* сэтгэгдэл унших үед гацуурын хөдөлгөөнийг түр зогсооно */
+    .xm-reading .xl-b, .xm-reading .xm-snow i { animation-play-state: paused !important; }
+    .xm-reader.open { animation: xmRdIn 0.3s ease-out both; }
+    @keyframes xmRdIn { from { opacity: 0; } to { opacity: 1; } }
+    .xm-reader .xm-card { will-change: transform, opacity; }
     /* уншигч картын гэрэл */
     .xm-card-top { position: relative; overflow: hidden; }
     .xm-card-top::before { content: ""; position: absolute; left: 50%; top: 55%; width: 220px; height: 220px; transform: translate(-50%, -50%); border-radius: 9999px; pointer-events: none;
@@ -1835,10 +1841,11 @@
     .xm-card-top::after { content: ""; position: absolute; left: 50%; top: 55%; width: 300px; height: 300px; margin: -150px 0 0 -150px; pointer-events: none; opacity: 0.45;
       background: repeating-conic-gradient(from 0deg, rgba(255, 247, 205, 0.55) 0deg 6deg, rgba(255, 247, 205, 0) 6deg 24deg);
       -webkit-mask: radial-gradient(closest-side, #000 20%, transparent 70%); mask: radial-gradient(closest-side, #000 20%, transparent 70%); animation: xoSpin 16s linear infinite; }
-    #xm-card-orn { position: relative; z-index: 1; filter: drop-shadow(0 0 14px rgba(255, 236, 160, 0.9)); animation: xmCOrn 2.4s ease-in-out infinite; }
+    #xm-card-orn { position: relative; z-index: 1; filter: drop-shadow(0 0 14px rgba(255, 236, 160, 0.9)); animation: xmCOrn 2.4s ease-in-out infinite; will-change: transform; }
+    .xm-card-top::before, .xm-card-top::after { will-change: transform, opacity; }
     @keyframes xmCGlow { 50% { opacity: 0.65; transform: translate(-50%, -50%) scale(1.15); } }
     @keyframes xmCOrn { 50% { transform: translateY(-4px) scale(1.04); } }
-    @media (prefers-reduced-motion: reduce) { .xo-gl, .xo-rays, .xo-gring, .xo-sp, .xm-card-top::before, .xm-card-top::after, #xm-card-orn { animation: none !important; } }
+    @media (prefers-reduced-motion: reduce) { .xo-flash > *, .xm-card-top::before, .xm-card-top::after, #xm-card-orn { animation: none !important; } }
 
     .xm-reader {
       position: absolute; inset: 0; z-index: 40; display: none; align-items: center; justify-content: center;
@@ -3192,7 +3199,7 @@
       <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/85">
         <div class="flex flex-col gap-1">
           <p>© 2026 Мандал сумын Ерөнхий боловсролын 4-р сургууль. Бүх эрх хуулиар хамгаалагдсан.</p>
-          <span class="text-[10px] text-white/50">хувилбар 3.34</span>
+          <span class="text-[10px] text-white/50">хувилбар 3.35</span>
         </div>
 
         <button
@@ -3621,7 +3628,7 @@
         </p>
         <pre id="firestore-rules-snippet" class="p-2.5 rounded-xl bg-slate-900 text-emerald-300 font-mono text-[11px] overflow-x-auto max-h-56 overflow-y-auto select-all">rules_version = '2';
 
-// Мандал 4-р сургуулийн сайт — Firestore Rules (хувилбар 3.34)
+// Мандал 4-р сургуулийн сайт — Firestore Rules (хувилбар 3.35)
 service cloud.firestore {
   match /databases/{database}/documents {
 
@@ -5128,6 +5135,7 @@ service cloud.firestore {
       </div>
     </div>
 
+    <div id="xo-flash" class="xo-flash" aria-hidden="true"><i class="xf-gl"></i><i class="xf-ry"></i><i class="xf-rg"></i><b style="--a:0deg"></b><b style="--a:60deg"></b><b style="--a:120deg"></b><b style="--a:180deg"></b><b style="--a:240deg"></b><b style="--a:300deg"></b></div>
     <div id="xm-reader" class="xm-reader" onclick="if(event.target===this)xmCloseReader()">
       <div class="xm-card" role="document">
         <div class="xm-card-top"><div id="xm-card-orn"></div></div>
@@ -5288,18 +5296,95 @@ service cloud.firestore {
 
     /* ---------- 3 гацуурын өнгөний сэдэв ---------- */
     var TREES = [
-      { name: 'Маргад гацуур', sub: 'Сонгодог ногоон', tiers: [['#1f8a4c', '#0b5129'], ['#25a05a', '#0f6a36'], ['#2db46a', '#147b42'], ['#3fcf80', '#1a9653']],
+      { name: 'Маргад гацуур', sub: 'Сонгодог ногоон', tiers: [['#2c7a4b', '#0d3a23'], ['#338a53', '#114429'], ['#3a9a5c', '#154f30'], ['#45ab68', '#1a5c37']], snow: 0.6,
         garland: '#fcd34d', bulbs: ['#fb7185', '#fde047', '#7dd3fc', '#86efac', '#f9a8d4'], glow: 'rgba(56, 189, 248, 0.22)', bg1: '#071328', bg2: '#0e2a52', bg3: '#1d4f7a', far: '#1b3d66', mid: '#0f2945', mtn: '#3d6596' },
-      { name: 'Цасан гацуур', sub: 'Мөнгөлөг цэнхэр', tiers: [['#1e7a6f', '#0c4a52'], ['#25917f', '#0f5c61'], ['#2fa891', '#136d70'], ['#46c3a8', '#1a8582']],
+      { name: 'Цасан гацуур', sub: 'Мөнгөлөг цэнхэр', tiers: [['#3f807a', '#163e45'], ['#478c85', '#1a4a50'], ['#509890', '#1f5659'], ['#5ba59c', '#256265']], snow: 1,
         garland: '#e2e8f0', bulbs: ['#bae6fd', '#e0e7ff', '#f0f9ff', '#a5f3fc', '#c7d2fe'], glow: 'rgba(165, 243, 252, 0.22)', bg1: '#0c1d40', bg2: '#21497e', bg3: '#5a86b8', far: '#3a6496', mid: '#244a77', mtn: '#88a9d3' },
-      { name: 'Алтан гацуур', sub: 'Алтлаг гэрэлт', tiers: [['#17703f', '#08401f'], ['#1c8549', '#0b5229'], ['#219a54', '#0f6232'], ['#2fb565', '#137a3d']],
+      { name: 'Алтан гацуур', sub: 'Алтлаг гэрэлт', tiers: [['#2d6c39', '#10351b'], ['#347a40', '#133f20'], ['#3b8846', '#174925'], ['#44964f', '#1b552b']], snow: 0.45,
         garland: '#fbbf24', bulbs: ['#fde68a', '#fbbf24', '#fca5a5', '#fdba74', '#fef3c7'], glow: 'rgba(251, 191, 36, 0.2)', bg1: '#140b2a', bg2: '#33204f', bg3: '#7a4a5c', far: '#43295e', mid: '#2b1a40', mtn: '#8a5f86' }
     ];
     var CAPACITY = SLOTS.length; // нэг гацуурт өлгөх чимэглэлийн дээд тоо
 
+    /* ---------- бодит гацуурын мөчир (seed-тэй, тогтмол) ---------- */
+    function rngf(seed) { var a = seed >>> 0; return function () { a = (a + 0x6D2B79F5) >>> 0; var t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+    function qpt(a, b, c, u) { return (1 - u) * (1 - u) * a + 2 * u * (1 - u) * b + u * u * c; }
+    function f1(n) { return n.toFixed(1); }
+    function firShape(t, R) {
+      var bx = edge(t), my = t.top + (bx - t.top) * 0.5, pts = [[CX, t.top]], tips = [], nS = 4 + Math.round(t.hw / 70), k, u, x, y;
+      for (k = 1; k <= nS; k++) {
+        u = k / nS; x = qpt(CX, CX + t.hw * 0.62, CX + t.hw, u); y = qpt(t.top, my, bx, u);
+        if (k < nS) { var tp = [x + 5 + R() * 12 * u, y + 6 + R() * 7]; pts.push(tp); tips.push(tp); pts.push([x - 7 - R() * 12 * u, y + 9 + R() * 4]); }
+        else { var tl = [x + 8, y + 12 + R() * 6]; pts.push(tl); tips.push(tl); }
+      }
+      var nB = Math.max(4, Math.round(t.hw / 19)), step = 2 * t.hw / nB;
+      for (var j = 0; j < nB; j++) {
+        x = CX + t.hw - step * (j + 0.5);
+        pts.push([x, bx - 5 - R() * 11]);
+        if (j < nB - 1) { var bt = [x - step * 0.5 + (R() - 0.5) * 6, bx + 7 + R() * 15]; pts.push(bt); tips.push(bt); }
+      }
+      var tl2 = [CX - t.hw - 8, bx + 12 + R() * 6]; pts.push(tl2); tips.push(tl2);
+      for (k = nS - 1; k >= 1; k--) {
+        u = k / nS; x = qpt(CX, CX - t.hw * 0.62, CX - t.hw, u); y = qpt(t.top, my, bx, u);
+        pts.push([x + 7 + R() * 12 * u, y + 9 + R() * 4]); var tp2 = [x - 5 - R() * 12 * u, y + 6 + R() * 7]; pts.push(tp2); tips.push(tp2);
+      }
+      return { d: 'M' + pts.map(function (q) { return f1(q[0]) + ' ' + f1(q[1]); }).join(' L') + 'Z', tips: tips };
+    }
+    function realTiers(th, ti, pre, big) {
+      var R = rngf(ti * 977 + (big ? 131 : 17)), snow = th.snow == null ? 0.6 : th.snow, defs = '', body = '';
+      defs += '<linearGradient id="' + pre + 'lt" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity=".17"/><stop offset=".42" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".34"/></linearGradient>' +
+        '<radialGradient id="' + pre + 'sd" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#00140a" stop-opacity=".6"/><stop offset="1" stop-color="#00140a" stop-opacity="0"/></radialGradient>' +
+        '<linearGradient id="' + pre + 'fr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e9f6ff" stop-opacity="' + (0.06 + snow * 0.16).toFixed(2) + '"/><stop offset="1" stop-color="#e9f6ff" stop-opacity="0"/></linearGradient>';
+      TIERS.forEach(function (t, i) {
+        var f = firShape(t, R), bx = edge(t), h = bx - t.top;
+        defs += '<linearGradient id="' + pre + 'g' + i + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + th.tiers[i][0] + '"/><stop offset="1" stop-color="' + th.tiers[i][1] + '"/></linearGradient>' +
+          '<clipPath id="' + pre + 'c' + i + '"><path d="' + f.d + '"/></clipPath>';
+        body += '<path d="' + f.d + '" transform="translate(0 11)" fill="rgba(0,14,8,.38)"/><path d="' + f.d + '" fill="url(#' + pre + 'g' + i + ')"/>';
+        body += '<g clip-path="url(#' + pre + 'c' + i + ')"><rect x="' + (CX - t.hw - 30) + '" y="' + t.top + '" width="' + (2 * t.hw + 60) + '" height="' + (h + 40) + '" fill="url(#' + pre + 'lt)"/>' +
+          '<rect x="' + (CX - t.hw - 30) + '" y="' + t.top + '" width="' + (2 * t.hw + 60) + '" height="' + (h + 40) + '" fill="url(#' + pre + 'fr)"/>';
+        if (i < TIERS.length - 1) { var ab = TIERS[i + 1]; body += '<ellipse cx="' + CX + '" cy="' + (edge(ab) + 16) + '" rx="' + (ab.hw * 1.15).toFixed(0) + '" ry="' + (big ? 40 : 36) + '" fill="url(#' + pre + 'sd)"/>'; }
+        /* мөчрийн давхарга: дээд талдаа гэрэлтэй, доор сүүдэртэй нуман мөчир */
+        var lt = '', dk = '', rows = big ? 4 : 3;
+        for (var r = 1; r <= rows; r++) {
+          var yy = t.top + h * (0.28 + 0.66 * r / rows), w = t.hw * (yy - t.top) / h;
+          [-1, 1].forEach(function (sd) {
+            var x2 = CX + sd * w * (0.86 + R() * 0.1), y2 = yy + 14 + R() * 8;
+            lt += 'M' + f1(CX + sd * 4) + ' ' + f1(yy - 6) + ' Q' + f1(CX + sd * w * 0.5) + ' ' + f1(yy - 8) + ' ' + f1(x2) + ' ' + f1(y2) + ' ';
+            dk += 'M' + f1(CX + sd * 4) + ' ' + f1(yy + 2) + ' Q' + f1(CX + sd * w * 0.5) + ' ' + f1(yy + 2) + ' ' + f1(x2) + ' ' + f1(y2 + 8) + ' ';
+          });
+        }
+        /* зүү */
+        var nl = '', nd = '', N = big ? 90 : 46;
+        for (var q = 0; q < N; q++) {
+          var y = t.top + 18 + R() * (h - 14), ww = t.hw * (y - t.top) / h, x = CX + (R() * 2 - 1) * ww * 0.94, dir = x < CX ? -1 : 1, len = (big ? 9 : 11) + R() * 9;
+          var seg = 'M' + f1(x) + ' ' + f1(y) + ' l' + f1(dir * len * 0.8) + ' ' + f1(len * 0.5) + ' ';
+          if (q % 3 === 0) nd += seg; else nl += seg;
+        }
+        body += '<path d="' + dk + '" fill="none" stroke="rgba(0,18,10,.22)" stroke-width="' + (big ? 6 : 8) + '" stroke-linecap="round"/>' +
+          '<path d="' + lt + '" fill="none" stroke="rgba(255,255,255,.13)" stroke-width="' + (big ? 3 : 4) + '" stroke-linecap="round"/>' +
+          '<path d="' + nl + '" fill="none" stroke="rgba(214,255,226,.16)" stroke-width="' + (big ? 2 : 3) + '" stroke-linecap="round"/>' +
+          '<path d="' + nd + '" fill="none" stroke="rgba(0,20,10,.28)" stroke-width="' + (big ? 2.2 : 3) + '" stroke-linecap="round"/></g>';
+        /* цас: мөчрийн үзүүр болон дээд талд */
+        var sn = '';
+        f.tips.forEach(function (tp) {
+          if (R() > 0.32 + snow * 0.5) return;
+          var rx = 4 + R() * 5 + snow * 4, ry = 2.4 + R() * 1.4 + snow, cx = tp[0] + (CX - tp[0]) * 0.06, cy = tp[1] - 9 - R() * 3;
+          sn += '<ellipse cx="' + f1(cx) + '" cy="' + f1(cy) + '" rx="' + f1(rx) + '" ry="' + f1(ry) + '"/>' +
+            '<ellipse cx="' + f1(cx + (R() - 0.5) * rx) + '" cy="' + f1(cy - ry * 0.6) + '" rx="' + f1(rx * (0.45 + R() * 0.2)) + '" ry="' + f1(ry * 0.8) + '"/>';
+        });
+        var lumps = Math.round(2 + snow * 5 + (big ? 2 : 0));
+        for (var m = 0; m < lumps; m++) {
+          var ly = t.top + h * (0.35 + R() * 0.55), lw = t.hw * (ly - t.top) / h * 0.85, lx = CX + (R() * 2 - 1) * lw;
+          var lr = 4 + R() * 6 + snow * 3; sn += '<ellipse cx="' + f1(lx) + '" cy="' + f1(ly) + '" rx="' + f1(lr) + '" ry="' + f1(2 + R() * 1.4) + '"/><ellipse cx="' + f1(lx + lr * 0.4) + '" cy="' + f1(ly - 1.6) + '" rx="' + f1(lr * 0.5) + '" ry="1.8"/>';
+        }
+        body += '<g fill="#f3f9ff" opacity=".9">' + sn + '</g>';
+      });
+      return { defs: defs, body: body };
+    }
+
     function treeMarkup(ti) {
       var th = TREES[ti] || TREES[0];
-      var s = '<defs>';
+      var RT = realTiers(th, ti, 'xr', true);
+      var s = '<defs>' + RT.defs;
       TIERS.forEach(function (t, i) {
         s += '<linearGradient id="xtg' + i + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + th.tiers[i][0] + '"/><stop offset="1" stop-color="' + th.tiers[i][1] + '"/></linearGradient>';
       });
@@ -5320,26 +5405,8 @@ service cloud.firestore {
       [[150, 746], [220, 754], [372, 750], [446, 744], [96, 752], [500, 752]].forEach(function (p, i) {
         s += '<path class="xl-b" style="--d:' + (-(i * 0.5)).toFixed(1) + 's" d="M' + p[0] + ' ' + (p[1] - 5) + 'l1.4 3.6 3.6 1.4-3.6 1.4-1.4 3.6-1.4-3.6-3.6-1.4 3.6-1.4z" fill="#ffffff"/>';
       });
-      /* tiers, bottom to top */
-      TIERS.forEach(function (t, i) {
-        var d = tierPath(t);
-        s += '<path d="' + d + '" transform="translate(0 8)" fill="rgba(2,20,12,.32)"/>' +
-          '<path d="' + d + '" fill="url(#xtg' + i + ')"/>' +
-          '<path d="' + d + '" fill="url(#xtShine)"/>';
-        /* зүүн навчны зураас */
-        var bx = edge(t);
-        for (var k = 1; k <= 5; k++) {
-          var fy = t.top + (bx - t.top) * (k / 6), fw = t.hw * (k / 6) * 0.9;
-          s += '<path d="M' + (CX - fw).toFixed(1) + ' ' + fy.toFixed(1) + ' q' + (fw * 0.5).toFixed(1) + ' 10 ' + fw.toFixed(1) + ' 4 q' + (fw * 0.5).toFixed(1) + ' -6 ' + fw.toFixed(1) + ' -4" fill="none" stroke="rgba(0,0,0,.14)" stroke-width="1.6" stroke-linecap="round"/>';
-        }
-        /* цасан ирмэг + цасан бөөгнөрөл */
-        s += '<path d="M' + (CX + t.hw) + ' ' + bx + ' ' + scallops(t) + '" fill="none" stroke="#f1f8ff" stroke-width="4.6" stroke-linecap="round" opacity=".95"/>' +
-          '<path d="M' + CX + ' ' + (t.top + 6) + ' Q' + (CX - t.hw * 0.5) + ' ' + (t.top + (bx - t.top) * 0.45) + ' ' + (CX - t.hw + 14) + ' ' + (bx - 8) + '" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".16"/>';
-        for (var m = 0; m < 3; m++) {
-          var sx = CX + (m - 1) * t.hw * 0.55, sy = bx - 3 + (m % 2) * 3;
-          s += '<ellipse cx="' + sx.toFixed(1) + '" cy="' + sy.toFixed(1) + '" rx="' + (10 + i * 2) + '" ry="5" fill="#ffffff" opacity=".92"/>';
-        }
-      });
+      /* tiers (бодит мөчиртэй) */
+      s += RT.body;
       /* цасны ширхэгт тоос */
       for (var q = 0; q < 26; q++) {
         var yy = 120 + ((q * 97) % 500), hwq = hwAt(yy) - 20; if (hwq < 10) continue;
@@ -5449,36 +5516,31 @@ service cloud.firestore {
 
     /* Сонгох дэлгэцийн жижиг гацуур (хөдөлгөөнгүй, хөнгөн) */
     function miniTree(ti, wishes) {
-      var th = TREES[ti], p = 'mt' + ti + '_';
-      var s = '<svg viewBox="0 0 600 780" aria-hidden="true"><defs>';
-      TIERS.forEach(function (t, i) { s += '<linearGradient id="' + p + i + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + th.tiers[i][0] + '"/><stop offset="1" stop-color="' + th.tiers[i][1] + '"/></linearGradient>'; });
-      s += '<radialGradient id="' + p + 'm" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ffffff"/><stop offset=".6" stop-color="#eef5fd"/><stop offset="1" stop-color="#eef5fd" stop-opacity="0"/></radialGradient>';
-      s += '<linearGradient id="' + p + 'sh" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity=".2"/><stop offset=".45" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".18"/></linearGradient>';
-      s += '<radialGradient id="' + p + 'sg" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#fff7cc" stop-opacity=".95"/><stop offset=".35" stop-color="#fde68a" stop-opacity=".45"/><stop offset="1" stop-color="#fde68a" stop-opacity="0"/></radialGradient>';
-      s += '<radialGradient id="' + p + 'tg" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="' + th.garland + '" stop-opacity=".35"/><stop offset="1" stop-color="' + th.garland + '" stop-opacity="0"/></radialGradient>';
+      var th = TREES[ti], p = 'mt' + ti + '_', RT = realTiers(th, ti, p, false), R = rngf(ti * 53 + 5);
+      var s = '<svg viewBox="0 0 600 780" aria-hidden="true"><defs>' + RT.defs;
+      s += '<radialGradient id="' + p + 'm" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ffffff"/><stop offset=".6" stop-color="#eef5fd"/><stop offset="1" stop-color="#eef5fd" stop-opacity="0"/></radialGradient>' +
+        '<radialGradient id="' + p + 'sg" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#fff7cc" stop-opacity=".95"/><stop offset=".35" stop-color="#fde68a" stop-opacity=".45"/><stop offset="1" stop-color="#fde68a" stop-opacity="0"/></radialGradient>' +
+        '<radialGradient id="' + p + 'tg" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="' + th.garland + '" stop-opacity=".28"/><stop offset="1" stop-color="' + th.garland + '" stop-opacity="0"/></radialGradient>' +
+        '<linearGradient id="' + p + 'tr" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5a3315"/><stop offset=".45" stop-color="#8f5a2c"/><stop offset="1" stop-color="#3f230e"/></linearGradient>' +
+        '<radialGradient id="' + p + 'bl" cx=".35" cy=".3" r=".75"><stop offset="0" stop-color="#fff" stop-opacity=".75"/><stop offset=".35" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".35"/></radialGradient>';
       s += '</defs><ellipse cx="300" cy="440" rx="290" ry="330" fill="url(#' + p + 'tg)"/>' +
-        '<rect x="274" y="636" width="52" height="104" rx="5" fill="#8a5427"/><rect x="274" y="636" width="18" height="104" fill="#a86a35"/>' +
-        '<ellipse cx="300" cy="752" rx="300" ry="46" fill="url(#' + p + 'm)"/>';
-      var bulbs = '';
-      TIERS.forEach(function (t, i) {
-        var bx = edge(t), h = bx - t.top;
-        s += '<path d="' + tierPath(t) + '" fill="url(#' + p + i + ')"/><path d="' + tierPath(t) + '" fill="url(#' + p + 'sh)"/>' +
-          '<path d="M' + (CX + t.hw) + ' ' + bx + ' ' + scallops(t) + '" fill="none" stroke="#f1f8ff" stroke-width="5" stroke-linecap="round"/>';
-        var y1 = t.top + h * 0.5, y2 = t.top + h * 0.8, x1 = CX - t.hw * 0.62, x2 = CX + t.hw * 0.86;
-        var mx = (x1 + x2) / 2, my = (y1 + y2) / 2 + 26;
-        s += '<path d="M' + x1.toFixed(0) + ' ' + y1.toFixed(0) + ' Q' + mx.toFixed(0) + ' ' + my.toFixed(0) + ' ' + x2.toFixed(0) + ' ' + y2.toFixed(0) + '" fill="none" stroke="' + th.garland + '" stroke-width="5" stroke-linecap="round" opacity=".9"/>';
-        for (var k = 1; k <= 4; k++) {
-          var u = k / 5, bxp = (1 - u) * (1 - u) * x1 + 2 * u * (1 - u) * mx + u * u * x2, byp = (1 - u) * (1 - u) * y1 + 2 * u * (1 - u) * my + u * u * y2;
-          var col = th.bulbs[(i * 4 + k) % th.bulbs.length];
-          bulbs += '<circle class="xm-mb" style="--bd:' + ((i * 4 + k) % 7 * 0.35).toFixed(2) + 's" cx="' + bxp.toFixed(0) + '" cy="' + (byp + 6).toFixed(0) + '" r="7" fill="' + col + '"/>';
-        }
-      });
-      s += bulbs;
+        '<ellipse cx="300" cy="752" rx="300" ry="46" fill="url(#' + p + 'm)"/><ellipse cx="300" cy="738" rx="150" ry="13" fill="rgba(10,30,55,.28)"/>' +
+        '<path d="M276 630 L272 742 Q300 748 328 742 L324 630 Z" fill="url(#' + p + 'tr)"/><path d="M286 646 v86 M302 650 v90 M314 644 v84" stroke="#2c1708" stroke-width="2.4" opacity=".35"/>';
+      s += RT.body;
+      /* гэрлийн цуваа: жижиг дулаан гэрэл (статик — гацалтгүй) */
+      var halo = '', core = '';
+      for (var q = 0; q < 30; q++) {
+        var y = 110 + R() * 520, w = hwAt(y) - 22; if (w < 8) continue;
+        var x = CX + (R() * 2 - 1) * w, col = th.bulbs[q % th.bulbs.length];
+        halo += '<circle cx="' + f1(x) + '" cy="' + f1(y) + '" r="12" fill="' + col + '" opacity=".3"/>';
+        core += '<circle cx="' + f1(x) + '" cy="' + f1(y) + '" r="4" fill="#fffbea"/>';
+      }
+      s += halo + core;
       (wishes || []).forEach(function (w) {
-        var sl = SLOTS[(w.slot || 0) % SLOTS.length] || SLOTS[0];
-        s += '<circle cx="' + sl.x + '" cy="' + (sl.y + 18) + '" r="11" fill="' + (/^#[0-9a-fA-F]{6}$/.test(w.color) ? w.color : '#e11d48') + '"/>';
+        var sl = SLOTS[(w.slot || 0) % SLOTS.length] || SLOTS[0], c = /^#[0-9a-fA-F]{6}$/.test(w.color) ? w.color : '#e11d48', cy = sl.y + 18;
+        s += '<rect x="' + (sl.x - 3) + '" y="' + (cy - 15) + '" width="6" height="5" rx="1" fill="#d6b45a"/><circle cx="' + sl.x + '" cy="' + cy + '" r="11" fill="' + c + '"/><circle cx="' + sl.x + '" cy="' + cy + '" r="11" fill="url(#' + p + 'bl)"/>';
       });
-      s += '<circle class="xm-mstar-g" cx="' + CX + '" cy="58" r="56" fill="url(#' + p + 'sg)"/><path d="' + starPath(CX, 56, 34, 15) + '" fill="#fcd34d" stroke="#d97706" stroke-width="1.5"/></svg>';
+      s += '<circle cx="' + CX + '" cy="58" r="56" fill="url(#' + p + 'sg)"/><path d="' + starPath(CX, 56, 34, 15) + '" fill="#fcd34d" stroke="#d97706" stroke-width="1.5"/></svg>';
       return s;
     }
 
@@ -5596,52 +5658,50 @@ service cloud.firestore {
       $('xm-card-date').textContent = fmtDate(w.ts);
       $('xm-reader').classList.add('open');
       var card = document.querySelector('#xm-reader .xm-card');
+      pauseTree(true);
       if (fromEl && card && card.animate && !reduceMotion()) {
         var o = fromEl.getBoundingClientRect(), c = card.getBoundingClientRect();
         if (c.width > 0) {
           var dx = (o.left + o.width / 2) - (c.left + c.width / 2), dy = (o.top + o.height / 2) - (c.top + c.height / 2);
-          card.animate([
-            { transform: 'translate(' + dx.toFixed(0) + 'px,' + dy.toFixed(0) + 'px) scale(0.08)', opacity: 0, filter: 'brightness(2.2)' },
-            { opacity: 1, offset: 0.35 },
-            { transform: 'none', opacity: 1, filter: 'none' }
-          ], { duration: 620, easing: 'cubic-bezier(0.2, 0.9, 0.25, 1)' });
-          $('xm-reader').animate([{ backgroundColor: 'rgba(3, 10, 25, 0)' }, { backgroundColor: 'rgba(3, 10, 25, 0.62)' }], { duration: 450, easing: 'ease-out' });
+          card.style.animation = 'none';
+          var an = card.animate([
+            { transform: 'translate3d(' + dx.toFixed(0) + 'px,' + dy.toFixed(0) + 'px,0) scale(0.1)', opacity: 0 },
+            { opacity: 1, offset: 0.3 },
+            { transform: 'translate3d(0,0,0) scale(1)', opacity: 1 }
+          ], { duration: 520, easing: 'cubic-bezier(0.2, 0.9, 0.25, 1)' });
+          an.onfinish = function () { card.style.animation = ''; };
         }
       }
     }
     function reduceMotion() { return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches); }
-    var litEl = null, litBusy = false;
-    function ensureGlowDef() {
-      if (document.getElementById('xoGlowG')) return;
-      var svg = $('xm-tree'); if (!svg) return;
-      var d = svgEl('<defs><radialGradient id="xoGlowG" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#fffbe6" stop-opacity="1"/><stop offset=".3" stop-color="#fde68a" stop-opacity=".75"/><stop offset=".65" stop-color="#fbbf24" stop-opacity=".25"/><stop offset="1" stop-color="#fbbf24" stop-opacity="0"/></radialGradient></defs>');
-      svg.insertBefore(d, svg.firstChild);
+    var litBusy = false;
+    /* Гацалт багатай: гэрлийг SVG дотор биш, тусдаа HTML давхаргад (transform/opacity) зурна */
+    function pauseTree(on) {
+      var m = $('xm-modal'), svg = $('xm-tree');
+      if (m) m.classList.toggle('xm-reading', !!on);
+      try { if (svg && svg.pauseAnimations) { if (on) svg.pauseAnimations(); else svg.unpauseAnimations(); } } catch (e) {}
     }
-    function unlight() {
-      var g = litEl; litEl = null; if (!g) return;
-      g.classList.remove('xo-lit'); g.classList.add('xo-unlit');
-      setTimeout(function () { var gl = g.querySelector('.xo-glow'); if (gl && !g.classList.contains('xo-lit')) gl.remove(); g.classList.remove('xo-unlit'); }, 450);
+    function flashAt(g) {
+      var fl = $('xo-flash'); if (!fl) return;
+      var r = g.getBoundingClientRect();
+      fl.style.left = (r.left + r.width / 2) + 'px'; fl.style.top = (r.top + r.height / 2) + 'px';
+      fl.classList.remove('go'); void fl.offsetWidth; fl.classList.add('go');
     }
     function lightOrnament(g) {
       var id = g.getAttribute('data-id');
       if (litBusy) return;
+      pauseTree(true);
       if (reduceMotion()) { openReader(id); return; }
-      unlight(); ensureGlowDef();
-      var old = g.querySelector('.xo-glow'); if (old) old.remove();
-      var rays = '';
-      for (var k = 0; k < 10; k++) { var a = k * 36 * Math.PI / 180, r1 = 30, r2 = k % 2 ? 50 : 62;
-        rays += '<line x1="' + (Math.cos(a) * r1).toFixed(1) + '" y1="' + (22 + Math.sin(a) * r1).toFixed(1) + '" x2="' + (Math.cos(a) * r2).toFixed(1) + '" y2="' + (22 + Math.sin(a) * r2).toFixed(1) + '"/>'; }
-      var sp = '';
-      for (var j = 0; j < 7; j++) { var b = (j * 51 + 20) * Math.PI / 180;
-        sp += '<circle class="xo-sp" style="--sx:' + (Math.cos(b) * 58).toFixed(0) + 'px;--sy:' + (Math.sin(b) * 58).toFixed(0) + 'px;--sd:' + (j * 0.04).toFixed(2) + 's" cx="0" cy="22" r="' + (j % 3 ? 3 : 4.5) + '"/>'; }
-      var glow = svgEl('<g class="xo-glow" aria-hidden="true"><circle class="xo-gl" cx="0" cy="22" r="74" fill="url(#xoGlowG)"/>' +
-        '<g class="xo-rays">' + rays + '</g><circle class="xo-gring" cx="0" cy="22" r="30"/>' + sp + '</g>');
-      g.insertBefore(glow, g.firstChild);
-      if (g.parentNode) g.parentNode.appendChild(g); // урд гаргана
-      g.classList.add('xo-lit'); litEl = g; litBusy = true;
-      setTimeout(function () { litBusy = false; openReader(id, g); }, 560);
+      flashAt(g); litBusy = true;
+      setTimeout(function () { litBusy = false; openReader(id, g); }, 380);
     }
-    window.xmCloseReader = function () { $('xm-reader').classList.remove('open'); unlight(); };
+    window.xmCloseReader = function () {
+      var rd = $('xm-reader'); if (!rd) return;
+      var was = rd.classList.contains('open');
+      rd.classList.remove('open');
+      var fl = $('xo-flash'); if (fl) fl.classList.remove('go');
+      if (was) pauseTree(false);
+    };
 
     /* ---------- compose ---------- */
     function renderPicker() {
