@@ -424,6 +424,12 @@
       .glass-card:hover { transform: none; }
     }
 
+    /* Гар утсанд наалттай цэсний blur нь гүйлгэх үед гацалт үүсгэдэг тул унтраана */
+    @media (max-width: 767px) {
+      .glass-nav { backdrop-filter: none; -webkit-backdrop-filter: none; background: rgba(255, 255, 255, 0.97); }
+      #mobile-menu { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; background: #fff !important; }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       .school-showcase-float, .orb, .liquid-gradient-bg, .glisten-frame::before,
       .glisten-frame::after, .sparkle-star { animation: none !important; }
@@ -1112,98 +1118,438 @@
     }
   
     /* ==========================================================================
-       SOFT ANIMATED MISSION SHOWCASE (above director's greeting)
+       MISSION & OBJECTIVES v2 — light pastel, soft motion (transform/opacity only)
        ========================================================================== */
-    .mission-aurora {
-      background: linear-gradient(120deg, #eef2ff 0%, #fdf2f8 28%, #ecfeff 56%, #f0fdf4 80%, #eef2ff 100%);
-      background-size: 300% 300%;
-      animation: auroraShift 16s ease-in-out infinite;
-      box-shadow: 0 18px 40px -22px rgba(99, 102, 241, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.9);
-    }
-    @keyframes auroraShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-    .ms-blob { position: absolute; border-radius: 9999px; filter: blur(38px); opacity: 0.55; pointer-events: none; will-change: transform; }
-    .ms-blob-1 { width: 220px; height: 220px; left: -60px; top: -70px; background: #c7d2fe; animation: msDrift1 14s ease-in-out infinite; }
-    .ms-blob-2 { width: 200px; height: 200px; right: -50px; top: 10px; background: #fbcfe8; animation: msDrift2 17s ease-in-out infinite; }
-    .ms-blob-3 { width: 240px; height: 240px; left: 38%; bottom: -130px; background: #a5f3fc; animation: msDrift1 20s ease-in-out infinite reverse; }
-    @keyframes msDrift1 { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(40px, 26px) scale(1.15); } }
-    @keyframes msDrift2 { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(-36px, 30px) scale(1.1); } }
-
-    .ms-sparkle {
-      position: absolute; bottom: 8%; width: 8px; height: 8px; border-radius: 9999px;
-      background: rgba(255, 255, 255, 0.95);
-      box-shadow: 0 0 12px 3px rgba(167, 139, 250, 0.55);
-      pointer-events: none; opacity: 0;
-      animation: msFloatUp 7s ease-in infinite;
-    }
-    @keyframes msFloatUp {
-      0% { transform: translateY(20px) scale(0.5); opacity: 0; }
-      20% { opacity: 1; }
-      100% { transform: translateY(-150px) scale(1.1); opacity: 0; }
-    }
-
-    .ms-badge {
-      position: relative; overflow: hidden;
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      padding: 0.45rem 1.1rem; border-radius: 9999px;
-      background: rgba(255, 255, 255, 0.68);
+    .mission-v2 {
+      isolation: isolate;
+      contain: layout paint;
+      background:
+        radial-gradient(90% 70% at 0% 0%, #e9efff 0%, rgba(233, 239, 255, 0) 60%),
+        radial-gradient(80% 70% at 100% 0%, #fdeef6 0%, rgba(253, 238, 246, 0) 60%),
+        radial-gradient(90% 80% at 50% 110%, #e6faf3 0%, rgba(230, 250, 243, 0) 65%),
+        #fbfcff;
       border: 1px solid rgba(255, 255, 255, 0.95);
-      -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
-      color: #6d28d9; font-size: 11px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase;
-      box-shadow: 0 8px 20px -10px rgba(124, 58, 237, 0.45);
+      box-shadow: 0 18px 40px -28px rgba(99, 102, 241, 0.35), inset 0 1px 0 #fff;
     }
-    .ms-badge::after {
+    .mv-bg { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+    .mv-blob {
+      position: absolute; border-radius: 9999px; opacity: 0.7; will-change: transform;
+      animation: mvFloat 16s ease-in-out infinite;
+    }
+    .mv-b1 { width: 260px; height: 260px; left: -70px; top: -90px; background: radial-gradient(circle at 40% 40%, rgba(165, 180, 252, 0.55), rgba(165, 180, 252, 0) 70%); }
+    .mv-b2 { width: 240px; height: 240px; right: -60px; top: 10%; background: radial-gradient(circle at 50% 50%, rgba(249, 168, 212, 0.5), rgba(249, 168, 212, 0) 70%); animation-delay: -5s; animation-duration: 19s; }
+    .mv-b3 { width: 300px; height: 300px; left: 35%; bottom: -170px; background: radial-gradient(circle at 50% 50%, rgba(153, 246, 228, 0.55), rgba(153, 246, 228, 0) 70%); animation-delay: -9s; animation-duration: 22s; }
+    @keyframes mvFloat {
+      0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+      33% { transform: translate3d(28px, 18px, 0) scale(1.06); }
+      66% { transform: translate3d(-18px, -14px, 0) scale(0.96); }
+    }
+    .mv-spark {
+      position: absolute; width: 10px; height: 10px; opacity: 0;
+      background: radial-gradient(circle, #fff 0 30%, rgba(255, 255, 255, 0) 70%);
+      box-shadow: 0 0 10px 2px rgba(196, 181, 253, 0.7);
+      border-radius: 9999px; animation: mvTwinkle 4.8s ease-in-out infinite;
+    }
+    .mv-s1 { left: 12%; top: 22%; }
+    .mv-s2 { left: 84%; top: 30%; animation-delay: -1.6s; box-shadow: 0 0 10px 2px rgba(249, 168, 212, 0.7); }
+    .mv-s3 { left: 60%; top: 12%; animation-delay: -3.1s; box-shadow: 0 0 10px 2px rgba(125, 211, 252, 0.7); }
+    .mv-s4 { left: 30%; top: 78%; animation-delay: -2.3s; box-shadow: 0 0 10px 2px rgba(110, 231, 183, 0.7); }
+    @keyframes mvTwinkle { 0%, 100% { opacity: 0; transform: scale(0.4); } 50% { opacity: 1; transform: scale(1.15); } }
+
+    .mv-badge {
+      position: relative; overflow: hidden; display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.45rem 1.1rem; border-radius: 9999px; background: rgba(255, 255, 255, 0.88);
+      border: 1px solid #e0e7ff; color: #4f46e5; font-size: 11px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase;
+      box-shadow: 0 8px 22px -14px rgba(79, 70, 229, 0.55);
+    }
+    .mv-badge::after {
       content: ""; position: absolute; inset: 0;
-      background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.9) 50%, transparent 70%);
-      transform: translateX(-130%);
-      animation: msBadgeSheen 4.5s ease-in-out infinite;
+      background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.95) 50%, transparent 70%);
+      transform: translateX(-130%); animation: mvSheen 5.5s ease-in-out infinite;
     }
-    @keyframes msBadgeSheen { 0%, 55% { transform: translateX(-130%); } 100% { transform: translateX(130%); } }
-    .ms-badge-star { animation: msSpin 8s linear infinite; }
-    @keyframes msSpin { to { transform: rotate(360deg); } }
+    @keyframes mvSheen { 0%, 55% { transform: translateX(-130%); } 100% { transform: translateX(130%); } }
+    .mv-badge-star { color: #f59e0b; animation: mvSpin 10s linear infinite; }
+    @keyframes mvSpin { to { transform: rotate(360deg); } }
 
-    .ms-word {
-      display: inline-block;
-      background: linear-gradient(90deg, #6366f1, #d946ef, #06b6d4, #6366f1);
-      background-size: 300% 100%;
-      -webkit-background-clip: text; background-clip: text;
-      -webkit-text-fill-color: transparent; color: transparent;
-      animation: msWave 4.8s ease-in-out infinite, msHue 9s linear infinite;
+    .mv-quote { color: #1e2a4a; }
+    .mv-qm { color: #a5b4fc; font-weight: 900; margin: 0 0.15em; }
+    .mv-hl {
+      background: linear-gradient(100deg, #6366f1 0%, #d946ef 50%, #14b8a6 100%);
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
     }
-    @keyframes msWave { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
-    @keyframes msHue { 0% { background-position: 0% 50%; } 100% { background-position: 300% 50%; } }
+    .mission-v2 .ms-word { display: inline-block; opacity: 0; transform: translate3d(0, 10px, 0); }
+    .mission-v2.mv-in .ms-word { animation: mvWordIn 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+    @keyframes mvWordIn { to { opacity: 1; transform: none; } }
+    .mv-underline {
+      display: block; width: 120px; height: 4px; border-radius: 9999px; transform-origin: center; transform: scaleX(0);
+      background: linear-gradient(90deg, #a5b4fc, #f9a8d4, #99f6e4);
+    }
+    .mission-v2.mv-in .mv-underline { animation: mvLine 0.9s cubic-bezier(0.22, 1, 0.36, 1) 1.5s forwards; }
+    @keyframes mvLine { to { transform: scaleX(1); } }
 
-    .obj-glass {
-      background: rgba(255, 255, 255, 0.58) !important;
-      -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.92) !important;
-      box-shadow: 0 8px 24px -14px rgba(99, 102, 241, 0.35);
+    /* Objective cards */
+    .mv-card {
+      --c1: #818cf8; --c2: #7dd3fc; --soft: #eef2ff; --ink: #3730a3; --ring: rgba(129, 140, 248, 0.45);
+      position: relative; overflow: hidden; cursor: pointer; outline: none;
+      border-radius: 1.35rem; padding: 1.1rem 1.1rem 1rem;
+      background: rgba(255, 255, 255, 0.82); border: 1px solid rgba(255, 255, 255, 0.98);
+      box-shadow: 0 10px 26px -22px var(--c1), inset 0 1px 0 #fff;
+      opacity: 0; translate: 0 22px;
+      transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.5s ease, background-color 0.5s ease;
     }
-    .obj-glass.obj-active {
-      transform: translateY(-4px);
-      background: rgba(255, 255, 255, 0.88) !important;
-      box-shadow: 0 18px 34px -16px rgba(139, 92, 246, 0.45), 0 0 0 1.5px rgba(167, 139, 250, 0.5);
+    .mv-rose { --c1: #f9a8d4; --c2: #fda4af; --soft: #fdf2f8; --ink: #9d174d; --ring: rgba(244, 114, 182, 0.45); }
+    .mv-teal { --c1: #5eead4; --c2: #86efac; --soft: #ecfdf5; --ink: #115e59; --ring: rgba(45, 212, 191, 0.45); }
+    .mission-v2.mv-in .mv-card { animation: mvCardIn 0.85s cubic-bezier(0.22, 1, 0.36, 1) forwards; animation-delay: calc(var(--i) * 130ms + 0.5s); }
+    @keyframes mvCardIn { to { opacity: 1; translate: 0 0; } }
+    .mv-card:hover { transform: translateY(-3px); }
+    .mv-card:focus-visible { box-shadow: 0 0 0 3px var(--ring); }
+    .mv-card.obj-active {
+      transform: translateY(-6px);
+      background: linear-gradient(165deg, #ffffff 0%, var(--soft) 100%);
+      box-shadow: 0 24px 40px -26px var(--c1), 0 0 0 1.5px var(--ring), inset 0 1px 0 #fff;
     }
-    .obj-glass::before {
-      content: ""; position: absolute; inset: 0; pointer-events: none;
-      background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, 0.8) 50%, transparent 70%);
+    .mv-card::before {
+      content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 2;
+      background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, 0.9) 50%, transparent 70%);
       transform: translateX(-130%);
     }
-    .obj-glass.obj-active::before { animation: objSheen 1.5s ease forwards; }
-    @keyframes objSheen { to { transform: translateX(130%); } }
-    .obj-icon { animation: msBob 4s ease-in-out infinite; }
-    @keyframes msBob { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-3px) rotate(-5deg); } }
-    .obj-num {
-      position: absolute; right: 12px; top: 2px; font-family: 'Montserrat', sans-serif;
-      font-size: 56px; font-weight: 900; line-height: 1; color: rgba(165, 180, 252, 0.3); pointer-events: none;
+    .mv-card.obj-active::before { animation: mvCardSheen 1.3s ease forwards; }
+    @keyframes mvCardSheen { to { transform: translateX(130%); } }
+    .mv-glow {
+      position: absolute; width: 170px; height: 170px; right: -60px; top: -70px; border-radius: 9999px; pointer-events: none;
+      background: radial-gradient(circle, var(--c1) 0%, rgba(255, 255, 255, 0) 68%);
+      opacity: 0.22; transform: scale(0.7); transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.8s ease;
     }
+    .mv-card.obj-active .mv-glow { opacity: 0.5; transform: scale(1.15); }
+    .mv-num {
+      position: absolute; right: 14px; bottom: 6px; font-family: 'Montserrat', sans-serif; font-size: 54px; font-weight: 900; line-height: 1;
+      color: var(--c1); opacity: 0.16; pointer-events: none; transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .mv-card.obj-active .mv-num { opacity: 0.3; transform: translateY(-4px); }
+    .mv-ico-wrap { position: relative; width: 52px; height: 52px; flex-shrink: 0; }
+    .mv-ring { position: absolute; inset: 0; width: 52px; height: 52px; transform: rotate(-90deg); }
+    .mv-ring circle { fill: none; stroke-width: 3; }
+    .mv-ring-bg { stroke: var(--soft); }
+    .mv-ring-fg { stroke: var(--c1); stroke-linecap: round; stroke-dasharray: 145; stroke-dashoffset: 145; opacity: 0; }
+    .mv-card.obj-active .mv-ring-fg { opacity: 1; animation: mvRing 4.2s linear forwards; }
+    @keyframes mvRing { to { stroke-dashoffset: 0; } }
+    .mv-ico {
+      position: absolute; inset: 7px; border-radius: 9999px; display: flex; align-items: center; justify-content: center;
+      background: var(--soft); color: var(--ink); transition: background 0.5s ease, color 0.5s ease, transform 0.5s ease;
+    }
+    .mv-card.obj-active .mv-ico { background: linear-gradient(135deg, var(--c1), var(--c2)); color: #fff; animation: mvBob 3.2s ease-in-out infinite; }
+    @keyframes mvBob { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-2px) rotate(-6deg); } }
+    .mv-kicker { display: block; font-size: 10px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink); opacity: 0.75; line-height: 1; }
+    .mv-title { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 14px; color: #1e293b; margin-top: 4px; }
+    .mv-text { position: relative; font-size: 12.5px; line-height: 1.6; color: #475569; }
+    .mv-dots { position: relative; display: flex; gap: 5px; margin-top: 12px; }
+    .mv-dots i { display: block; width: 6px; height: 6px; border-radius: 9999px; background: var(--c1); opacity: 0.25; transition: opacity 0.4s ease, width 0.4s ease; }
+    .mv-card.obj-active .mv-dots i { animation: mvDot 1.4s ease-in-out infinite; }
+    .mv-card.obj-active .mv-dots i:nth-child(2) { animation-delay: 0.18s; }
+    .mv-card.obj-active .mv-dots i:nth-child(3) { animation-delay: 0.36s; }
+    @keyframes mvDot { 0%, 100% { opacity: 0.25; transform: scale(1); } 50% { opacity: 0.9; transform: scale(1.35); } }
+
+    #mission-showcase.ms-off *, #mission-showcase.ms-off *::before, #mission-showcase.ms-off *::after { animation-play-state: paused !important; }
+    @media (max-width: 639px) { .mv-b3, .mv-s3, .mv-s4 { display: none; } }
+    @media (prefers-reduced-motion: reduce) {
+      .mv-blob, .mv-spark, .mv-badge::after, .mv-badge-star, .mv-ico, .mv-dots i, .mv-card::before, .mv-ring-fg { animation: none !important; }
+      .mission-v2 .ms-word, .mv-card { animation: none !important; opacity: 1 !important; transform: none; translate: none; }
+      .mv-underline { transform: none; }
+    }
+
+    /* ==========================================================================
+       HEADER MINI FIR TREE BUTTON
+       ========================================================================== */
+    .xt-btn { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
+    .xt-mini { display: block; width: 24px; height: 28px; transform-origin: 50% 100%; animation: xtSway 3.8s ease-in-out infinite; overflow: visible; }
+    .xt-btn:hover .xt-mini { animation-duration: 1.6s; }
+    @keyframes xtSway { 0%, 100% { transform: rotate(-2.6deg); } 50% { transform: rotate(2.6deg); } }
+    .xt-mini .xt-b { animation: xtBulb 2.2s ease-in-out infinite; }
+    .xt-mini .xt-b:nth-of-type(2) { animation-delay: -0.5s; }
+    .xt-mini .xt-b:nth-of-type(3) { animation-delay: -1.0s; }
+    .xt-mini .xt-b:nth-of-type(4) { animation-delay: -1.5s; }
+    .xt-mini .xt-b:nth-of-type(5) { animation-delay: -1.9s; }
+    @keyframes xtBulb { 0%, 100% { opacity: 0.35; } 50% { opacity: 1; } }
+    .xt-mini .xt-star { animation: xtBulb 1.8s ease-in-out infinite; }
+    @media (prefers-reduced-motion: reduce) { .xt-mini, .xt-mini .xt-b, .xt-mini .xt-star { animation: none !important; } }
+
+    /* ==========================================================================
+       GRATITUDE TREE MODAL
+       ========================================================================== */
+    .xm-modal {
+      position: fixed; inset: 0; z-index: 70; display: none; flex-direction: column; overflow: hidden; color: #fff;
+      background:
+        radial-gradient(70% 50% at 50% 38%, rgba(56, 189, 248, 0.22), rgba(56, 189, 248, 0) 70%),
+        linear-gradient(180deg, #0a1b36 0%, #0f3358 52%, #14525f 100%);
+    }
+    .xm-modal.open { display: flex; }
+    .xm-modal *, .xm-modal *::before, .xm-modal *::after { box-sizing: border-box; }
+    .xm-top {
+      position: relative; z-index: 5; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      padding: 12px 16px; padding-top: max(12px, env(safe-area-inset-top));
+    }
+    .xm-title { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 18px; line-height: 1.15; }
+    .xm-sub { font-size: 12px; font-weight: 600; color: rgba(226, 240, 255, 0.8); margin-top: 2px; }
+    .xm-close {
+      width: 42px; height: 42px; flex-shrink: 0; border-radius: 9999px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(255, 255, 255, 0.14); border: 1px solid rgba(255, 255, 255, 0.28); color: #fff;
+    }
+    .xm-close:hover { background: rgba(255, 255, 255, 0.26); }
+    .xm-body { position: relative; z-index: 2; flex: 1; min-height: 0; display: flex; flex-direction: column; overflow-y: auto; overscroll-behavior: contain; }
+    .xm-stage { position: relative; flex: 1; display: flex; align-items: flex-start; justify-content: center; padding: 0 8px 96px; }
+    .xm-stage svg.xm-tree { width: 100%; max-width: 520px; height: auto; aspect-ratio: 600 / 780; display: block; }
+    .xm-count {
+      position: absolute; left: 12px; top: 4px; z-index: 3;
+      padding: 5px 13px; border-radius: 9999px; font-size: 12px; font-weight: 800; white-space: nowrap;
+      background: rgba(255, 255, 255, 0.14); border: 1px solid rgba(255, 255, 255, 0.25);
+    }
+        .xm-fab {
+      position: fixed; left: 50%; bottom: max(16px, env(safe-area-inset-bottom)); transform: translateX(-50%); z-index: 15;
+      display: inline-flex; align-items: center; gap: 8px; padding: 14px 26px; border-radius: 9999px; cursor: pointer; white-space: nowrap;
+      background: #fff; color: #0f3d2a; font-weight: 800; font-size: 15px; font-family: 'Montserrat', sans-serif;
+      box-shadow: 0 14px 30px -8px rgba(0, 0, 0, 0.5); border: 0;
+    }
+    .xm-fab:active { transform: translateX(-50%) scale(0.97); }
+
+    .xm-panel {
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; max-height: 88dvh; overflow-y: auto; overscroll-behavior: contain;
+      background: #fff; color: #0f172a; border-radius: 26px 26px 0 0;
+      padding: 14px 16px calc(18px + env(safe-area-inset-bottom));
+      box-shadow: 0 -22px 50px -12px rgba(0, 0, 0, 0.5);
+      transform: translateY(105%); visibility: hidden;
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), visibility 0s linear 0.35s;
+    }
+    .xm-panel.open { transform: none; visibility: visible; transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), visibility 0s; }
+    .xm-grab { width: 44px; height: 5px; border-radius: 9999px; background: #cbd5e1; margin: 0 auto 10px; }
+    .xm-ph { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
+    .xm-ph h3 { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 18px; }
+    .xm-pclose { width: 36px; height: 36px; border-radius: 9999px; background: #f1f5f9; color: #334155; border: 0; cursor: pointer; font-size: 18px; font-weight: 800; }
+    .xm-prev {
+      display: flex; align-items: center; justify-content: center; height: 108px; margin-bottom: 12px; border-radius: 18px;
+      background: linear-gradient(180deg, #0f3358, #14525f);
+    }
+    .xm-lbl { display: block; font-size: 12px; font-weight: 800; color: #475569; margin: 12px 0 6px; }
+    .xm-styles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+    .xm-style {
+      aspect-ratio: 1 / 1; border-radius: 14px; cursor: pointer; padding: 4px;
+      display: flex; align-items: center; justify-content: center;
+      border: 2px solid #e2e8f0; background: #f8fafc;
+    }
+    .xm-style.sel { border-color: #0f172a; background: #fff; box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.08); }
+    .xm-style svg { width: 100%; height: 100%; display: block; }
+    .xm-swatches { display: flex; flex-wrap: wrap; gap: 10px; }
+    .xm-sw { width: 36px; height: 36px; border-radius: 9999px; cursor: pointer; border: 3px solid #fff; box-shadow: 0 0 0 1.5px #cbd5e1; }
+    .xm-sw.sel { box-shadow: 0 0 0 3px #0f172a; }
+    .xm-in {
+      width: 100%; padding: 12px 14px; border-radius: 14px; border: 1.5px solid #cbd5e1; background: #fff;
+      font-size: 16px; font-weight: 600; color: #0f172a; outline: none; font-family: inherit;
+    }
+    .xm-in:focus { border-color: #0f766e; box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.14); }
+    textarea.xm-in { resize: none; min-height: 96px; line-height: 1.45; }
+    .xm-cnt { text-align: right; font-size: 11px; font-weight: 700; color: #94a3b8; margin-top: 3px; }
+    .xm-submit {
+      width: 100%; margin-top: 14px; padding: 15px; border-radius: 16px; cursor: pointer; border: 0;
+      background: linear-gradient(135deg, #16a34a, #0d9488); color: #fff; font-weight: 800; font-size: 15px; font-family: 'Montserrat', sans-serif;
+    }
+    .xm-submit:active { transform: scale(0.985); }
+    .xm-note { margin-top: 8px; font-size: 12px; font-weight: 700; text-align: center; min-height: 18px; color: #0f766e; }
+    .xm-note.err { color: #be123c; }
+
+    @media (min-width: 1024px) {
+      .xm-body { flex-direction: row; overflow: hidden; }
+      .xm-stage { padding: 0 16px 8px; align-items: center; }
+      .xm-stage svg.xm-tree { height: 100%; width: 100%; max-width: none; aspect-ratio: auto; max-height: calc(100vh - 84px); }
+      .xm-count { top: 0; }
+      .xm-fab { display: none; }
+      .xm-panel {
+        position: relative; transform: none; visibility: visible; width: 400px; flex-shrink: 0; max-height: none;
+        border-radius: 0; box-shadow: -18px 0 40px -20px rgba(0, 0, 0, 0.55); padding: 20px 20px 20px; transition: none;
+      }
+      .xm-grab, .xm-pclose { display: none; }
+    }
+
+    .xm-snow { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 1; }
+    .xm-snow i {
+      position: absolute; top: -12px; left: var(--l); width: var(--s); height: var(--s); border-radius: 9999px;
+      background: #fff; opacity: 0; will-change: transform, opacity;
+      animation: xmFall var(--d) linear var(--dl) infinite;
+    }
+    @keyframes xmFall {
+      0%   { transform: translate3d(0, 0, 0); opacity: 0; }
+      8%   { opacity: 0.9; }
+      50%  { transform: translate3d(18px, 55vh, 0); }
+      92%  { opacity: 0.8; }
+      100% { transform: translate3d(-12px, 108vh, 0); opacity: 0; }
+    }
+    .xl-b { animation: xmTw 2.4s ease-in-out infinite; animation-delay: var(--d, 0s); }
+    @keyframes xmTw { 0%, 100% { opacity: 0.35; } 50% { opacity: 1; } }
+
+    .xo { cursor: pointer; outline: none; }
+    .xo-in { animation: xoIn 0.75s cubic-bezier(0.2, 0.9, 0.3, 1.15) both; animation-delay: var(--d, 0s); }
+    @keyframes xoIn { from { opacity: 0; transform: translateY(-28px) scale(0.5); } to { opacity: 1; transform: none; } }
+    .xo-pop { transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1); }
+    .xo:hover .xo-pop, .xo:focus-visible .xo-pop { transform: scale(1.16); }
+    .xo:focus-visible .xo-ring { opacity: 1; }
+    .xo-ring { opacity: 0; }
+
+    .xm-reader {
+      position: absolute; inset: 0; z-index: 40; display: none; align-items: center; justify-content: center;
+      padding: 20px; background: rgba(3, 10, 25, 0.62);
+    }
+    .xm-reader.open { display: flex; }
+    .xm-card {
+      position: relative; width: 100%; max-width: 380px; max-height: 86dvh; overflow-y: auto; border-radius: 26px; background: #fff; color: #0f172a;
+      padding: 0 22px 22px; box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.6); animation: xmPop 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.1);
+    }
+    @keyframes xmPop { from { opacity: 0; transform: translateY(16px) scale(0.94); } to { opacity: 1; transform: none; } }
+    .xm-card-top { display: flex; justify-content: center; margin: 0 -22px 14px; padding: 14px 0 6px; background: linear-gradient(180deg, #0f3358, #14525f); border-radius: 26px 26px 0 0; }
+    .xm-to { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 19px; line-height: 1.25; text-align: center; word-break: break-word; }
+    .xm-msg { margin-top: 10px; font-size: 15.5px; line-height: 1.6; font-weight: 600; color: #334155; text-align: center; white-space: pre-wrap; word-break: break-word; }
+    .xm-from { margin-top: 14px; text-align: center; font-size: 13px; font-weight: 800; color: #0f766e; }
+    .xm-date { margin-top: 2px; text-align: center; font-size: 11.5px; font-weight: 700; color: #94a3b8; }
+    .xm-rclose { margin-top: 16px; width: 100%; padding: 12px; border-radius: 14px; background: #0f172a; color: #fff; font-weight: 800; border: 0; cursor: pointer; }
 
     @media (prefers-reduced-motion: reduce) {
-      .mission-aurora, .ms-blob, .ms-sparkle, .ms-badge::after, .ms-badge-star, .ms-word, .obj-icon, .obj-glass::before { animation: none !important; }
+      .xm-snow i, .xl-b, .xo-in { animation: none !important; opacity: 1; }
     }
+
+    /* ==========================================================================
+       ATTENDANCE ENTRY — soft pastel, shift-coded (Өглөө = шаргал, Өдөр = нил цэнхэр)
+       ========================================================================== */
+    #attendance-modal {
+      --att-head-bg: linear-gradient(120deg, #e3faf3 0%, #e6f3ff 60%, #f1ecff 100%);
+      --att-ink: #134e4a; --att-acc: #2dd4bf; --att-acc2: #38bdf8; --att-soft: #f0fdfa; --att-line: #bdeee2;
+    }
+    #attendance-modal.att-shift-morning {
+      --att-head-bg: linear-gradient(120deg, #fff3da 0%, #ffe6d8 55%, #ffe2ec 100%);
+      --att-ink: #7c2d12; --att-acc: #f8b84e; --att-acc2: #f79a6b; --att-soft: #fff9ef; --att-line: #fadcad;
+    }
+    #attendance-modal.att-shift-afternoon {
+      --att-head-bg: linear-gradient(120deg, #e8edff 0%, #ede7ff 55%, #e4f1ff 100%);
+      --att-ink: #312e81; --att-acc: #8b9cf7; --att-acc2: #a78bfa; --att-soft: #f6f7ff; --att-line: #d4dafc;
+    }
+    #attendance-modal.att-editing #att-head { background: var(--att-head-bg) !important; animation: none !important; color: var(--att-ink); transition: background 0.45s ease; }
+    #attendance-modal.att-editing #att-head .text-white,
+    #attendance-modal.att-editing #att-head .text-white\/85 { color: var(--att-ink) !important; }
+    #attendance-modal.att-editing #att-head #att-mode-badge { background: rgba(255, 255, 255, 0.8) !important; border-color: var(--att-line) !important; }
+    #attendance-modal.att-editing #att-head .att-head-ghost { background: rgba(255, 255, 255, 0.72) !important; border: 1px solid var(--att-line) !important; color: var(--att-ink) !important; }
+    #attendance-modal.att-editing #att-footer-bar { background: var(--att-soft); border-color: var(--att-line); }
+    #attendance-modal.att-editing #att-save-btn {
+      background: linear-gradient(135deg, var(--att-acc), var(--att-acc2)) !important; background-image: linear-gradient(135deg, var(--att-acc), var(--att-acc2)) !important;
+      color: #fff !important; animation: none !important; box-shadow: 0 12px 24px -14px var(--att-acc2) !important; text-shadow: 0 1px 1px rgba(0, 0, 0, 0.12);
+    }
+    #attendance-modal.att-editing #att-save-btn::after { display: none !important; }
+    #att-edit-sticky-bar { background: #ffffff; border-color: var(--att-line) !important; box-shadow: 0 8px 16px -14px rgba(15, 23, 42, 0.35); }
+    #att-edit-list input[type="number"]::-webkit-outer-spin-button,
+    #att-edit-list input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    #att-edit-list input[type="number"] { -moz-appearance: textfield; appearance: textfield; }
+
+    /* Current-shift banner */
+    .att-now {
+      display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 14px;
+      background: var(--att-head-bg); border: 1px solid var(--att-line); color: var(--att-ink);
+      font-weight: 800; font-size: 13px; line-height: 1.3;
+    }
+    .att-now b { font-family: 'Montserrat', sans-serif; font-weight: 900; letter-spacing: 0.02em; }
+    .att-now .att-now-ico { width: 34px; height: 34px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: #fff; background: linear-gradient(135deg, var(--att-acc), var(--att-acc2)); }
+
+    /* Shift selector buttons */
+    .att-sbtn {
+      display: block; width: 100%; text-align: left; border-radius: 1.1rem; border: 2px solid; padding: 0.7rem 0.8rem; min-height: 74px; cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.25s ease, background 0.25s ease, border-color 0.25s ease; -webkit-tap-highlight-color: transparent;
+    }
+    .att-sbtn:active { transform: scale(0.98); }
+    .att-sbtn .att-sico { width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background 0.25s ease, color 0.25s ease; }
+    .att-sbtn .att-chk { width: 24px; height: 24px; border-radius: 9999px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 2px solid currentColor; opacity: 0.35; }
+    .att-sbtn[aria-pressed="true"] .att-chk { opacity: 1; border-color: transparent; color: #fff; }
+    .att-sbtn.m { border-color: #fbe3bd; background: #fffdf8; color: #9a3412; }
+    .att-sbtn.m .att-sico { background: #fff1d6; color: #f59e0b; }
+    .att-sbtn.m[aria-pressed="true"] { background: linear-gradient(135deg, #fff3d8, #ffe5dc); border-color: #f5b453; color: #7c2d12; box-shadow: 0 0 0 4px rgba(251, 191, 36, 0.16), 0 14px 26px -18px rgba(234, 88, 12, 0.75); }
+    .att-sbtn.m[aria-pressed="true"] .att-sico { background: linear-gradient(135deg, #fbc65a, #f79a6b); color: #fff; }
+    .att-sbtn.m[aria-pressed="true"] .att-chk { background: #f59e0b; }
+    .att-sbtn.a { border-color: #dce1fd; background: #fbfbff; color: #3730a3; }
+    .att-sbtn.a .att-sico { background: #eceffe; color: #6366f1; }
+    .att-sbtn.a[aria-pressed="true"] { background: linear-gradient(135deg, #e9edff, #efe7ff); border-color: #97a5f6; color: #312e81; box-shadow: 0 0 0 4px rgba(129, 140, 248, 0.16), 0 14px 26px -18px rgba(99, 102, 241, 0.75); }
+    .att-sbtn.a[aria-pressed="true"] .att-sico { background: linear-gradient(135deg, #8b9cf7, #a78bfa); color: #fff; }
+    .att-sbtn.a[aria-pressed="true"] .att-chk { background: #6366f1; }
+    .att-allbtn { padding: 6px 12px; border-radius: 9999px; font-size: 11px; font-weight: 800; border: 1px solid var(--att-line); background: #fff; color: var(--att-ink); cursor: pointer; }
+    .att-allbtn[aria-pressed="true"] { background: linear-gradient(135deg, #d9f7ee, #dcecff); border-color: #8fdcc8; color: #134e4a; }
+    .att-gpill { padding: 7px 12px; border-radius: 10px; font-size: 12px; font-weight: 800; flex-shrink: 0; cursor: pointer; background: var(--att-soft); color: var(--att-ink); border: 1px solid var(--att-line); transition: background 0.2s ease; }
+    .att-gpill:hover, .att-gpill:active { background: #fff; }
+
+    /* Section headers */
+    .att-sec-head { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 16px; border: 1px solid; }
+    .att-sec-head .att-sec-ico { width: 36px; height: 36px; border-radius: 11px; display: flex; align-items: center; justify-content: center; color: #fff; flex-shrink: 0; }
+    .att-sec-m { background: linear-gradient(120deg, #fff4dc, #ffe8de); border-color: #fadcad; color: #7c2d12; }
+    .att-sec-m .att-sec-ico { background: linear-gradient(135deg, #fbc65a, #f79a6b); }
+    .att-sec-a { background: linear-gradient(120deg, #eaefff, #efe8ff); border-color: #d4dafc; color: #312e81; }
+    .att-sec-a .att-sec-ico { background: linear-gradient(135deg, #8b9cf7, #a78bfa); }
+
+    /* Class cards */
+    .att-card { border-left-width: 5px !important; transition: box-shadow 0.25s ease; }
+    .att-card-m { border-color: #fbe6c6 !important; border-left-color: #f6b752 !important; background: linear-gradient(180deg, #fffcf5, #ffffff 60%); }
+    .att-card-a { border-color: #e0e5fd !important; border-left-color: #93a2f6 !important; background: linear-gradient(180deg, #f9faff, #ffffff 60%); }
+    .att-lbl { min-width: 3.4rem; text-align: center; padding: 8px 12px; border-radius: 12px; font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 16px; }
+    .att-lbl-m { background: linear-gradient(135deg, #fde7a8, #fdc7a0); color: #7c2d12; }
+    .att-lbl-a { background: linear-gradient(135deg, #d3dafd, #e2d7fd); color: #312e81; }
+    .att-chip { display: inline-flex; align-items: center; gap: 3px; padding: 2px 7px; border-radius: 9999px; font-size: 10px; font-weight: 800; }
+    .att-chip-m { background: #fff1d6; color: #b45309; }
+    .att-chip-a { background: #eceffe; color: #4338ca; }
+    .att-tbtn { width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; cursor: pointer; background: #f1f5f9; color: #475569; }
+    .att-card-m .att-tbtn { background: #fff4e0; color: #b45309; }
+    .att-card-a .att-tbtn { background: #eef0ff; color: #4f46e5; }
+
+    /* Reason steppers */
+    .att-st { --t: #fb7185; --t2: #f472b6; --tb: #fff5f6; --tl: #fdd5dc; --ti: #9f1239; border-radius: 1rem; padding: 0.5rem; background: var(--tb); border: 1px solid var(--tl); transition: background 0.25s ease, box-shadow 0.25s ease; }
+    .att-st.t-excused { --t: #fbbf24; --t2: #f59e0b; --tb: #fffaeb; --tl: #fde7b0; --ti: #92400e; }
+    .att-st.t-absent { --t: #f87171; --t2: #fb7185; --tb: #fff4f3; --tl: #fecaca; --ti: #991b1b; }
+    .att-st.t-remote { --t: #38bdf8; --t2: #22d3ee; --tb: #f1fbff; --tl: #c4ecfb; --ti: #075985; }
+    .att-st.on { box-shadow: 0 0 0 2px var(--tl), 0 8px 18px -14px var(--t); background: #fff; }
+    .att-st label { color: var(--ti); }
+    .att-st .att-mn, .att-st .att-pl { width: 46px; height: 46px; border-radius: 12px; font-weight: 900; font-size: 22px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; cursor: pointer; user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent; transition: transform 0.12s ease; }
+    .att-st .att-mn { background: #fff; border: 1px solid var(--tl); color: var(--ti); }
+    .att-st .att-pl { background: linear-gradient(135deg, var(--t), var(--t2)); color: #fff; border: 0; box-shadow: 0 6px 14px -8px var(--t); }
+    .att-st .att-mn:active, .att-st .att-pl:active { transform: scale(0.92); }
+    .att-st input { width: 100%; min-width: 2.4rem; height: 46px; padding: 0 2px; border-radius: 12px; background: #fff; border: 1px solid var(--tl); text-align: center; font-size: 19px; font-weight: 900; color: #0f172a; outline: none; }
+    .att-st input:focus { border-color: var(--t); box-shadow: 0 0 0 3px var(--tb); }
+    @media (min-width: 640px) { .att-st .att-mn, .att-st .att-pl, .att-st input { height: 44px; } .att-st .att-mn, .att-st .att-pl { width: 44px; } }
+
+    /* Утсан дээр ирц бичих хэсгийг нягт, дэлгэц дүүрэхгүй болгох */
+    @media (max-width: 639px) {
+      #attendance-modal.att-editing #att-head { padding-top: 10px; padding-bottom: 10px; }
+      #attendance-modal.att-editing #att-head { flex-wrap: nowrap; }
+      #attendance-modal.att-editing #att-head > div:first-child { min-width: 0; }
+      #attendance-modal.att-editing #att-head h3 { font-size: 16px; }
+      #attendance-modal.att-editing #att-head p.text-xs { display: none; }
+      #attendance-modal.att-editing #att-head button:not([aria-label="Хаах"]) { display: none; }
+      #attendance-modal.att-editing #att-summary-strip { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 5px; padding-top: 10px; }
+      #attendance-modal.att-editing #att-summary-strip > div { padding: 6px 2px; border-radius: 12px; }
+      #attendance-modal.att-editing #att-summary-strip span.block { font-size: 9.5px; }
+      #attendance-modal.att-editing #att-summary-strip .font-heading { font-size: 16px; }
+      #attendance-modal.att-editing #att-sum-percent { display: none; }
+      #attendance-modal.att-editing #att-edit-view > div:first-child { display: none; }
+      #att-edit-sticky-bar { padding-top: 8px; padding-bottom: 8px; }
+      #att-edit-sticky-bar > div:first-child p { font-size: 13px; }
+      .att-sbtn { min-height: 60px; padding: 0.55rem 0.6rem; }
+      .att-sbtn .att-sico { width: 34px; height: 34px; border-radius: 10px; }
+      .att-sbtn .att-chk { display: none; }
+      .att-now { padding: 7px 10px; font-size: 12px; gap: 8px; }
+      .att-now .att-now-ico { width: 28px; height: 28px; border-radius: 8px; }
+      .att-now .att-now-ico svg { width: 16px; height: 16px; }
+      .att-gpill { padding: 6px 10px; }
+    }
+
+    /* ==========================================================================
+       POST IMAGES — portrait photos centered, never awkwardly cropped
+       ========================================================================== */
+    .media-frame { position: relative; overflow: hidden; }
+    .media-frame .mf-bg { display: none; }
+    .media-frame.portrait .mf-bg {
+      display: block; position: absolute; left: -14px; top: -14px; width: calc(100% + 28px); height: calc(100% + 28px);
+      object-fit: cover; filter: blur(16px); opacity: 0.55; pointer-events: none;
+    }
+    .media-frame.portrait .mf-fg { position: relative; z-index: 1; object-fit: contain !important; object-position: center center; transform: none !important; }
   </style>
 </head>
 <body class="antialiased selection:bg-fuchsia-500 selection:text-white">
@@ -1297,6 +1643,7 @@
               <svg class="w-3.5 h-3.5 text-indigo-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
               <span>Сэлэнгэ • Мандал сум</span>
             </span>
+            <button type="button" onclick="openXmasTree()" class="xt-btn xl:hidden px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-[11px] font-extrabold" aria-label="Гацуур чимэглэх"><svg class="xt-mini" viewBox="0 0 44 52" aria-hidden="true" focusable="false"><path d="M22 22L40 45H4Z" fill="#15803d"/><path d="M22 13L36 33H8Z" fill="#16a34a"/><path d="M22 5L32 21H12Z" fill="#22c55e"/><path d="M4 45L40 45" stroke="#e8f5ff" stroke-width="2.2" stroke-linecap="round" opacity=".9"/><rect x="19" y="45" width="6" height="6" rx="1" fill="#92400e"/><circle class="xt-b" cx="16" cy="38" r="2.3" fill="#f43f5e"/><circle class="xt-b" cx="29" cy="40" r="2.3" fill="#fbbf24"/><circle class="xt-b" cx="22" cy="30" r="2.2" fill="#60a5fa"/><circle class="xt-b" cx="27" cy="22" r="2" fill="#f472b6"/><circle class="xt-b" cx="17" cy="23" r="2" fill="#fde047"/><path class="xt-star" d="M22 0.5l1.6 3.3 3.6.5-2.6 2.5.6 3.6L22 8.7l-3.2 1.7.6-3.6-2.6-2.5 3.6-.5z" fill="#fcd34d"/></svg><span>Гацуур чимэглэх</span></button>
             <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/70 border border-white/90 shadow-xs text-slate-700">
               <span id="weather-temp">--°C</span>
               <div id="weather-icon-container" class="flex items-center justify-center"></div>
@@ -1367,10 +1714,9 @@
           <!-- Center: Organized Glass Pill Desktop Navigation -->
           <nav class="hidden xl:flex items-center gap-1 p-1.5 rounded-full glass-pill text-[13px] font-bold text-slate-700">
             <a href="#home" class="px-3.5 py-1.5 rounded-full hover:bg-white hover:text-indigo-600 hover:shadow-xs transition-all">Нүүр</a>
-            <a href="#events-calendar" class="px-3.5 py-1.5 rounded-full hover:bg-white hover:text-indigo-600 hover:shadow-xs transition-all">Үйл ажиллагаа</a>
             <a href="sain-hicheel.html" class="px-3.5 py-1.5 rounded-full hover:bg-white hover:text-indigo-600 hover:shadow-xs transition-all">Сайн хичээл</a>
-            <a href="#news" class="px-3.5 py-1.5 rounded-full hover:bg-white hover:text-indigo-600 hover:shadow-xs transition-all">Мэдээ</a>
             <a href="#gallery" class="px-3.5 py-1.5 rounded-full hover:bg-white hover:text-indigo-600 hover:shadow-xs transition-all">Зургийн цомог</a>
+            <button type="button" onclick="openXmasTree()" class="xt-btn px-3.5 py-1 rounded-full hover:bg-white hover:text-emerald-700 hover:shadow-xs transition-all font-bold"><svg class="xt-mini" viewBox="0 0 44 52" aria-hidden="true" focusable="false"><path d="M22 22L40 45H4Z" fill="#15803d"/><path d="M22 13L36 33H8Z" fill="#16a34a"/><path d="M22 5L32 21H12Z" fill="#22c55e"/><path d="M4 45L40 45" stroke="#e8f5ff" stroke-width="2.2" stroke-linecap="round" opacity=".9"/><rect x="19" y="45" width="6" height="6" rx="1" fill="#92400e"/><circle class="xt-b" cx="16" cy="38" r="2.3" fill="#f43f5e"/><circle class="xt-b" cx="29" cy="40" r="2.3" fill="#fbbf24"/><circle class="xt-b" cx="22" cy="30" r="2.2" fill="#60a5fa"/><circle class="xt-b" cx="27" cy="22" r="2" fill="#f472b6"/><circle class="xt-b" cx="17" cy="23" r="2" fill="#fde047"/><path class="xt-star" d="M22 0.5l1.6 3.3 3.6.5-2.6 2.5.6 3.6L22 8.7l-3.2 1.7.6-3.6-2.6-2.5 3.6-.5z" fill="#fcd34d"/></svg><span>Гацуур чимэглэх</span></button>
           </nav>
 
           <!-- Right: Identically Styled Primary Action Buttons & Mobile Menu Toggle -->
@@ -1415,10 +1761,9 @@
     <!-- Mobile Dropdown Navigation -->
     <div id="mobile-menu" class="hidden xl:hidden bg-white/95 backdrop-blur-xl border-b border-slate-200 px-5 py-4 space-y-1.5 shadow-lg">
       <a href="#home" onclick="toggleMobileMenu()" class="block px-3.5 py-2.5 rounded-xl font-bold text-slate-700 hover:bg-indigo-50 hover:text-indigo-600 transition-colors">Нүүр</a>
-      <a href="#events-calendar" onclick="toggleMobileMenu()" class="block px-3.5 py-2.5 rounded-xl font-bold text-slate-700 hover:bg-indigo-50 hover:text-indigo-600 transition-colors">Үйл ажиллагаа</a>
       <a href="sain-hicheel.html" onclick="toggleMobileMenu()" class="block px-3.5 py-2.5 rounded-xl font-bold text-slate-700 hover:bg-indigo-50 hover:text-indigo-600 transition-colors">Сайн хичээл</a>
-      <a href="#news" onclick="toggleMobileMenu()" class="block px-3.5 py-2.5 rounded-xl font-bold text-slate-700 hover:bg-indigo-50 hover:text-indigo-600 transition-colors">Мэдээ</a>
       <a href="#gallery" onclick="toggleMobileMenu()" class="block px-3.5 py-2.5 rounded-xl font-bold text-slate-700 hover:bg-indigo-50 hover:text-indigo-600 transition-colors">Зургийн цомог</a>
+      <button type="button" onclick="toggleMobileMenu();openXmasTree()" class="xt-btn w-full text-left px-3.5 py-2.5 rounded-xl font-bold text-emerald-800 bg-emerald-50 hover:bg-emerald-100 transition-colors"><svg class="xt-mini" viewBox="0 0 44 52" aria-hidden="true" focusable="false"><path d="M22 22L40 45H4Z" fill="#15803d"/><path d="M22 13L36 33H8Z" fill="#16a34a"/><path d="M22 5L32 21H12Z" fill="#22c55e"/><path d="M4 45L40 45" stroke="#e8f5ff" stroke-width="2.2" stroke-linecap="round" opacity=".9"/><rect x="19" y="45" width="6" height="6" rx="1" fill="#92400e"/><circle class="xt-b" cx="16" cy="38" r="2.3" fill="#f43f5e"/><circle class="xt-b" cx="29" cy="40" r="2.3" fill="#fbbf24"/><circle class="xt-b" cx="22" cy="30" r="2.2" fill="#60a5fa"/><circle class="xt-b" cx="27" cy="22" r="2" fill="#f472b6"/><circle class="xt-b" cx="17" cy="23" r="2" fill="#fde047"/><path class="xt-star" d="M22 0.5l1.6 3.3 3.6.5-2.6 2.5.6 3.6L22 8.7l-3.2 1.7.6-3.6-2.6-2.5 3.6-.5z" fill="#fcd34d"/></svg><span>Гацуур чимэглэх</span></button>
     </div>
   </header>
 
@@ -1483,66 +1828,70 @@
   <section id="about" class="py-10 sm:py-14 relative z-10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="glass-card rounded-[2rem] p-6 sm:p-10 shadow-xl reveal space-y-7">
-        <!-- Animated School Mission & Objectives Showcase (above director's greeting) -->
-        <div id="mission-showcase" class="mission-aurora relative rounded-[1.75rem] overflow-hidden p-5 sm:p-8 border border-white/80">
-          <span class="ms-blob ms-blob-1"></span>
-          <span class="ms-blob ms-blob-2"></span>
-          <span class="ms-blob ms-blob-3"></span>
-          <span class="ms-sparkle" style="left:8%;animation-delay:0s;animation-duration:7s"></span><span class="ms-sparkle" style="left:22%;animation-delay:2.2s;animation-duration:8s"></span><span class="ms-sparkle" style="left:38%;animation-delay:4.1s;animation-duration:6.5s"></span><span class="ms-sparkle" style="left:55%;animation-delay:1.1s;animation-duration:7.5s"></span><span class="ms-sparkle" style="left:70%;animation-delay:3.3s;animation-duration:8s"></span><span class="ms-sparkle" style="left:86%;animation-delay:5.2s;animation-duration:6.8s"></span><span class="ms-sparkle" style="left:94%;animation-delay:0.6s;animation-duration:7.2s"></span>
+        <!-- School Mission & Objectives — light pastel showcase (v2) -->
+        <div id="mission-showcase" class="mission-v2 relative rounded-[1.75rem] overflow-hidden px-5 py-7 sm:px-8 sm:py-9">
+          <div class="mv-bg" aria-hidden="true"><span class="mv-blob mv-b1"></span><span class="mv-blob mv-b2"></span><span class="mv-blob mv-b3"></span><span class="mv-spark mv-s1"></span><span class="mv-spark mv-s2"></span><span class="mv-spark mv-s3"></span><span class="mv-spark mv-s4"></span></div>
 
           <div class="relative z-10">
             <div class="flex flex-col items-center text-center gap-4">
-              <div class="ms-badge">
-                <svg class="ms-badge-star w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <div class="mv-badge">
+                <svg class="mv-badge-star w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
                 <span>Эрхэм зорилго</span>
               </div>
-              <p class="font-heading font-extrabold text-base sm:text-xl lg:text-2xl leading-snug max-w-3xl">
-                <span class="text-indigo-300 font-black mr-1">«</span><span class="ms-word" style="animation-delay:0.0s,0.0s">Шинийг</span> <span class="ms-word" style="animation-delay:0.18s,0.18s">сэтгэж,</span> <span class="ms-word" style="animation-delay:0.36s,0.36s">бүтээлчээр</span> <span class="ms-word" style="animation-delay:0.54s,0.54s">манлайлах</span> <span class="ms-word" style="animation-delay:0.72s,0.72s">—</span> <span class="ms-word" style="animation-delay:0.9s,0.9s">эрдэм</span> <span class="ms-word" style="animation-delay:1.08s,1.08s">мэдлэгтэй,</span> <span class="ms-word" style="animation-delay:1.26s,1.26s">эрхэм</span> <span class="ms-word" style="animation-delay:1.44s,1.44s">5</span> <span class="ms-word" style="animation-delay:1.62s,1.62s">соёлыг</span> <span class="ms-word" style="animation-delay:1.8s,1.8s">дээдлэгч,</span> <span class="ms-word" style="animation-delay:1.98s,1.98s">хариуцлагатай</span> <span class="ms-word" style="animation-delay:2.16s,2.16s">иргэнийг</span> <span class="ms-word" style="animation-delay:2.34s,2.34s">төлөвшүүлнэ.</span><span class="text-indigo-300 font-black ml-1">»</span>
+              <p class="mv-quote font-heading font-extrabold text-base sm:text-xl lg:text-2xl leading-snug max-w-3xl">
+                <span class="mv-qm">“</span><span class="ms-word mv-hl" style="animation-delay:0.00s">Шинийг</span> <span class="ms-word mv-hl" style="animation-delay:0.12s">сэтгэж,</span> <span class="ms-word mv-hl" style="animation-delay:0.24s">бүтээлчээр</span> <span class="ms-word mv-hl" style="animation-delay:0.36s">манлайлах</span> <span class="ms-word" style="animation-delay:0.48s">—</span> <span class="ms-word" style="animation-delay:0.60s">эрдэм</span> <span class="ms-word" style="animation-delay:0.72s">мэдлэгтэй,</span> <span class="ms-word" style="animation-delay:0.84s">эрхэм</span> <span class="ms-word" style="animation-delay:0.96s">5</span> <span class="ms-word" style="animation-delay:1.08s">соёлыг</span> <span class="ms-word" style="animation-delay:1.20s">дээдлэгч,</span> <span class="ms-word" style="animation-delay:1.32s">хариуцлагатай</span> <span class="ms-word" style="animation-delay:1.44s">иргэнийг</span> <span class="ms-word" style="animation-delay:1.56s">төлөвшүүлнэ.</span><span class="mv-qm">”</span>
               </p>
+              <span class="mv-underline" aria-hidden="true"></span>
             </div>
 
-            <div id="school-objectives-grid" class="grid sm:grid-cols-3 gap-3.5 mt-6">
-            <div onclick="setActiveObjective(0)" class="objective-card obj-glass obj-active rounded-2xl p-4 cursor-pointer">
-              <span class="obj-num">01</span>
-              <div class="flex items-center gap-2.5 mb-2 relative">
-                <div class="obj-icon w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-400 to-sky-400 text-white flex items-center justify-center shrink-0 shadow-sm" style="animation-delay:0.0s">
-                  <svg class="w-[18px] h-[18px]" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+            <div id="school-objectives-grid" class="grid sm:grid-cols-3 gap-3.5 sm:gap-4 mt-7">
+            <div onclick="setActiveObjective(0)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();setActiveObjective(0);}" class="objective-card mv-card mv-indigo obj-active" style="--i:0">
+              <span class="mv-glow" aria-hidden="true"></span>
+              <span class="mv-num" aria-hidden="true">01</span>
+              <div class="relative flex items-center gap-3 mb-2.5">
+                <div class="mv-ico-wrap">
+                  <svg class="mv-ring" viewBox="0 0 52 52" aria-hidden="true"><circle class="mv-ring-bg" cx="26" cy="26" r="23"/><circle class="mv-ring-fg" cx="26" cy="26" r="23"/></svg>
+                  <div class="mv-ico obj-icon"><svg class="w-[19px] h-[19px]" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg></div>
                 </div>
-                <div>
-                  <span class="text-[10px] font-extrabold uppercase tracking-wider text-indigo-500 block leading-none">Зорилт 01</span>
-                  <h3 class="font-heading font-extrabold text-xs sm:text-sm text-slate-800 mt-0.5">Чанартай сургалт</h3>
+                <div class="min-w-0">
+                  <span class="mv-kicker">Зорилт 01</span>
+                  <h3 class="mv-title">Чанартай сургалт</h3>
                 </div>
               </div>
-              <p class="text-xs text-slate-600 leading-relaxed relative">Хүүхэд бүрийн авьяасыг нээх, судалгаа ба цахим технологид суурилсан чанартай сургалтыг хэрэгжүүлнэ.</p>
-              <div class="objective-progress"></div>
+              <p class="mv-text">Хүүхэд бүрийн авьяасыг нээх, судалгаа ба цахим технологид суурилсан чанартай сургалтыг хэрэгжүүлнэ.</p>
+              <div class="mv-dots" aria-hidden="true"><i></i><i></i><i></i></div>
             </div>
-            <div onclick="setActiveObjective(1)" class="objective-card obj-glass rounded-2xl p-4 cursor-pointer">
-              <span class="obj-num">02</span>
-              <div class="flex items-center gap-2.5 mb-2 relative">
-                <div class="obj-icon w-9 h-9 rounded-xl bg-gradient-to-br from-fuchsia-400 to-rose-400 text-white flex items-center justify-center shrink-0 shadow-sm" style="animation-delay:0.6s">
-                  <svg class="w-[18px] h-[18px]" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+            <div onclick="setActiveObjective(1)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();setActiveObjective(1);}" class="objective-card mv-card mv-rose" style="--i:1">
+              <span class="mv-glow" aria-hidden="true"></span>
+              <span class="mv-num" aria-hidden="true">02</span>
+              <div class="relative flex items-center gap-3 mb-2.5">
+                <div class="mv-ico-wrap">
+                  <svg class="mv-ring" viewBox="0 0 52 52" aria-hidden="true"><circle class="mv-ring-bg" cx="26" cy="26" r="23"/><circle class="mv-ring-fg" cx="26" cy="26" r="23"/></svg>
+                  <div class="mv-ico obj-icon"><svg class="w-[19px] h-[19px]" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg></div>
                 </div>
-                <div>
-                  <span class="text-[10px] font-extrabold uppercase tracking-wider text-fuchsia-500 block leading-none">Зорилт 02</span>
-                  <h3 class="font-heading font-extrabold text-xs sm:text-sm text-slate-800 mt-0.5">Эрхэм 5 соёл</h3>
+                <div class="min-w-0">
+                  <span class="mv-kicker">Зорилт 02</span>
+                  <h3 class="mv-title">Эрхэм 5 соёл</h3>
                 </div>
               </div>
-              <p class="text-xs text-slate-600 leading-relaxed relative">Хүндэтгэлтэй харилцаа, цаг баримтлал, ухаалаг утасгүй цэвэр орчныг сургуулийн өдөр тутмын соёл болгоно.</p>
-              <div class="objective-progress"></div>
+              <p class="mv-text">Хүндэтгэлтэй харилцаа, цаг баримтлал, ухаалаг утасгүй цэвэр орчныг сургуулийн өдөр тутмын соёл болгоно.</p>
+              <div class="mv-dots" aria-hidden="true"><i></i><i></i><i></i></div>
             </div>
-            <div onclick="setActiveObjective(2)" class="objective-card obj-glass rounded-2xl p-4 cursor-pointer">
-              <span class="obj-num">03</span>
-              <div class="flex items-center gap-2.5 mb-2 relative">
-                <div class="obj-icon w-9 h-9 rounded-xl bg-gradient-to-br from-cyan-400 to-teal-400 text-white flex items-center justify-center shrink-0 shadow-sm" style="animation-delay:1.2s">
-                  <svg class="w-[18px] h-[18px]" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            <div onclick="setActiveObjective(2)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();setActiveObjective(2);}" class="objective-card mv-card mv-teal" style="--i:2">
+              <span class="mv-glow" aria-hidden="true"></span>
+              <span class="mv-num" aria-hidden="true">03</span>
+              <div class="relative flex items-center gap-3 mb-2.5">
+                <div class="mv-ico-wrap">
+                  <svg class="mv-ring" viewBox="0 0 52 52" aria-hidden="true"><circle class="mv-ring-bg" cx="26" cy="26" r="23"/><circle class="mv-ring-fg" cx="26" cy="26" r="23"/></svg>
+                  <div class="mv-ico obj-icon"><svg class="w-[19px] h-[19px]" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg></div>
                 </div>
-                <div>
-                  <span class="text-[10px] font-extrabold uppercase tracking-wider text-teal-500 block leading-none">Зорилт 03</span>
-                  <h3 class="font-heading font-extrabold text-xs sm:text-sm text-slate-800 mt-0.5">Хамтын хөгжил</h3>
+                <div class="min-w-0">
+                  <span class="mv-kicker">Зорилт 03</span>
+                  <h3 class="mv-title">Хамтын хөгжил</h3>
                 </div>
               </div>
-              <p class="text-xs text-slate-600 leading-relaxed relative">Багш, сурагч, эцэг эхийн нээлттэй түншлэлээр хүүхдэд ээлтэй, аюулгүй хөгжлийн орчныг бүрдүүлнэ.</p>
-              <div class="objective-progress"></div>
+              <p class="mv-text">Багш, сурагч, эцэг эхийн нээлттэй түншлэлээр хүүхдэд ээлтэй, аюулгүй хөгжлийн орчныг бүрдүүлнэ.</p>
+              <div class="mv-dots" aria-hidden="true"><i></i><i></i><i></i></div>
             </div>
             </div>
           </div>
@@ -2039,7 +2388,7 @@
       <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/85">
         <div class="flex flex-col gap-1">
           <p>© 2026 Мандал сумын Ерөнхий боловсролын 4-р сургууль. Бүх эрх хуулиар хамгаалагдсан.</p>
-          <span class="text-[10px] text-white/50">хувилбар 3.18</span>
+          <span class="text-[10px] text-white/50">хувилбар 3.19</span>
         </div>
 
         <button
@@ -2101,8 +2450,9 @@
       </button>
 
       <!-- Multi-Image Carousel Wrapper -->
-      <div id="reader-gallery-wrapper" class="relative bg-slate-900">
-        <img id="reader-image" src="" alt="" class="w-full h-64 sm:h-96 object-cover block" />
+      <div id="reader-gallery-wrapper" class="relative bg-slate-900 media-frame">
+        <img id="reader-image-bg" src="" alt="" aria-hidden="true" class="mf-bg" />
+        <img id="reader-image" src="" alt="" onload="fitPortrait(this)" class="mf-fg w-full h-72 sm:h-[26rem] object-cover block" />
 
         <button
           id="reader-prev-btn"
@@ -2459,14 +2809,66 @@
           </button>
         </div>
         <p id="firebase-error-desc" class="text-[11px] text-amber-800 leading-relaxed">
-          <strong>surguuliinsite</strong> төслийн Firebase Console → <strong>Firestore Database → Rules</strong> хэсэгт доорх дүрмийг хуулж <strong>Publish</strong> дарна уу:
+          <strong>surguuliinsite</strong> төслийн Firebase Console → <strong>Firestore Database → Rules</strong> хэсэгт доорх дүрмийг хуулж <strong>Publish</strong> дарна уу. Гацуурын сэтгэгдэл устгахын тулд <strong>admin_secrets</strong> collection-д <strong>tree</strong> баримт үүсгэж, <strong>key</strong> (string) талбарт нууц түлхүүрээ бичнэ:
         </p>
-        <pre id="firestore-rules-snippet" class="p-2.5 rounded-xl bg-slate-900 text-emerald-300 font-mono text-[11px] overflow-x-auto select-all">rules_version = '2';
+        <pre id="firestore-rules-snippet" class="p-2.5 rounded-xl bg-slate-900 text-emerald-300 font-mono text-[11px] overflow-x-auto max-h-56 overflow-y-auto select-all">rules_version = '2';
+
+// ============================================================================
+// Мандал 4-р сургуулийн сайт — Firestore Rules (хувилбар 3.19)
+// Firebase Console → Firestore Database → Rules → энэ бүх текстийг хуулж → Publish
+// ============================================================================
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write: if true;
+
+    // ---------- Сайтын үндсэн өгөгдөл (өмнөх шигээ ажиллана) ----------
+    // АНХААР: сайт Firebase Auth ашигладаггүй тул эдгээрийг одоохондоо нээлттэй үлдээв.
+    match /settings/{docId}     { allow read, write: if true; }
+    match /events/{docId}       { allow read, write: if true; }
+    match /posts/{docId}        { allow read, write: if true; }
+    match /gallery/{docId}      { allow read, write: if true; }
+    match /good_lessons/{docId} { allow read, write: if true; }
+    match /attendance/{docId}   { allow read, write: if true; }
+
+    // ---------- Талархлын гацуур ----------
+    function validWish(d) {
+      return d.keys().hasOnly(['to', 'from', 'message', 'style', 'color', 'slot', 'ts', 'createdAt'])
+        &amp;&amp; d.keys().hasAll(['to', 'message', 'style', 'color', 'slot', 'ts', 'createdAt'])
+        &amp;&amp; d.to is string &amp;&amp; d.to.size() &gt;= 1 &amp;&amp; d.to.size() &lt;= 40
+        &amp;&amp; (!('from' in d) || (d.from is string &amp;&amp; d.from.size() &lt;= 40))
+        &amp;&amp; d.message is string &amp;&amp; d.message.size() &gt;= 2 &amp;&amp; d.message.size() &lt;= 240
+        &amp;&amp; d.style in ['ball', 'star', 'bell', 'candy', 'gift', 'snow', 'heart', 'drop']
+        &amp;&amp; d.color is string &amp;&amp; d.color.matches('^#[0-9a-fA-F]{6}$')
+        &amp;&amp; d.slot is int &amp;&amp; d.slot &gt;= 0 &amp;&amp; d.slot &lt; 400
+        &amp;&amp; d.ts is number
+        &amp;&amp; d.createdAt == request.time;
     }
+
+    match /tree_wishes/{wishId} {
+      allow read: if true;                                   // хүн бүр гацуурыг харна
+      allow create: if validWish(request.resource.data);     // зөвхөн зөв хэлбэртэй сэтгэгдэл
+      allow update: if false;                                // өлгөсөн сэтгэгдлийг засахгүй
+      // Устгах: админ нэг batch-аар tree_deletions/{wishId}-г зөв түлхүүртэй үүсгэсэн үед л
+      allow delete: if existsAfter(/databases/$(database)/documents/tree_deletions/$(wishId));
+    }
+
+    // Устгалтын бүртгэл — түлхүүр admin_secrets/tree.key-тэй таарах ёстой. Хэн ч уншиж чадахгүй.
+    match /tree_deletions/{wishId} {
+      allow read: if false;
+      allow create: if request.resource.data.keys().hasOnly(['key', 'at'])
+        &amp;&amp; request.resource.data.at == request.time
+        &amp;&amp; request.resource.data.key is string
+        &amp;&amp; request.resource.data.key == get(/databases/$(database)/documents/admin_secrets/tree).data.key
+        &amp;&amp; exists(/databases/$(database)/documents/tree_wishes/$(wishId));
+      allow update, delete: if false;
+    }
+
+    // Нууц түлхүүр — зөвхөн Firebase Console-оос гараар үүсгэнэ, сайтаас уншигдахгүй
+    match /admin_secrets/{docId} {
+      allow read, write: if false;
+    }
+
+    // Дээр нэрлэгдээгүй бусад бүх collection хаалттай.
+    // medee.html, sain-hicheel.html өөр collection ашигладаг бол дээр нэмнэ үү.
   }
 }</pre>
       </div>
@@ -2546,6 +2948,13 @@ service cloud.firestore {
           class="admin-tab-btn px-3.5 py-2.5 rounded-t-xl text-xs sm:text-sm font-bold border-b-2 transition-all cursor-pointer"
         >
           Зургийн цомог
+        </button>
+        <button
+          onclick="switchAdminTab('tab-tree')"
+          data-tab="tab-tree"
+          class="admin-tab-btn px-3.5 py-2.5 rounded-t-xl text-xs sm:text-sm font-bold border-b-2 transition-all cursor-pointer"
+        >
+          Гацуур
         </button>
       </div>
 
@@ -3218,6 +3627,34 @@ service cloud.firestore {
             <div id="admin-gallery-list" class="grid sm:grid-cols-2 gap-3"></div>
           </div>
         </div>
+
+        <!-- TAB 5: GRATITUDE TREE MODERATION (Талархлын гацуурын сэтгэгдэл устгах) -->
+        <div id="tab-tree" class="admin-tab-panel hidden space-y-5">
+          <div class="p-5 rounded-2xl bg-gradient-to-r from-emerald-50 via-teal-50 to-sky-50 border border-emerald-100">
+            <h4 class="font-heading font-extrabold text-base text-slate-900">Талархлын гацуурын сэтгэгдлүүд</h4>
+            <p class="text-xs sm:text-sm text-slate-600 mt-1">Зохисгүй, давхардсан сэтгэгдлийг эндээс устгана. Устгасан даруйд бүх хүний гацуураас алга болно.</p>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-white border border-slate-200 space-y-2">
+            <label for="tree-admin-key" class="block text-xs font-extrabold text-slate-800">Устгах нууц түлхүүр</label>
+            <div class="flex items-center gap-2">
+              <input id="tree-admin-key" type="password" autocomplete="off" placeholder="Firestore → admin_secrets → tree → key утга"
+                class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-sm font-semibold focus:outline-none focus:border-emerald-500" />
+              <button type="button" onclick="saveTreeAdminKey()" class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-extrabold shrink-0 cursor-pointer transition-colors">Хадгалах</button>
+            </div>
+            <p id="tree-admin-key-hint" class="text-[11px] font-semibold text-slate-500">Түлхүүр зөвхөн энэ хөтчийн нээлттэй сешнд хадгалагдана (хаахад арилна).</p>
+          </div>
+
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <h4 class="font-heading font-extrabold text-base text-slate-900">
+              Өлгөсөн талархлууд (<span id="manage-tree-count" class="text-emerald-600">0</span>)
+            </h4>
+            <span id="tree-admin-status" class="text-[11px] font-bold text-slate-500">Хүлээж байна...</span>
+          </div>
+          <input id="tree-admin-search" type="search" oninput="renderAdminTreeWishes()" placeholder="Хайх: хэнд, хэнээс, үг..."
+            class="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-sm font-semibold focus:outline-none focus:border-emerald-500" />
+          <div id="admin-tree-list" class="space-y-2.5"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -3229,7 +3666,7 @@ service cloud.firestore {
   <div id="attendance-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-2 sm:p-4 bg-slate-950/75 backdrop-blur-md overscroll-contain">
     <div class="bg-white rounded-3xl max-w-6xl w-full h-[94dvh] max-h-[94dvh] flex flex-col overflow-hidden shadow-2xl border border-white/60">
       <!-- Modal Header -->
-      <div class="liquid-gradient-bg px-4 sm:px-7 py-3 sm:py-4 text-white flex flex-wrap items-center justify-between gap-2 sm:gap-3 shrink-0">
+      <div id="att-head" class="liquid-gradient-bg px-4 sm:px-7 py-3 sm:py-4 text-white flex flex-wrap items-center justify-between gap-2 sm:gap-3 shrink-0">
         <div class="space-y-0.5">
           <div class="flex flex-wrap items-center gap-2">
             <h3 class="font-heading font-extrabold text-lg sm:text-2xl tracking-tight">Сурагчдын ирцийн мэдээлэл</h3>
@@ -3250,7 +3687,7 @@ service cloud.firestore {
           <button
             type="button"
             onclick="openAttendancePrintModal()"
-            class="px-3.5 py-2 rounded-xl bg-white/20 hover:bg-white/30 backdrop-blur-md border border-white/30 text-white text-xs font-extrabold flex items-center gap-1.5 transition-all cursor-pointer"
+            class="att-head-ghost px-3.5 py-2 rounded-xl bg-white/20 hover:bg-white/30 backdrop-blur-md border border-white/30 text-white text-xs font-extrabold flex items-center gap-1.5 transition-all cursor-pointer"
           >
             <span>Хэвлэх</span>
           </button>
@@ -3258,7 +3695,7 @@ service cloud.firestore {
             type="button"
             onclick="closeAttendanceModal()"
             aria-label="Хаах"
-            class="w-9 h-9 rounded-full bg-white/20 hover:bg-rose-500 flex items-center justify-center transition-colors cursor-pointer"
+            class="att-head-ghost w-9 h-9 rounded-full bg-white/20 hover:bg-rose-500 flex items-center justify-center transition-colors cursor-pointer"
           >
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -3444,38 +3881,21 @@ service cloud.firestore {
 
         <!-- Edit View (Unlocked via code 20262027) -->
         <div id="att-edit-view" class="hidden space-y-3">
-          <div class="p-3 rounded-2xl bg-indigo-50 border border-indigo-200 text-xs font-bold text-indigo-900">
-            <strong>Ирц оруулах горим:</strong> <strong>− / +</strong> товчоор хурдан тохируулж эсвэл тоон дээр дарж бичнэ үү. <strong>Тасалсан</strong> хэсэгт тоо нэмэхэд сурагчдын нэр бичих талбар шууд гарч ирнэ.
+          <div class="px-3.5 py-3 rounded-2xl bg-sky-50/70 border border-sky-100 text-[13px] leading-relaxed font-semibold text-slate-700">
+            <strong class="text-slate-900">Ирц бичих:</strong> ① доороос <strong class="text-amber-700">Өглөө</strong> эсвэл <strong class="text-indigo-700">Өдөр</strong> ээлжээ сонгоно → ② анги бүр дээр <strong class="text-slate-900">+ / −</strong> товчоор тоо оруулна → ③ доод талын товчоор хадгална. Тасалсан сурагчийн нэр бичих талбар автоматаар гарна.
           </div>
 
-          <!-- Sticky Shift Tabs & Quick Grade Jump Bar (Mobile-Friendly) -->
-          <div id="att-edit-sticky-bar" class="sticky top-0 z-20 -mx-4 sm:-mx-6 px-4 sm:px-6 py-2.5 bg-white/95 backdrop-blur-md border-y border-slate-200 shadow-xs space-y-2">
-            <div class="grid grid-cols-3 gap-1.5">
-              <button
-                type="button"
-                id="att-eshift-morning"
-                onclick="setAttendanceEditShift('morning')"
-                class="py-2 px-2 rounded-xl text-xs font-heading font-extrabold border transition-all cursor-pointer"
-              >
-                Өглөөний ээлж
-              </button>
-              <button
-                type="button"
-                id="att-eshift-afternoon"
-                onclick="setAttendanceEditShift('afternoon')"
-                class="py-2 px-2 rounded-xl text-xs font-heading font-extrabold border transition-all cursor-pointer"
-              >
-                Өдрийн ээлж
-              </button>
-              <button
-                type="button"
-                id="att-eshift-all"
-                onclick="setAttendanceEditShift('all')"
-                class="py-2 px-2 rounded-xl text-xs font-heading font-extrabold border transition-all cursor-pointer"
-              >
-                Бүх анги
-              </button>
+          <!-- Sticky shift chooser (large, easy to notice) -->
+          <div id="att-edit-sticky-bar" class="sticky top-0 z-20 -mx-4 sm:-mx-6 px-4 sm:px-6 py-3 border-y space-y-2.5">
+            <div class="flex items-center justify-between gap-2">
+              <p class="text-sm font-heading font-extrabold text-slate-900">Ямар ээлжийн ирц бичих вэ?</p>
+              <button type="button" id="att-eshift-all" onclick="setAttendanceEditShift('all')" class="att-allbtn">Бүх анги</button>
             </div>
+            <div class="grid grid-cols-2 gap-2">
+              <button type="button" id="att-eshift-morning" onclick="setAttendanceEditShift('morning')"></button>
+              <button type="button" id="att-eshift-afternoon" onclick="setAttendanceEditShift('afternoon')"></button>
+            </div>
+            <div id="att-shift-now" class="att-now" role="status" aria-live="polite"></div>
             <div id="att-edit-grade-pills" class="flex items-center gap-1.5 overflow-x-auto pb-0.5 no-scrollbar"></div>
           </div>
 
@@ -3486,7 +3906,7 @@ service cloud.firestore {
       </div>
 
       <!-- Footer Action Bar -->
-      <div class="px-4 sm:px-6 py-3 bg-slate-50 border-t border-slate-200 flex flex-wrap items-center justify-between gap-2.5 shrink-0">
+      <div id="att-footer-bar" class="px-4 sm:px-6 py-3 bg-slate-50 border-t border-slate-200 flex flex-wrap items-center justify-between gap-2.5 shrink-0" style="padding-bottom: max(0.75rem, env(safe-area-inset-bottom));">
         <div id="att-footer-public" class="w-full flex flex-wrap items-center justify-between gap-3">
           <span id="att-footer-hint" class="text-xs font-bold text-slate-500">
             Бүх өдрийн ирц нээлттэй харагдана • Ирц оруулах бол багшийн код шаардлагатай
@@ -3501,19 +3921,19 @@ service cloud.firestore {
           </button>
         </div>
 
-        <div id="att-footer-edit" class="hidden w-full flex flex-wrap items-center justify-between gap-3">
+        <div id="att-footer-edit" class="hidden w-full flex items-center justify-between gap-2.5">
           <button
             type="button"
             onclick="exitAttendanceEditMode()"
-            class="px-4 py-2.5 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-800 font-heading font-bold text-xs sm:text-sm cursor-pointer transition-colors"
+            class="px-4 py-3 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 font-heading font-bold text-xs sm:text-sm cursor-pointer transition-colors shrink-0"
           >
-            ← Харах горим руу буцах
+            ← <span class="hidden sm:inline">Харах горим руу </span>буцах
           </button>
           <button
             type="button"
             id="att-save-btn"
             onclick="saveCurrentAttendanceDay()"
-            class="btn-attendance-animated px-7 py-2.5 rounded-xl font-heading font-extrabold text-xs sm:text-sm flex items-center gap-2 cursor-pointer"
+            class="btn-attendance-animated flex-1 sm:flex-none justify-center px-7 py-3 rounded-xl font-heading font-extrabold text-sm flex items-center gap-2 cursor-pointer"
           >
             <span>Ирц хадгалах</span>
           </button>
@@ -3774,6 +4194,469 @@ service cloud.firestore {
   <!-- ========================================================================
        TOAST NOTIFICATION CONTAINER
        ======================================================================== -->
+  <!-- ========================================================================
+       GRATITUDE FIR TREE (Талархлын гацуур)
+       ======================================================================== -->
+  <div id="xm-modal" class="xm-modal" role="dialog" aria-modal="true" aria-label="Талархлын гацуур">
+    <div class="xm-snow" aria-hidden="true">
+      <i style="--l:4%;--s:4px;--d:11s;--dl:-1s"></i><i style="--l:12%;--s:6px;--d:14s;--dl:-6s"></i><i style="--l:21%;--s:3px;--d:10s;--dl:-3s"></i><i style="--l:30%;--s:5px;--d:13s;--dl:-9s"></i>
+      <i style="--l:39%;--s:4px;--d:12s;--dl:-4s"></i><i style="--l:47%;--s:6px;--d:15s;--dl:-11s"></i><i style="--l:55%;--s:3px;--d:10s;--dl:-7s"></i><i style="--l:63%;--s:5px;--d:13s;--dl:-2s"></i>
+      <i style="--l:71%;--s:4px;--d:12s;--dl:-8s"></i><i style="--l:79%;--s:6px;--d:14s;--dl:-5s"></i><i style="--l:87%;--s:3px;--d:11s;--dl:-10s"></i><i style="--l:94%;--s:5px;--d:13s;--dl:-1.5s"></i>
+    </div>
+
+    <div class="xm-top">
+      <div>
+        <div class="xm-title">Талархлын гацуур</div>
+        <div class="xm-sub">Чимэглэл бүр дээр талархлын үг нуугдаж байна — дарж уншаарай</div>
+      </div>
+      <button type="button" class="xm-close" onclick="closeXmasTree()" aria-label="Хаах">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+
+    <div class="xm-body">
+      <div class="xm-stage">
+        <span id="xm-count" class="xm-count">Чимэглэл: 0</span>
+        <svg id="xm-tree" class="xm-tree" viewBox="0 0 600 780" role="img" aria-label="Шинэ жилийн гацуур"></svg>
+      </div>
+
+      <aside id="xm-panel" class="xm-panel" aria-label="Талархал өлгөх">
+        <div class="xm-grab"></div>
+        <div class="xm-ph">
+          <h3>Талархал өлгөх</h3>
+          <button type="button" class="xm-pclose" onclick="xmPanel(false)" aria-label="Хаах">✕</button>
+        </div>
+        <div id="xm-prev" class="xm-prev"></div>
+
+        <span class="xm-lbl">1. Чимэглэлийн загвар</span>
+        <div id="xm-styles" class="xm-styles"></div>
+
+        <span class="xm-lbl">2. Өнгө</span>
+        <div id="xm-swatches" class="xm-swatches"></div>
+
+        <form id="xm-form" autocomplete="off" novalidate>
+          <label class="xm-lbl" for="xm-to">3. Хэнд талархаж байна вэ?</label>
+          <input id="xm-to" class="xm-in" maxlength="40" placeholder="Жишээ нь: Бат багш, 9а анги, захирал..." />
+
+          <label class="xm-lbl" for="xm-msg">4. Талархлын үг</label>
+          <textarea id="xm-msg" class="xm-in" maxlength="240" placeholder="Сайхан үг, баярлалаа гэж бичээрэй..."></textarea>
+          <div class="xm-cnt"><span id="xm-msg-n">0</span>/240</div>
+
+          <label class="xm-lbl" for="xm-from">5. Таны нэр <span style="font-weight:600;color:#94a3b8">(заавал биш)</span></label>
+          <input id="xm-from" class="xm-in" maxlength="40" placeholder="Нэргүй үлдээж болно" />
+
+          <button type="submit" class="xm-submit">Гацуур дээр өлгөх</button>
+          <div id="xm-note" class="xm-note" role="status" aria-live="polite"></div>
+        </form>
+      </aside>
+    </div>
+
+    <button id="xm-fab" type="button" class="xm-fab" onclick="xmPanel(true)">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+      Талархал өлгөх
+    </button>
+
+    <div id="xm-reader" class="xm-reader" onclick="if(event.target===this)xmCloseReader()">
+      <div class="xm-card" role="document">
+        <div class="xm-card-top"><div id="xm-card-orn"></div></div>
+        <div class="xm-to" id="xm-card-to"></div>
+        <div class="xm-msg" id="xm-card-msg"></div>
+        <div class="xm-from" id="xm-card-from"></div>
+        <div class="xm-date" id="xm-card-date"></div>
+        <button type="button" class="xm-rclose" onclick="xmCloseReader()">Хаах</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    'use strict';
+    var NS = 'http://www.w3.org/2000/svg';
+    var CX = 300;
+    var $ = function (id) { return document.getElementById(id); };
+
+    /* ---------- colour helpers ---------- */
+    function rgb(h) { h = h.replace('#', ''); return [parseInt(h.substr(0, 2), 16), parseInt(h.substr(2, 2), 16), parseInt(h.substr(4, 2), 16)]; }
+    function mix(h, t, a) {
+      var c = rgb(h), d = rgb(t);
+      return '#' + [0, 1, 2].map(function (i) { return ('0' + Math.round(c[i] + (d[i] - c[i]) * a).toString(16)).slice(-2); }).join('');
+    }
+    function dark(h, a) { return mix(h, '#000000', a); }
+    function light(h, a) { return mix(h, '#ffffff', a); }
+    function starPath(cx, cy, ro, ri) {
+      var d = '';
+      for (var i = 0; i < 10; i++) {
+        var r = i % 2 === 0 ? ro : ri, a = -Math.PI / 2 + i * Math.PI / 5;
+        d += (i ? 'L' : 'M') + (cx + r * Math.cos(a)).toFixed(2) + ' ' + (cy + r * Math.sin(a)).toFixed(2);
+      }
+      return d + 'Z';
+    }
+
+    /* ---------- ornament drawings (origin = hanging point, extends downward) ---------- */
+    var GOLD = '#e9b949';
+    var ORN = {
+      ball: function (c) {
+        return '<line x1="0" y1="-5" x2="0" y2="0" stroke="' + GOLD + '" stroke-width="1.6"/>' +
+          '<rect x="-4.5" y="0" width="9" height="6" rx="1.6" fill="' + GOLD + '"/>' +
+          '<circle cx="0" cy="23" r="17" fill="' + dark(c, 0.3) + '"/>' +
+          '<circle cx="-1.2" cy="21.8" r="15.6" fill="' + c + '"/>' +
+          '<path d="M-15.2 19.5Q0 26 15.2 19.5" fill="none" stroke="' + light(c, 0.6) + '" stroke-width="2.2" opacity=".8" stroke-linecap="round"/>' +
+          '<path d="M-16 26.5Q0 33.5 16 26.5" fill="none" stroke="' + light(c, 0.6) + '" stroke-width="2.2" opacity=".8" stroke-linecap="round"/>' +
+          '<ellipse cx="-6.5" cy="14.5" rx="4.6" ry="2.8" transform="rotate(-35 -6.5 14.5)" fill="#fff" opacity=".6"/>';
+      },
+      star: function (c) {
+        return '<line x1="0" y1="-5" x2="0" y2="6" stroke="' + GOLD + '" stroke-width="1.6"/>' +
+          '<path d="' + starPath(0, 25, 20, 8.6) + '" fill="' + dark(c, 0.22) + '" stroke="' + dark(c, 0.35) + '" stroke-width="1" stroke-linejoin="round"/>' +
+          '<path d="' + starPath(0, 25, 15, 6.2) + '" fill="' + c + '"/>' +
+          '<path d="' + starPath(0, 24, 7, 3) + '" fill="' + light(c, 0.7) + '" opacity=".85"/>';
+      },
+      bell: function (c) {
+        return '<line x1="0" y1="-5" x2="0" y2="6" stroke="' + GOLD + '" stroke-width="1.6"/>' +
+          '<circle cx="0" cy="6.5" r="3.4" fill="' + GOLD + '"/>' +
+          '<path d="M-14 36C-12 30 -11 24 -11 18C-11 11 -6 8 0 8C6 8 11 11 11 18C11 24 12 30 14 36Z" fill="' + c + '"/>' +
+          '<path d="M3 9.5C8 11 10 14 10 18C10 24 11 30 13 35L7 35C8 29 7 23 6 18C5.5 14 4.5 11 3 9.5Z" fill="' + dark(c, 0.25) + '" opacity=".6"/>' +
+          '<rect x="-15.5" y="35" width="31" height="5" rx="2.4" fill="' + dark(c, 0.22) + '"/>' +
+          '<path d="M-7.5 14C-9 18 -9 24 -9.5 29" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" opacity=".55"/>' +
+          '<circle cx="0" cy="43" r="3.6" fill="' + GOLD + '"/>';
+      },
+      candy: function (c) {
+        var p = 'M9.5 47V17A9.5 9.5 0 0 0 -9.5 17';
+        return '<line x1="0" y1="-5" x2="0" y2="7.5" stroke="' + GOLD + '" stroke-width="1.6"/>' +
+          '<path d="' + p + '" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round"/>' +
+          '<path d="' + p + '" fill="none" stroke="' + c + '" stroke-width="8" stroke-dasharray="4.6 6.4" stroke-dashoffset="2"/>' +
+          '<path d="M-9.5 17A9.5 9.5 0 0 1 0 7.5" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" opacity=".5" transform="translate(0 0)"/>';
+      },
+      gift: function (c) {
+        return '<line x1="0" y1="-5" x2="0" y2="10" stroke="' + GOLD + '" stroke-width="1.6"/>' +
+          '<rect x="-14" y="17" width="28" height="24" rx="2.6" fill="' + c + '"/>' +
+          '<rect x="-14" y="17" width="28" height="24" rx="2.6" fill="none" stroke="' + dark(c, 0.25) + '" stroke-width="1"/>' +
+          '<rect x="-16" y="12" width="32" height="8.5" rx="2.4" fill="' + dark(c, 0.16) + '"/>' +
+          '<rect x="-3.4" y="12" width="6.8" height="29" fill="#fde68a"/>' +
+          '<ellipse cx="-6.4" cy="9.4" rx="6" ry="3.6" transform="rotate(-24 -6.4 9.4)" fill="#fbbf24"/>' +
+          '<ellipse cx="6.4" cy="9.4" rx="6" ry="3.6" transform="rotate(24 6.4 9.4)" fill="#fbbf24"/>' +
+          '<circle cx="0" cy="11" r="2.8" fill="#f59e0b"/>';
+      },
+      snow: function (c) {
+        var s = '<line x1="0" y1="-5" x2="0" y2="6" stroke="' + GOLD + '" stroke-width="1.6"/>' +
+          '<circle cx="0" cy="25" r="19" fill="#fff" opacity=".16"/><g transform="translate(0 25)" stroke="' + c + '" stroke-width="2.6" stroke-linecap="round" fill="none">';
+        for (var k = 0; k < 3; k++) s += '<line x1="0" y1="-17" x2="0" y2="17" transform="rotate(' + (k * 60) + ')"/>';
+        for (var j = 0; j < 6; j++) s += '<path d="M-5.2 -12.6L0 -8L5.2 -12.6" stroke-width="2.2" transform="rotate(' + (j * 60) + ')"/>';
+        return s + '</g><circle cx="0" cy="25" r="3" fill="#fff"/>';
+      },
+      heart: function (c) {
+        return '<path d="M-5 9L0 -5L5 9" fill="none" stroke="' + GOLD + '" stroke-width="1.5" stroke-linejoin="round"/>' +
+          '<path d="M0 41C-21 28 -20 10 -9.5 9.6C-4.6 9.4 -1.2 12 0 15C1.2 12 4.6 9.4 9.5 9.6C20 10 21 28 0 41Z" fill="' + c + '"/>' +
+          '<path d="M0 41C-21 28 -20 10 -9.5 9.6" fill="none" stroke="' + dark(c, 0.2) + '" stroke-width="1" opacity=".5"/>' +
+          '<ellipse cx="-8.4" cy="17.5" rx="4.2" ry="2.6" transform="rotate(-40 -8.4 17.5)" fill="#fff" opacity=".6"/>';
+      },
+      drop: function (c) {
+        return '<line x1="0" y1="-5" x2="0" y2="7" stroke="' + GOLD + '" stroke-width="1.6"/>' +
+          '<rect x="-3.4" y="4" width="6.8" height="5" rx="1.4" fill="' + GOLD + '"/>' +
+          '<path d="M0 8C8 20 14 26 14 34A14 14 0 0 1 -14 34C-14 26 -8 20 0 8Z" fill="' + c + '"/>' +
+          '<path d="M0 8C8 20 14 26 14 34A14 14 0 0 1 0 48C9 44 11 38 9 31C7 24 4 17 0 8Z" fill="' + dark(c, 0.25) + '" opacity=".4"/>' +
+          '<ellipse cx="-5.5" cy="31" rx="2.8" ry="6" transform="rotate(10 -5.5 31)" fill="#fff" opacity=".55"/>';
+      }
+    };
+    var STYLES = [
+      { id: 'ball', n: 'Бөмбөлөг' }, { id: 'star', n: 'Од' }, { id: 'bell', n: 'Хонх' }, { id: 'candy', n: 'Чихрийн таяг' },
+      { id: 'gift', n: 'Бэлэг' }, { id: 'snow', n: 'Цасан ширхэг' }, { id: 'heart', n: 'Зүрх' }, { id: 'drop', n: 'Дусал' }
+    ];
+    var COLORS = [
+      { c: '#e11d48', n: 'Улаан' }, { c: '#f59e0b', n: 'Алтлаг' }, { c: '#2563eb', n: 'Цэнхэр' }, { c: '#ec4899', n: 'Ягаан' },
+      { c: '#cbd5e1', n: 'Мөнгөлөг' }, { c: '#7c3aed', n: 'Нил ягаан' }, { c: '#0d9488', n: 'Тэнгэр ногоон' }
+    ];
+    function ornSvg(style, color, w, h) {
+      return '<svg viewBox="-24 -9 48 62" width="' + w + '" height="' + h + '" aria-hidden="true">' + (ORN[style] || ORN.ball)(color) + '</svg>';
+    }
+
+    /* ---------- tree geometry ---------- */
+    var TIERS = [
+      { top: 330, bot: 650, hw: 262, c1: '#1f8a4c', c2: '#0e5a30' },
+      { top: 230, bot: 540, hw: 214, c1: '#25a05a', c2: '#117039' },
+      { top: 140, bot: 420, hw: 166, c1: '#2db46a', c2: '#157f45' },
+      { top: 62,  bot: 300, hw: 118, c1: '#3acb7c', c2: '#199853' }
+    ];
+    function edge(t) { return t.bot - 16; }
+    function scallops(t) {
+      var bx = edge(t), n = Math.round(t.hw / 34) + 2, step = 2 * t.hw / n, d = '';
+      for (var i = 0; i < n; i++) {
+        var x1 = CX + t.hw - step * i, x2 = x1 - step;
+        d += 'Q' + ((x1 + x2) / 2).toFixed(1) + ' ' + (t.bot + 8) + ' ' + x2.toFixed(1) + ' ' + bx + ' ';
+      }
+      return d;
+    }
+    function tierPath(t) {
+      var bx = edge(t), my = t.top + (bx - t.top) * 0.5;
+      return 'M' + CX + ' ' + t.top + ' Q' + (CX + t.hw * 0.62) + ' ' + my + ' ' + (CX + t.hw) + ' ' + bx + ' ' + scallops(t) +
+        'Q' + (CX - t.hw * 0.62) + ' ' + my + ' ' + CX + ' ' + t.top + 'Z';
+    }
+    function hwAt(y) {
+      var m = -1;
+      TIERS.forEach(function (t) {
+        var bx = edge(t);
+        if (y >= t.top && y <= bx) { var h = t.hw * (y - t.top) / (bx - t.top); if (h > m) m = h; }
+      });
+      return m;
+    }
+    function buildSlots() {
+      var out = [], row = 0;
+      for (var y = 136; y <= 626; y += 54, row++) {
+        var hw = hwAt(y) - 32;
+        if (hw < 6) continue;
+        var n = Math.floor(2 * hw / 58) + 1;
+        for (var i = 0; i < n; i++) {
+          var x = n === 1 ? CX : CX - hw + 2 * hw * (i / (n - 1));
+          var jx = ((i * 37 + row * 53) % 11) - 5, jy = ((i * 29 + row * 17) % 9) - 4;
+          out.push({ x: Math.round(x + jx), y: y + jy });
+        }
+      }
+      return out;
+    }
+    var SLOTS = buildSlots();
+
+    function treeMarkup() {
+      var s = '<defs>';
+      TIERS.forEach(function (t, i) {
+        s += '<linearGradient id="xtg' + i + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + t.c1 + '"/><stop offset="1" stop-color="' + t.c2 + '"/></linearGradient>';
+      });
+      s += '<linearGradient id="xtTrunk" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7c4a21"/><stop offset=".5" stop-color="#a0622d"/><stop offset="1" stop-color="#6b3d1a"/></linearGradient>' +
+        '<radialGradient id="xtHalo"><stop offset="0" stop-color="#fff3b0" stop-opacity=".95"/><stop offset=".45" stop-color="#fde047" stop-opacity=".35"/><stop offset="1" stop-color="#fde047" stop-opacity="0"/></radialGradient>' +
+        '<linearGradient id="xtStar" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff7c2"/><stop offset=".55" stop-color="#fcd34d"/><stop offset="1" stop-color="#f59e0b"/></linearGradient>' +
+        '</defs>';
+      /* trunk + snow ground */
+      s += '<rect x="270" y="636" width="60" height="96" rx="4" fill="url(#xtTrunk)"/>' +
+        '<ellipse cx="300" cy="748" rx="292" ry="30" fill="#cfe4f7"/><ellipse cx="300" cy="742" rx="262" ry="22" fill="#f4f9ff"/>';
+      /* tiers, bottom to top */
+      TIERS.forEach(function (t, i) {
+        var d = tierPath(t);
+        s += '<path d="' + d + '" transform="translate(0 7)" fill="rgba(4,30,18,.28)"/>' +
+          '<path d="' + d + '" fill="url(#xtg' + i + ')"/>' +
+          '<path d="M' + (CX + t.hw) + ' ' + edge(t) + ' ' + scallops(t) + '" fill="none" stroke="#eaf5ff" stroke-width="3.6" stroke-linecap="round" opacity=".9"/>' +
+          '<path d="M' + CX + ' ' + (t.top + 6) + ' Q' + (CX - t.hw * 0.5) + ' ' + (t.top + (edge(t) - t.top) * 0.45) + ' ' + (CX - t.hw + 14) + ' ' + (edge(t) - 8) + '" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".13"/>';
+      });
+      /* garland swags with twinkling bulbs */
+      var cols = ['#fb7185', '#fde047', '#7dd3fc', '#86efac', '#f9a8d4'], k = 0;
+      [166, 238, 310, 382, 454, 526, 598].forEach(function (y) {
+        var hw = hwAt(y) - 14; if (hw < 24) return;
+        var x0 = CX - hw, x2 = CX + hw, cy = y + 30;
+        s += '<path d="M' + x0 + ' ' + y + ' Q' + CX + ' ' + cy + ' ' + x2 + ' ' + y + '" fill="none" stroke="#fcd34d" stroke-width="1.7" opacity=".6"/>';
+        var n = Math.max(3, Math.floor(2 * hw / 44));
+        for (var i = 1; i <= n; i++) {
+          var t = i / (n + 1), u = 1 - t;
+          var bx = u * u * x0 + 2 * u * t * CX + t * t * x2, by = u * u * y + 2 * u * t * cy + t * t * y;
+          var col = cols[k % cols.length];
+          s += '<circle class="xl-b" cx="' + bx.toFixed(1) + '" cy="' + (by + 3).toFixed(1) + '" r="3.6" fill="' + col + '" style="--d:' + (-(k * 0.43) % 2.4).toFixed(2) + 's"/>';
+          k++;
+        }
+      });
+      /* star + halo */
+      s += '<circle cx="' + CX + '" cy="56" r="44" fill="url(#xtHalo)"><animate attributeName="r" values="38;54;38" dur="3.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".45 0 .55 1;.45 0 .55 1"/></circle>' +
+        '<path d="' + starPath(CX, 56, 30, 13) + '" fill="url(#xtStar)" stroke="#d97706" stroke-width="1.2" stroke-linejoin="round"/>' +
+        '<path d="' + starPath(CX, 56, 15, 6.4) + '" fill="#fffbe0" opacity=".8"/>';
+      /* small gifts at the base */
+      function box(x, y, w, h, c, r) {
+        return '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="3" fill="' + c + '"/>' +
+          '<rect x="' + (x + w / 2 - 3.5) + '" y="' + y + '" width="7" height="' + h + '" fill="' + r + '"/>' +
+          '<rect x="' + x + '" y="' + (y + h / 2 - 3.5) + '" width="' + w + '" height="7" fill="' + r + '" opacity=".9"/>' +
+          '<ellipse cx="' + (x + w / 2 - 6) + '" cy="' + (y - 3) + '" rx="6" ry="3.6" fill="' + r + '"/><ellipse cx="' + (x + w / 2 + 6) + '" cy="' + (y - 3) + '" rx="6" ry="3.6" fill="' + r + '"/>';
+      }
+      s += box(120, 706, 54, 40, '#2563eb', '#fde68a') + box(176, 722, 40, 28, '#e11d48', '#fff') +
+        box(398, 710, 50, 38, '#7c3aed', '#fcd34d') + box(354, 726, 38, 26, '#0d9488', '#fff');
+      s += '<g id="xm-orn"></g>';
+      return s;
+    }
+
+    /* ---------- state ---------- */
+    var LKEY = 'mandal4_xmas_wishes_v1', RKEY = 'mandal4_xmas_last_post';
+    var remote = [], extra = [], rendered = {}, unsub = null, built = false, firstBatch = true, retry = null;
+    var sel = { style: 'ball', color: '#e11d48' };
+
+    function loadExtra() { try { var a = JSON.parse(localStorage.getItem(LKEY) || '[]'); return Array.isArray(a) ? a : []; } catch (e) { return []; } }
+    function saveExtra() { try { localStorage.setItem(LKEY, JSON.stringify(extra.slice(-60))); } catch (e) {} }
+    function esc(s) { return String(s == null ? '' : s); }
+
+    function allWishes() {
+      return remote.concat(extra).sort(function (a, b) { return (a.ts || 0) - (b.ts || 0); }).slice(-90);
+    }
+    function svgEl(str) { var g = document.createElementNS(NS, 'g'); g.innerHTML = str; return g.firstElementChild; }
+
+    function orn(w, idx, animateIn, rep) {
+      var s = SLOTS[(w.slot || 0) % SLOTS.length] || SLOTS[0];
+      s = { x: s.x + (rep ? ((rep * 23) % 33) - 16 : 0), y: s.y + (rep ? (rep % 2 ? 22 : -8) : 0) };
+      var dur = (3.4 + ((idx * 7) % 10) * 0.18).toFixed(2), begin = (-((idx * 13) % 20) * 0.19).toFixed(2);
+      var amp = 3 + (idx % 3);
+      var html = '<g class="xo" data-id="' + w.id.replace(/[^\w-]/g, '') + '" tabindex="0" role="button" aria-label="' + esc(w.to).replace(/"/g, '') + ' — талархал унших" transform="translate(' + s.x + ' ' + s.y + ') scale(1.22)">' +
+        '<g><animateTransform attributeName="transform" type="rotate" values="-' + amp + ' 0 0;' + amp + ' 0 0;-' + amp + ' 0 0" keyTimes="0;.5;1" calcMode="spline" keySplines=".45 0 .55 1;.45 0 .55 1" dur="' + dur + 's" begin="' + begin + 's" repeatCount="indefinite"/>' +
+        '<circle cx="0" cy="22" r="27" fill="transparent"/>' +
+        '<g class="' + (animateIn ? 'xo-in' : '') + '" style="--d:' + (animateIn === 'stagger' ? (idx * 0.04).toFixed(2) : '0') + 's"><g class="xo-pop">' +
+        (ORN[w.style] || ORN.ball)(w.color || '#e11d48') + '</g></g></g></g>';
+      return svgEl(html);
+    }
+
+    function render() {
+      var host = $('xm-orn'); if (!host) return;
+      var list = allWishes(), seen = {}, reps = {};
+      list.forEach(function (w, i) {
+        seen[w.id] = 1;
+        var rep = reps[w.slot] = (reps[w.slot] == null ? 0 : reps[w.slot] + 1);
+        if (!rendered[w.id]) {
+          var el = orn(w, i, firstBatch ? 'stagger' : 'one', rep);
+          if (el) { host.appendChild(el); rendered[w.id] = { el: el, w: w }; }
+        } else { rendered[w.id].w = w; }
+      });
+      Object.keys(rendered).forEach(function (id) {
+        if (!seen[id]) { var r = rendered[id]; if (r.el.parentNode) r.el.parentNode.removeChild(r.el); delete rendered[id]; }
+      });
+      if (list.length) firstBatch = false;
+      $('xm-count').textContent = 'Чимэглэл: ' + list.length;
+    }
+
+    /* ---------- data: Firestore (shared) with local fallback ---------- */
+    function subscribe(tries) {
+      var fb = window.__xmasFB;
+      if (!fb) {
+        if ((tries || 0) < 6) { retry = setTimeout(function () { subscribe((tries || 0) + 1); }, 700); }
+        else { remote = []; render(); }
+        return;
+      }
+      try {
+        unsub = fb.onSnapshot(fb.query(fb.collection(fb.db, 'tree_wishes'), fb.limit(150)), function (snap) {
+          var a = [];
+          snap.forEach(function (d) {
+            var v = d.data() || {};
+            a.push({ id: d.id, to: v.to || '', from: v.from || '', message: v.message || '', style: v.style || 'ball', color: v.color || '#e11d48', slot: typeof v.slot === 'number' ? v.slot : 0, ts: v.ts || 0 });
+          });
+          remote = a; render();
+        }, function () { remote = []; render(); });
+      } catch (e) { remote = []; render(); }
+    }
+
+    /* ---------- reader ---------- */
+    function openReader(id) {
+      var r = rendered[id]; if (!r) return; var w = r.w;
+      $('xm-card-orn').innerHTML = ornSvg(w.style, w.color, 86, 112);
+      $('xm-card-to').textContent = 'Хэнд: ' + w.to;
+      $('xm-card-msg').textContent = w.message;
+      $('xm-card-from').textContent = w.from ? '— ' + w.from : '— Нэргүй';
+      var dt = '';
+      try { if (w.ts) dt = new Date(w.ts).toLocaleDateString('mn-MN', { year: 'numeric', month: 'long', day: 'numeric' }); } catch (e) {}
+      $('xm-card-date').textContent = dt;
+      $('xm-reader').classList.add('open');
+    }
+    window.xmCloseReader = function () { $('xm-reader').classList.remove('open'); };
+
+    /* ---------- compose ---------- */
+    function renderPicker() {
+      $('xm-prev').innerHTML = ornSvg(sel.style, sel.color, 70, 92);
+      var sb = $('xm-styles');
+      sb.innerHTML = STYLES.map(function (st) {
+        return '<button type="button" class="xm-style' + (st.id === sel.style ? ' sel' : '') + '" data-style="' + st.id + '" title="' + st.n + '" aria-label="' + st.n + '" aria-pressed="' + (st.id === sel.style) + '">' + ornSvg(st.id, sel.color, 40, 52) + '</button>';
+      }).join('');
+      $('xm-swatches').innerHTML = COLORS.map(function (c) {
+        return '<button type="button" class="xm-sw' + (c.c === sel.color ? ' sel' : '') + '" data-color="' + c.c + '" style="background:' + c.c + '" title="' + c.n + '" aria-label="' + c.n + '" aria-pressed="' + (c.c === sel.color) + '"></button>';
+      }).join('');
+    }
+    function note(msg, err) { var n = $('xm-note'); n.textContent = msg; n.className = 'xm-note' + (err ? ' err' : ''); }
+
+    function pickSlot() {
+      var used = {}; allWishes().forEach(function (w) { used[w.slot] = 1; });
+      var free = []; for (var i = 0; i < SLOTS.length; i++) if (!used[i]) free.push(i);
+      var pool = free.length ? free : SLOTS.map(function (_, i) { return i; });
+      return pool[Math.floor(Math.random() * pool.length)];
+    }
+
+    function submit(e) {
+      e.preventDefault();
+      var to = $('xm-to').value.trim(), msg = $('xm-msg').value.trim(), from = $('xm-from').value.trim();
+      if (!to) { note('Хэнд талархаж байгаагаа бичнэ үү', true); $('xm-to').focus(); return; }
+      if (msg.length < 2) { note('Талархлын үгээ бичнэ үү', true); $('xm-msg').focus(); return; }
+      try { var last = parseInt(localStorage.getItem(RKEY) || '0', 10); if (Date.now() - last < 15000) { note('Түр хүлээгээд дахин өлгөнө үү', true); return; } } catch (er) {}
+      var wish = { to: to.slice(0, 40), from: from.slice(0, 40), message: msg.slice(0, 240), style: sel.style, color: sel.color, slot: pickSlot(), ts: Date.now() };
+      try { localStorage.setItem(RKEY, String(Date.now())); } catch (er) {}
+      var fb = window.__xmasFB, fallback = function () {
+        wish.id = 'l' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+        extra.push(wish); saveExtra(); render();
+      };
+      if (fb) {
+        try {
+          fb.addDoc(fb.collection(fb.db, 'tree_wishes'), Object.assign({}, wish, { createdAt: fb.serverTimestamp() })).catch(fallback);
+        } catch (er) { fallback(); }
+      } else { fallback(); }
+      $('xm-to').value = ''; $('xm-msg').value = ''; $('xm-from').value = ''; $('xm-msg-n').textContent = '0';
+      note('Талархал гацуур дээр өлгөгдлөө!', false);
+      setTimeout(function () { xmPanel(false); note('', false); }, 1100);
+    }
+
+    window.xmPanel = function (open) {
+      var p = $('xm-panel'); if (!p) return;
+      p.classList.toggle('open', !!open);
+      var fab = $('xm-fab'); if (fab) fab.style.visibility = open ? 'hidden' : '';
+      if (open) setTimeout(function () { try { $('xm-to').focus({ preventScroll: true }); } catch (e) {} }, 380);
+    };
+
+    function init() {
+      $('xm-tree').innerHTML = treeMarkup();
+      renderPicker();
+      $('xm-styles').addEventListener('click', function (e) { var b = e.target.closest('[data-style]'); if (!b) return; sel.style = b.getAttribute('data-style'); renderPicker(); });
+      $('xm-swatches').addEventListener('click', function (e) { var b = e.target.closest('[data-color]'); if (!b) return; sel.color = b.getAttribute('data-color'); renderPicker(); });
+      $('xm-msg').addEventListener('input', function () { $('xm-msg-n').textContent = this.value.length; });
+      $('xm-form').addEventListener('submit', submit);
+      var host = $('xm-orn');
+      host.addEventListener('click', function (e) { var g = e.target.closest('.xo'); if (g) openReader(g.getAttribute('data-id')); });
+      host.addEventListener('keydown', function (e) {
+        if (e.key !== 'Enter' && e.key !== ' ') return;
+        var g = e.target.closest && e.target.closest('.xo'); if (g) { e.preventDefault(); openReader(g.getAttribute('data-id')); }
+      });
+      built = true;
+    }
+
+    window.openXmasTree = function () {
+      var m = $('xm-modal'); if (!m) return;
+      if (!built) { extra = loadExtra(); init(); }
+      m.classList.add('open');
+      document.documentElement.style.overflow = 'hidden';
+      firstBatch = true;
+      if (!unsub) subscribe(0);
+      render();
+      var c = m.querySelector('.xm-close'); if (c) setTimeout(function () { try { c.focus({ preventScroll: true }); } catch (e) {} }, 60);
+    };
+    window.closeXmasTree = function () {
+      var m = $('xm-modal'); if (!m) return;
+      m.classList.remove('open'); xmCloseReader(); xmPanel(false);
+      document.documentElement.style.overflow = '';
+      if (retry) { clearTimeout(retry); retry = null; }
+      if (unsub) { try { unsub(); } catch (e) {} unsub = null; }
+    };
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== 'Escape') return;
+      var m = $('xm-modal'); if (!m || !m.classList.contains('open')) return;
+      if ($('xm-reader').classList.contains('open')) xmCloseReader(); else closeXmasTree();
+    });
+  })();
+
+  /* Portrait-aware post images + pause mission animations off-screen */
+  function fitPortrait(img) {
+    try {
+      var f = img.closest('.media-frame'); if (!f) return;
+      f.classList.toggle('portrait', img.naturalHeight > img.naturalWidth * 1.08);
+    } catch (e) {}
+  }
+  (function () {
+    var m = document.getElementById('mission-showcase');
+    if (!m) return;
+    if (!('IntersectionObserver' in window)) { m.classList.add('mv-in'); return; }
+    new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        m.classList.toggle('ms-off', !e.isIntersecting);
+        if (e.isIntersecting && !m.classList.contains('mv-in')) {
+          m.classList.add('mv-in');
+          if (typeof window.setActiveObjective === 'function') { try { window.setActiveObjective(0); } catch (er) {} }
+        }
+      });
+    }, { rootMargin: '60px' }).observe(m);
+  })();
+  </script>
+
   <div id="toast-container" class="fixed bottom-5 right-5 z-[60] flex flex-col gap-2.5 max-w-sm w-full pointer-events-none px-4 sm:px-0"></div>
 
   <!-- ========================================================================
@@ -3792,7 +4675,10 @@ service cloud.firestore {
       addDoc,
       deleteDoc,
       onSnapshot,
-      serverTimestamp
+      serverTimestamp,
+      query,
+      limit,
+      writeBatch
     } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
     /* ------------------------------------------------------------------------
@@ -3859,6 +4745,7 @@ service cloud.firestore {
       getAnalytics(app);
     } catch (analyticsErr) {}
     const db = getFirestore(app);
+    window.__xmasFB = { db, collection, addDoc, onSnapshot, query, limit, serverTimestamp };
     let isFirestoreReady = false;
     let isInitialDataSeeded = false;
 
@@ -4392,10 +5279,6 @@ service cloud.firestore {
           }
         });
 
-        getDocs(collection(db, 'good_lessons')).then((snapshot) => {
-          applyGoodLessonsSnapshot(snapshot);
-        }).catch(() => {});
-
         onSnapshot(collection(db, 'good_lessons'), (snapshot) => {
           setFirebaseStatus('connected', 'Firebase холбогдсон');
           applyGoodLessonsSnapshot(snapshot);
@@ -4454,7 +5337,17 @@ service cloud.firestore {
       isAdminLoggedIn = isValidAdminSession();
     }
 
+    let saveLocalCacheTimer = null;
     function saveLocalCache() {
+      // Firestore snapshot бүрт том JSON-г шууд бичихгүй — 700ms-д нэг удаа, сул үед бичнэ
+      if (saveLocalCacheTimer) clearTimeout(saveLocalCacheTimer);
+      saveLocalCacheTimer = setTimeout(() => {
+        saveLocalCacheTimer = null;
+        const run = () => saveLocalCacheNow();
+        if ('requestIdleCallback' in window) requestIdleCallback(run, { timeout: 2000 }); else run();
+      }, 700);
+    }
+    function saveLocalCacheNow() {
       try {
         localStorage.setItem(STORAGE_KEYS.POSTS, JSON.stringify(posts));
         localStorage.setItem(STORAGE_KEYS.GALLERY, JSON.stringify(galleryPhotos));
@@ -4544,20 +5437,27 @@ service cloud.firestore {
       const track = document.getElementById('horizontal-events-track');
       if (track) { eventsFlowPaused = true; setTimeout(() => eventsFlowPaused = false, 2500); track.scrollBy({ left: offsetPx, behavior: 'smooth' }); }
     }
+    let eventsFlowInited = false;
     function initEventsSmoothFlow() {
       const track = document.getElementById('horizontal-events-track');
-      if (!track || eventsFlowRafId) return;
-      let isEventsInView = true;
+      if (!track || eventsFlowInited) return;
+      eventsFlowInited = true;
+      let isEventsInView = false;
+      const kick = () => { if (!eventsFlowRafId && isEventsInView && !document.hidden) eventsFlowRafId = requestAnimationFrame(stepFlow); };
       if ('IntersectionObserver' in window) {
         new IntersectionObserver((entries) => {
           isEventsInView = entries[0].isIntersecting;
+          kick();
         }, { threshold: 0.05 }).observe(track);
-      }
+      } else { isEventsInView = true; }
+      document.addEventListener('visibilitychange', kick);
       track.addEventListener('mouseenter', () => eventsFlowPaused = true);
       track.addEventListener('mouseleave', () => eventsFlowPaused = false);
       let subPixelAccumulator = 0;
-      const stepFlow = () => {
-        if (isEventsInView && !document.hidden && !eventsFlowPaused && !selectedCalDate && track.scrollWidth > track.clientWidth + 10) {
+      function stepFlow() {
+        eventsFlowRafId = null;
+        if (!isEventsInView || document.hidden) return; // харагдахгүй үед давталт бүрэн зогсоно
+        if (!eventsFlowPaused && !selectedCalDate && track.scrollWidth > track.clientWidth + 10) {
           subPixelAccumulator += 0.55;
           if (subPixelAccumulator >= 1) {
             const step = Math.floor(subPixelAccumulator); track.scrollLeft += step; subPixelAccumulator -= step;
@@ -4567,8 +5467,8 @@ service cloud.firestore {
           }
         }
         eventsFlowRafId = requestAnimationFrame(stepFlow);
-      };
-      eventsFlowRafId = requestAnimationFrame(stepFlow);
+      }
+      kick();
     }
     function getEventCategoryGradient(category) {
       switch (category) {
@@ -4715,7 +5615,7 @@ service cloud.firestore {
       grid.innerHTML = displayedPosts.map(p => {
         const imgs = Array.isArray(p.images) ? p.images.length : 1; const vid = p.videoUrl ? `<span class="px-2.5 py-1 rounded-full bg-rose-600/90 text-white text-[11px] font-extrabold backdrop-blur-md">Видео</span>` : '';
         const mult = imgs > 1 ? `<span class="px-2.5 py-1 rounded-full bg-slate-950/75 text-white text-[11px] font-extrabold backdrop-blur-md">${imgs} зураг</span>` : '';
-        return `<article onclick="openPostReader('${p.id}')" class="glass-card rounded-3xl overflow-hidden flex flex-col group cursor-pointer"><div class="relative h-52 bg-slate-200"><img src="${escapeHtml(p.image)}" alt="" onerror="handleImageError(this, '${escapeHtml(p.category)}')" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" /><span class="absolute top-3.5 left-3.5 px-3.5 py-1 rounded-full text-xs font-extrabold text-white shadow-md ${getCategoryBadgeClass(p.category)}">${escapeHtml(p.category)}</span><div class="absolute bottom-3 right-3 flex gap-1.5">${mult}${vid}</div></div><div class="p-6 flex-1 flex flex-col justify-between space-y-4"><div><div class="text-xs font-bold text-slate-500 mb-2">${escapeHtml(p.date)}</div><h3 class="font-heading font-extrabold text-lg leading-snug line-clamp-2 group-hover:text-fuchsia-600 transition-colors">${escapeHtml(p.title)}</h3><p class="mt-2.5 text-sm text-slate-600 line-clamp-3">${escapeHtml(p.content)}</p></div><div class="pt-3 border-t border-slate-100"><span class="text-sm font-extrabold text-indigo-600 group-hover:text-fuchsia-600">Дэлгэрэнгүй унших →</span></div></div></article>`;
+        return `<article onclick="openPostReader('${p.id}')" class="glass-card rounded-3xl overflow-hidden flex flex-col group cursor-pointer"><div class="relative h-52 bg-slate-200 media-frame"><img src="${escapeHtml(p.image)}" alt="" aria-hidden="true" class="mf-bg" decoding="async" onerror="this.remove()" /><img src="${escapeHtml(p.image)}" alt="" onload="fitPortrait(this)" onerror="handleImageError(this, '${escapeHtml(p.category)}')" loading="lazy" decoding="async" class="mf-fg w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" /><span class="absolute top-3.5 left-3.5 px-3.5 py-1 rounded-full text-xs font-extrabold text-white shadow-md ${getCategoryBadgeClass(p.category)}">${escapeHtml(p.category)}</span><div class="absolute bottom-3 right-3 flex gap-1.5">${mult}${vid}</div></div><div class="p-6 flex-1 flex flex-col justify-between space-y-4"><div><div class="text-xs font-bold text-slate-500 mb-2">${escapeHtml(p.date)}</div><h3 class="font-heading font-extrabold text-lg leading-snug line-clamp-2 group-hover:text-fuchsia-600 transition-colors">${escapeHtml(p.title)}</h3><p class="mt-2.5 text-sm text-slate-600 line-clamp-3">${escapeHtml(p.content)}</p></div><div class="pt-3 border-t border-slate-100"><span class="text-sm font-extrabold text-indigo-600 group-hover:text-fuchsia-600">Дэлгэрэнгүй унших →</span></div></div></article>`;
       }).join('');
     }
 
@@ -4981,10 +5881,10 @@ service cloud.firestore {
 
     function openAdminDashboard(tab = 'tab-schedule') {
       if (!isAdminLoggedIn || !isValidAdminSession()) { logoutAdmin(); openLoginModal(); return; }
-      resetAdminIdleTimer(); updateScheduleUrlDisplay(); syncDynamicCategorySelects(); setDefaultAdminDateInputs(); renderAdminManageLists(); updateFirebaseStorageMeter(); switchAdminTab(tab);
       document.getElementById('admin-dashboard-modal').classList.replace('hidden', 'flex');
+      resetAdminIdleTimer(); updateScheduleUrlDisplay(); syncDynamicCategorySelects(); setDefaultAdminDateInputs(); switchAdminTab(tab);
     }
-    function closeAdminDashboard() { document.getElementById('admin-dashboard-modal').classList.replace('flex', 'hidden'); }
+    function closeAdminDashboard() { document.getElementById('admin-dashboard-modal').classList.replace('flex', 'hidden'); stopAdminTreeListener(); }
     function switchAdminTab(t) {
       resetAdminIdleTimer();
       document.querySelectorAll('.admin-tab-panel').forEach(p => p.classList.add('hidden')); document.getElementById(t).classList.remove('hidden');
@@ -4993,6 +5893,7 @@ service cloud.firestore {
       });
       renderAdminManageLists();
       if (t === 'tab-lessons') refreshGoodLessonsFromFirestore(false);
+      if (t === 'tab-tree') startAdminTreeListener(); else stopAdminTreeListener();
     }
 
     // Media Helpers
@@ -5373,7 +6274,10 @@ service cloud.firestore {
       });
       if (objectiveCycleTimer) clearInterval(objectiveCycleTimer);
       objectiveCycleTimer = setInterval(() => {
-        if (!document.hidden) setActiveObjective(activeObjectiveIdx + 1);
+        const ms = document.getElementById('mission-showcase');
+        // Дэлгэцэн дээр харагдахгүй үед эргэлтийг зогсооно (далд ачаалал багасгах)
+        if (document.hidden || (ms && ms.classList.contains('ms-off'))) return;
+        setActiveObjective(activeObjectiveIdx + 1);
       }, 4200);
     }
 
@@ -5506,7 +6410,13 @@ service cloud.firestore {
       try { await deleteDoc(doc(db, 'gallery', id)); showToast('Устгагдлаа', 'info'); } catch(e){}
     }
 
-    function renderAdminManageLists() {
+    function isAdminDashboardOpen() {
+      const m = document.getElementById('admin-dashboard-modal');
+      return !!(m && !m.classList.contains('hidden'));
+    }
+    function renderAdminManageLists(force = false) {
+      // Админ самбар хаалттай үед зураг агуулсан жагсаалт, багтаамжийн тооцоог дахин зурахгүй
+      if (!force && !isAdminDashboardOpen()) return;
       if(document.getElementById('manage-lesson-count')) document.getElementById('manage-lesson-count').textContent = goodLessons.length;
       if(document.getElementById('manage-event-count')) document.getElementById('manage-event-count').textContent = schoolEvents.length;
       if(document.getElementById('manage-post-count')) document.getElementById('manage-post-count').textContent = posts.length;
@@ -5536,6 +6446,120 @@ service cloud.firestore {
       updateFirebaseStorageMeter();
     }
 
+
+    /* ------------------------------------------------------------------------
+       10.5. GRATITUDE TREE MODERATION (админ: гацуурын сэтгэгдэл устгах)
+       Устгалт нь batch-аар хийгдэнэ: tree_deletions/{id}-д нууц түлхүүр бичиж,
+       tree_wishes/{id}-г устгана. Firestore Rules түлхүүрийг admin_secrets/tree-тэй тулгана.
+       ------------------------------------------------------------------------ */
+    const TREE_KEY_SESSION = 'mandal4_tree_admin_key';
+    let adminTreeWishes = [];
+    let adminTreeUnsub = null;
+
+    function getTreeAdminKey() {
+      try { return sessionStorage.getItem(TREE_KEY_SESSION) || ''; } catch (e) { return ''; }
+    }
+    function saveTreeAdminKey() {
+      resetAdminIdleTimer();
+      const inp = document.getElementById('tree-admin-key');
+      const v = inp ? inp.value.trim() : '';
+      try { if (v) sessionStorage.setItem(TREE_KEY_SESSION, v); else sessionStorage.removeItem(TREE_KEY_SESSION); } catch (e) {}
+      updateTreeKeyHint();
+      showToast(v ? 'Устгах түлхүүр хадгалагдлаа.' : 'Түлхүүр арилгагдлаа.', v ? 'success' : 'info');
+    }
+    function updateTreeKeyHint() {
+      const h = document.getElementById('tree-admin-key-hint');
+      const inp = document.getElementById('tree-admin-key');
+      const k = getTreeAdminKey();
+      if (inp && k && !inp.value) inp.value = k;
+      if (h) {
+        h.textContent = k ? '✓ Түлхүүр оруулсан — устгах боломжтой.' : 'Түлхүүр зөвхөн энэ хөтчийн нээлттэй сешнд хадгалагдана (хаахад арилна).';
+        h.className = k ? 'text-[11px] font-bold text-emerald-700' : 'text-[11px] font-semibold text-slate-500';
+      }
+    }
+    function setTreeAdminStatus(t, isErr = false) {
+      const el = document.getElementById('tree-admin-status');
+      if (el) { el.textContent = t; el.className = `text-[11px] font-bold ${isErr ? 'text-rose-600' : 'text-slate-500'}`; }
+    }
+    function startAdminTreeListener() {
+      updateTreeKeyHint();
+      if (adminTreeUnsub) return;
+      setTreeAdminStatus('Firebase-ээс уншиж байна...');
+      try {
+        adminTreeUnsub = onSnapshot(query(collection(db, 'tree_wishes'), limit(500)), (snap) => {
+          const a = [];
+          snap.forEach((d) => {
+            const v = d.data() || {};
+            a.push({ id: d.id, to: String(v.to || ''), from: String(v.from || ''), message: String(v.message || ''), color: String(v.color || '#e11d48'), style: String(v.style || 'ball'), ts: Number(v.ts || 0) || (v.createdAt && v.createdAt.seconds ? v.createdAt.seconds * 1000 : 0) });
+          });
+          a.sort((x, y) => y.ts - x.ts);
+          adminTreeWishes = a;
+          setTreeAdminStatus(`Шууд холбогдсон • ${a.length} сэтгэгдэл`);
+          renderAdminTreeWishes();
+        }, (err) => {
+          setTreeAdminStatus(`Уншихад алдаа: ${err && err.code ? err.code : 'холболт'}`, true);
+          adminTreeUnsub = null;
+        });
+      } catch (e) { setTreeAdminStatus('Firebase холболтгүй', true); }
+    }
+    function stopAdminTreeListener() {
+      if (adminTreeUnsub) { try { adminTreeUnsub(); } catch (e) {} adminTreeUnsub = null; }
+    }
+    function renderAdminTreeWishes() {
+      const list = document.getElementById('admin-tree-list');
+      const cnt = document.getElementById('manage-tree-count');
+      if (cnt) cnt.textContent = adminTreeWishes.length;
+      if (!list) return;
+      const q = (document.getElementById('tree-admin-search')?.value || '').trim().toLowerCase();
+      const rows = q ? adminTreeWishes.filter((w) => (w.to + ' ' + w.from + ' ' + w.message).toLowerCase().includes(q)) : adminTreeWishes;
+      if (rows.length === 0) {
+        list.innerHTML = `<div class="p-6 rounded-2xl bg-slate-50 border border-dashed border-slate-300 text-center text-xs font-bold text-slate-500">${q ? 'Хайлтад тохирох сэтгэгдэл алга.' : 'Одоогоор гацуур дээр талархал өлгөөгүй байна.'}</div>`;
+        return;
+      }
+      list.innerHTML = rows.map((w) => {
+        let dt = '';
+        try { if (w.ts) dt = new Date(w.ts).toLocaleString('mn-MN', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }); } catch (e) {}
+        const color = /^#[0-9a-fA-F]{6}$/.test(w.color) ? w.color : '#e11d48';
+        return `<div class="flex items-start justify-between gap-3 p-3 bg-slate-50 border border-slate-200 rounded-2xl">
+          <div class="flex items-start gap-3 min-w-0">
+            <span class="mt-1 w-3.5 h-3.5 rounded-full shrink-0 ring-2 ring-white shadow" style="background:${color}"></span>
+            <div class="min-w-0">
+              <span class="text-[11px] font-bold text-emerald-700 block truncate">Хэнд: ${escapeHtml(w.to)}${dt ? ` • ${escapeHtml(dt)}` : ''}</span>
+              <p class="text-xs sm:text-sm font-semibold text-slate-800 mt-0.5 break-words whitespace-pre-line line-clamp-4">${escapeHtml(w.message)}</p>
+              <span class="text-[11px] font-bold text-slate-500 block mt-0.5">— ${escapeHtml(w.from || 'Нэргүй')}</span>
+            </div>
+          </div>
+          <button type="button" onclick="deleteTreeWishWithConfirm('${escapeHtml(w.id)}', this)" class="px-3 py-1.5 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold rounded-lg cursor-pointer transition-colors shrink-0">Устгах</button>
+        </div>`;
+      }).join('');
+    }
+    async function deleteTreeWishWithConfirm(id, b) {
+      resetAdminIdleTimer();
+      if (!/^[A-Za-z0-9_-]{1,64}$/.test(String(id))) return;
+      if (b.dataset.c !== '1') { b.dataset.c = '1'; b.textContent = 'Устгах уу?'; setTimeout(() => { if (b && b.dataset.c === '1') { b.dataset.c = '0'; b.textContent = 'Устгах'; } }, 3000); return; }
+      const key = getTreeAdminKey();
+      if (!key) {
+        b.dataset.c = '0'; b.textContent = 'Устгах';
+        showToast('Эхлээд дээрх "Устгах нууц түлхүүр"-ээ оруулж хадгална уу.', 'error');
+        const inp = document.getElementById('tree-admin-key'); if (inp) inp.focus();
+        return;
+      }
+      b.disabled = true; b.textContent = 'Устгаж байна...';
+      try {
+        const batch = writeBatch(db);
+        batch.set(doc(db, 'tree_deletions', id), { key, at: serverTimestamp() });
+        batch.delete(doc(db, 'tree_wishes', id));
+        await batch.commit();
+        adminTreeWishes = adminTreeWishes.filter((w) => w.id !== id);
+        renderAdminTreeWishes();
+        showToast('Сэтгэгдэл гацуураас устгагдлаа.', 'info');
+      } catch (err) {
+        b.disabled = false; b.dataset.c = '0'; b.textContent = 'Устгах';
+        const denied = err && err.code === 'permission-denied';
+        showToast(denied ? 'Зөвшөөрөлгүй: түлхүүр буруу эсвэл Firestore Rules шинэчлэгдээгүй байна.' : `Устгахад алдаа гарлаа (${err && err.code ? err.code : 'холболт'}).`, 'error');
+      }
+    }
+
     /* ------------------------------------------------------------------------
        11. READERS, LIGHTBOX & TOASTS
        ------------------------------------------------------------------------ */
@@ -5550,7 +6574,7 @@ service cloud.firestore {
     }
     function updateReaderCarousel() {
       const i = document.getElementById('reader-image'), p = document.getElementById('reader-prev-btn'), n = document.getElementById('reader-next-btn'), c = document.getElementById('reader-image-counter'), t = document.getElementById('reader-thumbs-strip');
-      i.src = currentReaderImages[currentReaderImgIdx];
+      i.src = currentReaderImages[currentReaderImgIdx]; const bgI = document.getElementById('reader-image-bg'); if (bgI) bgI.src = currentReaderImages[currentReaderImgIdx];
       if (currentReaderImages.length > 1) {
         p.classList.remove('hidden'); n.classList.remove('hidden'); c.classList.remove('hidden'); c.textContent = `${currentReaderImgIdx+1} / ${currentReaderImages.length}`;
         t.classList.remove('hidden'); t.innerHTML = currentReaderImages.map((s, idx) => `<img src="${escapeHtml(s)}" onclick="selectReaderImage(${idx})" class="w-16 h-12 object-cover cursor-pointer border-2 ${idx===currentReaderImgIdx?'border-fuchsia-600':'border-transparent opacity-60'}"/>`).join('');
@@ -5723,7 +6747,10 @@ service cloud.firestore {
       } catch (e) {}
     }
 
+    let attListenersStarted = false;
     function initAttendanceFirestoreListeners() {
+      if (attListenersStarted) return;
+      attListenersStarted = true;
       try {
         onSnapshot(doc(db, 'settings', 'attendance_totals'), (snap) => {
           if (snap.exists() && snap.data().totals) {
@@ -5865,6 +6892,8 @@ service cloud.firestore {
     }
 
     function openAttendanceModal() {
+      // Ирцийн бүх өдрийн өгөгдлийг зөвхөн цонх нээгдэх үед татна (нүүр хуудсыг хурдан болгох)
+      initAttendanceFirestoreListeners();
       if (!attCurrentDate) {
         attCurrentDate = getLatestWorkdayIso(new Date());
       }
@@ -5932,6 +6961,11 @@ service cloud.firestore {
         if (footPub) footPub.classList.remove('hidden');
         if (footEdit) footEdit.classList.add('hidden');
       }
+      const attModal = document.getElementById('attendance-modal');
+      if (attModal) attModal.classList.toggle('att-editing', !!attIsEditMode);
+      applyAttendanceShiftTheme();
+      const splitStripEl = document.getElementById('att-split-strip');
+      if (splitStripEl) splitStripEl.classList.toggle('hidden', !!attIsEditMode);
     }
 
     function renderAttendanceContent() {
@@ -6089,13 +7123,33 @@ service cloud.firestore {
           value="${escapeHtml(val)}"
           oninput="updateDraftStudentName('${classId}', 'absent', ${i}, this.value)"
           placeholder="Тасалсан сурагч #${i + 1} (Овог, нэр)"
-          class="px-3 py-1.5 rounded-lg bg-white border border-slate-300 text-xs font-semibold focus:outline-none focus:border-indigo-500"
+          autocomplete="off"
+          class="px-3 py-3 rounded-xl bg-white border border-red-200 text-base sm:text-sm font-semibold text-slate-900 focus:outline-none focus:border-red-300 focus:ring-2 focus:ring-red-100"
         />`;
       }
-      return `<div class="p-2.5 rounded-xl border bg-red-100 text-red-700 border-red-200 space-y-2">
-        <span class="text-[11px] font-extrabold block">Тасалсан сурагчдын нэрс (${cnt}):</span>
+      return `<div class="p-3 rounded-2xl border bg-red-50/60 border-red-100 space-y-2">
+        <span class="text-xs font-extrabold block text-red-800">Тасалсан сурагчдын нэрс (${cnt}):</span>
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-2">${inputsHtml}</div>
       </div>`;
+    }
+
+    const ATT_ICON_SUN = '<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path stroke-linecap="round" d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32l1.41-1.41"/></svg>';
+    const ATT_ICON_NOON = '<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m6.36.64l-1.42 1.42M21 12h-2M7.06 7.06L5.64 5.64M5 12H3m14 7H8a4 4 0 01-.4-7.98A5 5 0 0117 11a4 4 0 010 8z"/></svg>';
+    const ATT_ICON_ALL = '<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h10"/></svg>';
+    const ATT_SHIFT_META = {
+      morning: { title: 'Өглөөний ээлж', short: 'Өглөө', sub: '7–12-р анги, 2а 2в, 3б, 4–5-р анги', icon: ATT_ICON_SUN, tone: 'm' },
+      afternoon: { title: 'Өдрийн ээлж', short: 'Өдөр', sub: '1-р анги, 2б 2г, 3а 3в 3г, 6-р анги', icon: ATT_ICON_NOON, tone: 'a' },
+    };
+
+    function applyAttendanceShiftTheme() {
+      const m = document.getElementById('attendance-modal');
+      if (!m) return;
+      m.classList.remove('att-shift-morning', 'att-shift-afternoon', 'att-shift-all');
+      if (attIsEditMode) m.classList.add(`att-shift-${attEditShift}`);
+      const badge = document.getElementById('att-mode-badge');
+      if (badge && attIsEditMode) {
+        badge.textContent = attEditShift === 'all' ? 'Бүх анги • Ирц бичих горим' : `${ATT_SHIFT_META[attEditShift].title} • Ирц бичих горим`;
+      }
     }
 
     function setAttendanceEditShift(shift) {
@@ -6136,13 +7190,14 @@ service cloud.firestore {
       updateDraftField(classId, field, next);
     }
 
-    function makeStepperControl(classId, field, label, value, colorCls, maxVal) {
-      return `<div class="rounded-xl p-1.5 border ${colorCls.wrap}">
-        <label for="att-inp-${field}-${classId}" class="block text-[10px] font-extrabold text-center mb-1 ${colorCls.label}">${label}</label>
-        <div class="flex items-center justify-between gap-1">
-          <button type="button" onclick="stepDraftField('${classId}', '${field}', -1)" aria-label="${label} хасах" class="w-8 h-9 sm:w-7 sm:h-8 rounded-lg bg-white border border-slate-200 hover:bg-slate-100 active:scale-95 text-slate-700 font-black text-base flex items-center justify-center shrink-0 cursor-pointer select-none shadow-2xs">−</button>
-          <input id="att-inp-${field}-${classId}" type="number" inputmode="numeric" pattern="[0-9]*" min="0" max="${maxVal}" value="${value}" onfocus="this.select()" oninput="updateDraftField('${classId}', '${field}', this.value)" class="w-full min-w-[2.2rem] h-9 sm:h-8 px-1 rounded-lg bg-white border border-slate-200 text-center text-base sm:text-xs font-black ${colorCls.text} focus:outline-none focus:border-indigo-500" />
-          <button type="button" onclick="stepDraftField('${classId}', '${field}', 1)" aria-label="${label} нэмэх" class="w-8 h-9 sm:w-7 sm:h-8 rounded-lg ${colorCls.plusBtn} active:scale-95 text-white font-black text-base flex items-center justify-center shrink-0 cursor-pointer select-none shadow-2xs">+</button>
+    function makeStepperControl(classId, field, label, value, _unused, maxVal) {
+      const on = Number(value || 0) > 0 ? ' on' : '';
+      return `<div id="att-st-${field}-${classId}" class="att-st t-${field}${on}">
+        <label for="att-inp-${field}-${classId}" class="block text-xs font-extrabold text-center mb-1.5">${label}</label>
+        <div class="flex items-center justify-between gap-1.5">
+          <button type="button" onclick="stepDraftField('${classId}', '${field}', -1)" aria-label="${label} хасах" class="att-mn">−</button>
+          <input id="att-inp-${field}-${classId}" type="number" inputmode="numeric" pattern="[0-9]*" min="0" max="${maxVal}" value="${value}" onfocus="this.select()" oninput="updateDraftField('${classId}', '${field}', this.value)" />
+          <button type="button" onclick="stepDraftField('${classId}', '${field}', 1)" aria-label="${label} нэмэх" class="att-pl">+</button>
         </div>
       </div>`;
     }
@@ -6153,38 +7208,41 @@ service cloud.firestore {
       const pct = r.total > 0 ? Math.round((present / r.total) * 100) : 0;
       const nameSections = buildAbsentNamesHtml(c.id, r);
       const gradeAttr = isFirstOfGrade ? `data-edit-grade="${c.grade}"` : '';
+      const sh = isMorningShiftClass(c) ? ATT_SHIFT_META.morning : ATT_SHIFT_META.afternoon;
+      const t = sh.tone;
+      const accentBtn = t === 'm' ? 'bg-gradient-to-br from-amber-300 to-orange-300 text-amber-950' : 'bg-gradient-to-br from-indigo-300 to-violet-300 text-indigo-950';
 
-      return `<div id="att-edit-card-${c.id}" ${gradeAttr} class="p-3 sm:p-3.5 rounded-2xl bg-white border border-slate-200 shadow-xs space-y-2.5 transition-shadow">
-        <!-- Top Row: Class Badge + Present Pill + Total Input -->
-        <div class="flex flex-wrap items-center justify-between gap-2">
-          <div class="flex items-center gap-2">
-            <span class="px-3 py-1.5 rounded-xl bg-slate-900 text-white font-heading font-extrabold text-sm">${c.label}</span>
-            <span class="px-2.5 py-1 rounded-xl bg-emerald-50 border border-emerald-200 text-xs font-extrabold text-emerald-700">
-              Ирсэн: <strong id="att-d-pres-${c.id}">${present}</strong> <span id="att-d-pct-${c.id}" class="text-[11px] text-emerald-600">(${r.recorded && r.total > 0 ? pct + '%' : '0%'})</span>
-            </span>
+      return `<div id="att-edit-card-${c.id}" ${gradeAttr} class="att-card att-card-${t} scroll-mt-60 p-3 sm:p-4 rounded-2xl border space-y-3">
+        <div class="flex items-center justify-between gap-2">
+          <div class="flex items-center gap-3 min-w-0">
+            <span class="att-lbl att-lbl-${t}">${c.label}</span>
+            <div class="leading-tight min-w-0">
+              <span class="att-chip att-chip-${t}">${sh.short}</span>
+              <span class="block mt-0.5 text-base font-black text-slate-900">Ирсэн: <span id="att-d-pres-${c.id}">${present}</span> <span id="att-d-pct-${c.id}" class="text-xs font-bold text-slate-500">(${r.recorded && r.total > 0 ? pct + '%' : '0%'})</span></span>
+            </div>
           </div>
-          <div class="flex items-center gap-1.5">
-            <span class="text-[11px] font-extrabold text-slate-500">Сурагчийн тоо:</span>
-            <strong id="att-total-view-${c.id}" class="min-w-[1.5rem] text-center text-sm font-black text-slate-900">${r.total}</strong>
-            <button type="button" onclick="toggleTotalEditor('${c.id}')" aria-label="Сурагчийн тоог засах" title="Сурагчийн тоог засах" class="w-8 h-8 rounded-lg bg-slate-100 hover:bg-indigo-100 hover:text-indigo-700 text-slate-500 flex items-center justify-center cursor-pointer active:scale-95 transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125"/></svg></button>
+          <div class="flex items-center gap-2 shrink-0">
+            <div class="text-right leading-tight">
+              <span class="block text-[11px] font-bold text-slate-500">Нийт сурагч</span>
+              <strong id="att-total-view-${c.id}" class="text-base font-black text-slate-900">${r.total}</strong>
+            </div>
+            <button type="button" onclick="toggleTotalEditor('${c.id}')" aria-label="Сурагчийн тоог засах" title="Сурагчийн тоог засах" class="att-tbtn active:scale-95"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125"/></svg></button>
           </div>
         </div>
 
-        <!-- Hidden student-count editor (opens with the pencil icon) -->
-        <div id="att-total-editor-${c.id}" class="hidden items-center justify-end gap-1.5 flex-wrap p-2 rounded-xl bg-indigo-50/70 border border-indigo-100">
-          <span class="text-[11px] font-extrabold text-indigo-700 mr-auto">Ангийн сурагчийн тоог засах</span>
-          <button type="button" onclick="stepDraftField('${c.id}', 'total', -1)" aria-label="Сурагчийн тоо хасах" class="w-8 h-8 rounded-lg bg-white border border-slate-200 hover:bg-slate-100 active:scale-95 text-slate-700 font-black text-base flex items-center justify-center cursor-pointer select-none">−</button>
-          <input id="att-inp-total-${c.id}" type="number" inputmode="numeric" pattern="[0-9]*" min="0" max="80" value="${r.total}" onfocus="this.select()" oninput="updateDraftField('${c.id}', 'total', this.value)" class="w-14 h-8 rounded-lg bg-white border border-slate-300 text-center text-base sm:text-xs font-black text-slate-900 focus:outline-none focus:border-indigo-500" />
-          <button type="button" onclick="stepDraftField('${c.id}', 'total', 1)" aria-label="Сурагчийн тоо нэмэх" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-900 active:scale-95 text-white font-black text-base flex items-center justify-center cursor-pointer select-none">+</button>
-          <button type="button" onclick="toggleTotalEditor('${c.id}')" aria-label="Болсон" class="px-3 h-8 rounded-lg bg-emerald-500 hover:bg-emerald-600 text-white text-[11px] font-extrabold cursor-pointer active:scale-95">Болсон</button>
+        <div id="att-total-editor-${c.id}" class="hidden items-center justify-end gap-1.5 flex-wrap p-2 rounded-xl bg-white/80 border border-slate-200">
+          <span class="text-xs font-extrabold text-slate-700 mr-auto">Ангийн нийт сурагчийн тоо</span>
+          <button type="button" onclick="stepDraftField('${c.id}', 'total', -1)" aria-label="Сурагчийн тоо хасах" class="w-11 h-11 rounded-xl bg-white border border-slate-300 active:scale-95 text-slate-700 font-black text-lg flex items-center justify-center cursor-pointer select-none">−</button>
+          <input id="att-inp-total-${c.id}" type="number" inputmode="numeric" pattern="[0-9]*" min="0" max="80" value="${r.total}" onfocus="this.select()" oninput="updateDraftField('${c.id}', 'total', this.value)" class="w-16 h-11 rounded-xl bg-white border border-slate-300 text-center text-lg font-black text-slate-900 focus:outline-none focus:border-slate-400" />
+          <button type="button" onclick="stepDraftField('${c.id}', 'total', 1)" aria-label="Сурагчийн тоо нэмэх" class="w-11 h-11 rounded-xl ${accentBtn} active:scale-95 font-black text-lg flex items-center justify-center cursor-pointer select-none">+</button>
+          <button type="button" onclick="toggleTotalEditor('${c.id}')" class="px-4 h-11 rounded-xl ${accentBtn} text-xs font-extrabold cursor-pointer active:scale-95">Болсон</button>
         </div>
 
-        <!-- Mobile 2x2 / Desktop 4-col Touch Steppers -->
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-2">
-          ${makeStepperControl(c.id, 'sick', 'Өвчтэй', r.sick, { wrap: 'bg-rose-50/70 border-rose-200', label: 'text-rose-700', text: 'text-rose-700', plusBtn: 'bg-rose-500 hover:bg-rose-600' }, 50)}
-          ${makeStepperControl(c.id, 'excused', 'Чөлөөтэй', r.excused, { wrap: 'bg-amber-50/70 border-amber-200', label: 'text-amber-800', text: 'text-amber-800', plusBtn: 'bg-amber-500 hover:bg-amber-600' }, 50)}
-          ${makeStepperControl(c.id, 'absent', 'Тасалсан', r.absent, { wrap: 'bg-red-50/70 border-red-200', label: 'text-red-700', text: 'text-red-700', plusBtn: 'bg-red-600 hover:bg-red-700' }, 50)}
-          ${makeStepperControl(c.id, 'remote', 'Зайнаас', r.remote, { wrap: 'bg-cyan-50/70 border-cyan-200', label: 'text-cyan-800', text: 'text-cyan-800', plusBtn: 'bg-cyan-600 hover:bg-cyan-700' }, 50)}
+          ${makeStepperControl(c.id, 'sick', 'Өвчтэй', r.sick, null, 50)}
+          ${makeStepperControl(c.id, 'excused', 'Чөлөөтэй', r.excused, null, 50)}
+          ${makeStepperControl(c.id, 'absent', 'Тасалсан', r.absent, null, 50)}
+          ${makeStepperControl(c.id, 'remote', 'Зайнаас', r.remote, null, 50)}
         </div>
 
         <div id="att-names-wrap-${c.id}" class="${nameSections ? 'space-y-2 pt-1' : 'hidden'}">${nameSections}</div>
@@ -6201,26 +7259,51 @@ service cloud.firestore {
 
       const morningClasses = classes.filter(isMorningShiftClass);
       const afternoonClasses = classes.filter((c) => !isMorningShiftClass(c));
+      const check = '<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>';
+      const lists = { morning: morningClasses, afternoon: afternoonClasses };
 
-      // Update Sticky Shift Tab Buttons
-      const tabStyles = {
-        morning: { active: 'bg-amber-500 text-white border-amber-600 shadow-sm', idle: 'bg-amber-50/70 text-amber-900 border-amber-200 hover:bg-amber-100' },
-        afternoon: { active: 'bg-indigo-600 text-white border-indigo-700 shadow-sm', idle: 'bg-indigo-50/70 text-indigo-900 border-indigo-200 hover:bg-indigo-100' },
-        all: { active: 'bg-slate-900 text-white border-slate-900 shadow-sm', idle: 'bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200' },
-      };
-      ['morning', 'afternoon', 'all'].forEach((k) => {
+      applyAttendanceShiftTheme();
+
+      ['morning', 'afternoon'].forEach((k) => {
         const btn = document.getElementById(`att-eshift-${k}`);
         if (!btn) return;
-        const cnt = k === 'morning' ? morningClasses.length : (k === 'afternoon' ? afternoonClasses.length : classes.length);
-        const lbl = k === 'morning' ? 'Өглөө' : (k === 'afternoon' ? 'Өдөр' : 'Бүгд');
-        btn.textContent = `${lbl} (${cnt})`;
-        btn.className = `py-2 px-2 rounded-xl text-xs font-heading font-extrabold border transition-all cursor-pointer ${attEditShift === k ? tabStyles[k].active : tabStyles[k].idle}`;
+        const on = attEditShift === k;
+        const meta = ATT_SHIFT_META[k];
+        btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+        btn.className = `att-sbtn ${meta.tone}`;
+        btn.innerHTML = `<span class="flex items-center gap-2.5">
+            <span class="att-sico">${meta.icon}</span>
+            <span class="flex-1 min-w-0">
+              <span class="block font-heading font-extrabold text-[15px] sm:text-lg leading-tight">${meta.title}</span>
+              <span class="block mt-0.5 text-[11px] sm:text-xs font-bold leading-snug opacity-80">${lists[k].length} бүлэг<span class="hidden sm:inline"> • ${meta.sub}</span></span>
+            </span>
+            <span class="att-chk">${on ? check : ''}</span>
+          </span>`;
       });
+
+      const allBtn = document.getElementById('att-eshift-all');
+      if (allBtn) {
+        const on = attEditShift === 'all';
+        allBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+        allBtn.textContent = `${on ? '✓ ' : ''}Бүх анги (${classes.length})`;
+      }
+
+      const nowEl = document.getElementById('att-shift-now');
+      if (nowEl) {
+        if (attEditShift === 'all') {
+          nowEl.innerHTML = `<span class="att-now-ico">${ATT_ICON_ALL}</span><span><span class="hidden sm:inline">Та одоо </span><b>БҮХ АНГИЙН</b> (өглөө + өдөр) ирц бичиж байна</span>`;
+        } else {
+          const meta = ATT_SHIFT_META[attEditShift];
+          nowEl.innerHTML = `<span class="att-now-ico">${meta.icon}</span><span><span class="hidden sm:inline">Та одоо </span><b>${meta.title.toUpperCase()}НИЙ</b> ирц бичиж байна · ${lists[attEditShift].length} бүлэг</span>`;
+        }
+      }
+
+      const saveSpan = document.querySelector('#att-save-btn span');
+      if (saveSpan) saveSpan.textContent = attEditShift === 'morning' ? 'Өглөөний ээлж хадгалах' : (attEditShift === 'afternoon' ? 'Өдрийн ээлж хадгалах' : 'Бүх ирц хадгалах');
 
       const showMorning = (attEditShift === 'morning' || attEditShift === 'all') && morningClasses.length > 0;
       const showAfternoon = (attEditShift === 'afternoon' || attEditShift === 'all') && afternoonClasses.length > 0;
 
-      // Render Quick Grade Jump Pills
       const visibleClasses = [
         ...(showMorning ? morningClasses : []),
         ...(showAfternoon ? afternoonClasses : []),
@@ -6228,8 +7311,8 @@ service cloud.firestore {
       const uniqueGrades = Array.from(new Set(visibleClasses.map((c) => c.grade))).sort((a, b) => a - b);
       const pillsEl = document.getElementById('att-edit-grade-pills');
       if (pillsEl) {
-        pillsEl.innerHTML = `<span class="text-[10px] font-extrabold text-slate-400 shrink-0 mr-0.5">Анги:</span>` + uniqueGrades.map((g) =>
-          `<button type="button" onclick="jumpToEditGrade(${g})" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-indigo-600 hover:text-white text-slate-700 text-xs font-extrabold shrink-0 transition-colors cursor-pointer">${g}-р</button>`
+        pillsEl.innerHTML = `<span class="text-[11px] font-extrabold text-slate-400 shrink-0 mr-0.5">Анги руу очих:</span>` + uniqueGrades.map((g) =>
+          `<button type="button" onclick="jumpToEditGrade(${g})" class="att-gpill">${g}-р</button>`
         ).join('');
       }
 
@@ -6240,42 +7323,30 @@ service cloud.firestore {
         return renderEditClassCard(c, first);
       }).join('');
 
+      const section = (k) => {
+        const meta = ATT_SHIFT_META[k];
+        const tintBox = meta.tone === 'm' ? 'bg-amber-50/60 border-amber-100' : 'bg-indigo-50/60 border-indigo-100';
+        const tintInp = meta.tone === 'm' ? 'border-amber-200 focus:border-amber-300 focus:ring-amber-100' : 'border-indigo-200 focus:border-indigo-300 focus:ring-indigo-100';
+        return `<section class="space-y-2.5">
+        <div class="att-sec-head att-sec-${meta.tone}">
+          <span class="att-sec-ico">${meta.icon}</span>
+          <div class="min-w-0"><h4 class="font-heading font-extrabold text-base leading-tight">${meta.title}</h4><span class="text-[11px] font-bold opacity-75">${lists[k].length} бүлэг • ${meta.sub}</span></div>
+        </div>
+        <div class="space-y-2.5">${mapCards(lists[k])}</div>
+        <div class="p-3 rounded-2xl border ${tintBox} space-y-1.5">
+          <label class="block text-xs font-extrabold text-slate-700">Ирц бүртгэсэн багш (${meta.title})</label>
+          <input type="text" value="${escapeHtml(attDraftTeachers[k] || '')}" oninput="updateDraftTeacher('${k}', this.value)" placeholder="Багшийн овог, нэр..." autocomplete="off" class="w-full px-3.5 py-3 rounded-xl bg-white border ${tintInp} text-base font-semibold text-slate-900 focus:outline-none focus:ring-2" />
+        </div>
+      </section>`;
+      };
+
       let htmlOut = '';
-
-      if (showMorning) {
-        htmlOut += `<div class="space-y-2.5 p-3 sm:p-4 rounded-2xl bg-amber-50/50 border border-amber-200/80">
-          <div class="flex flex-wrap items-center justify-between gap-2 pb-1">
-            <h4 class="font-heading font-extrabold text-sm sm:text-base text-amber-900">Өглөөний ээлж (${morningClasses.length} бүлэг)</h4>
-            <span class="text-[11px] font-bold text-amber-700">7–12 бүх анги, 2а, 2в, 3б, 4а–4в, 5а–5г</span>
-          </div>
-          <div class="space-y-2.5">${mapCards(morningClasses)}</div>
-          <div class="pt-2">
-            <div class="p-3 rounded-xl bg-white border border-amber-300 flex flex-col sm:flex-row sm:items-center gap-2">
-              <label class="text-xs font-extrabold text-amber-900 shrink-0">Ирц бүртгэсэн багш (Өглөөний ээлж):</label>
-              <input type="text" value="${escapeHtml(attDraftTeachers.morning || '')}" oninput="updateDraftTeacher('morning', this.value)" placeholder="Багшийн овог, нэр оруулна уу..." class="flex-1 px-3.5 py-2.5 rounded-xl bg-amber-50/40 border border-amber-200 text-base sm:text-sm font-bold text-slate-800 focus:outline-none focus:border-amber-500" />
-            </div>
-          </div>
-        </div>`;
-      }
-
-      if (showAfternoon) {
-        htmlOut += `<div class="space-y-2.5 p-3 sm:p-4 rounded-2xl bg-indigo-50/50 border border-indigo-200/80">
-          <div class="flex flex-wrap items-center justify-between gap-2 pb-1">
-            <h4 class="font-heading font-extrabold text-sm sm:text-base text-indigo-900">Өдрийн ээлж (${afternoonClasses.length} бүлэг)</h4>
-            <span class="text-[11px] font-bold text-indigo-700">1а–1г, 2б, 2г, 3а, 3в, 3г, 6а–6в</span>
-          </div>
-          <div class="space-y-2.5">${mapCards(afternoonClasses)}</div>
-          <div class="pt-2">
-            <div class="p-3 rounded-xl bg-white border border-indigo-300 flex flex-col sm:flex-row sm:items-center gap-2">
-              <label class="text-xs font-extrabold text-indigo-900 shrink-0">Ирц бүртгэсэн багш (Өдрийн ээлж):</label>
-              <input type="text" value="${escapeHtml(attDraftTeachers.afternoon || '')}" oninput="updateDraftTeacher('afternoon', this.value)" placeholder="Багшийн овог, нэр оруулна уу..." class="flex-1 px-3.5 py-2.5 rounded-xl bg-indigo-50/40 border border-indigo-200 text-base sm:text-sm font-bold text-slate-800 focus:outline-none focus:border-indigo-500" />
-            </div>
-          </div>
-        </div>`;
-      }
+      if (showMorning) htmlOut += section('morning');
+      if (showMorning && showAfternoon) htmlOut += '<div class="h-px bg-slate-200 my-4"></div>';
+      if (showAfternoon) htmlOut += section('afternoon');
 
       if (!htmlOut) {
-        htmlOut = `<div class="p-8 rounded-2xl bg-slate-50 border border-dashed border-slate-300 text-center text-xs font-bold text-slate-500">Сонгосон шүүлтүүрт тохирох анги энэ ээлжид алга байна. "Бүгд" таб дээр дарна уу.</div>`;
+        htmlOut = `<div class="p-8 rounded-2xl bg-slate-50 border border-dashed border-slate-300 text-center text-xs font-bold text-slate-500">Сонгосон шүүлтүүрт тохирох анги энэ ээлжид алга байна. "Бүх анги" дээр дарна уу.</div>`;
       }
 
       container.innerHTML = htmlOut;
@@ -6287,6 +7358,8 @@ service cloud.firestore {
       const val = Math.max(0, Math.min(maxVal, parseInt(rawVal || '0', 10) || 0));
       attDraftDay[classId][field] = val;
       attDraftDay[classId].dirty = true;
+      const stEl = document.getElementById(`att-st-${field}-${classId}`);
+      if (stEl) stEl.classList.toggle('on', val > 0);
       attDraftDay[classId].recorded = Number(attDraftDay[classId].total || 0) > 0;
 
       if (field === 'absent') {
@@ -6393,10 +7466,12 @@ service cloud.firestore {
         localStorage.removeItem(ATT_LOCKOUT_KEY);
         closeAttendanceCodePrompt();
         attIsEditMode = true;
+        // Цагаас хамаарч ээлжийг автоматаар санал болгоно (12:00-оос өмнө — өглөө)
+        attEditShift = new Date().getHours() < 12 ? 'morning' : 'afternoon';
         prepareAttendanceDraftForCurrentDate();
         updateAttendanceModeUI();
         renderAttendanceContent();
-        showToast('Ирц оруулах горим нээгдлээ!', 'success');
+        showToast(`Ирц оруулах горим нээгдлээ — ${ATT_SHIFT_META[attEditShift].title} сонгогдсон`, 'success');
       } else {
         const tries = (parseInt(localStorage.getItem(ATT_ATTEMPTS_KEY) || '0', 10) || 0) + 1;
         if (tries >= 5) {
@@ -7474,7 +8549,8 @@ ${bodyHtml}
       openAttendanceModal, closeAttendanceModal, openAttendanceImageModal, closeAttendanceImageModal, downloadAttendanceImage, setAttendanceEditShift, jumpToEditGrade, stepDraftField, toggleTotalEditor, setAttendanceToToday, shiftAttendanceWorkday, handleAttendanceDateChange, renderAttendanceContent, openAttendanceCodePrompt, closeAttendanceCodePrompt, verifyAttendanceCode, exitAttendanceEditMode, saveCurrentAttendanceDay, updateDraftField, updateDraftStudentName, updateDraftTeacher, openAttendanceNamesModal, closeAttendanceNamesModal, openAttendancePrintModal, closeAttendancePrintModal, selectPrintReportType, executeAttendancePrint,
 
       openDirectorModal, closeDirectorModal, setActiveObjective, downloadEventsExcelTemplate, handleEventsExcelUpload,
-      openScheduleLink, toggleMobileMenu, toggleGalleryDeck, updateFirebaseStorageMeter, handleSchoolPhotoFallback: window.handleSchoolPhotoFallback, handleImageError: window.handleImageError, clearSelectedCalendarDate, changeCalendarMonth, scrollEventsHorizontal, filterPosts, filterLessons, openLessonViewer, closeLessonViewer, handleSaveGoodLesson, startEditGoodLesson, cancelEditGoodLesson, deleteGoodLessonWithConfirm, refreshGoodLessonsFromFirestore, addEventCategory, removeEventCategory, addPostCategory, removePostCategory, handleFooterAdminClick, closePostReader, stepReaderImage, selectReaderImage, closeLightbox, navigateLightbox, setLightboxMediaMode, stepLightboxInnerPhoto, selectLightboxInnerPhoto, closeLoginModal, handleAdminLogin, togglePasswordVisibility, logoutAdmin, closeAdminDashboard, switchAdminTab, handleSaveScheduleUrl, testScheduleUrl, clearScheduleUrl, handleAddCalendarEvent, startEditEvent, cancelEditEvent, handleAddPost, startEditPost, cancelEditPost, handleMultipleMediaFiles, addMediaImageUrl, removePendingMediaImage, setPendingMediaCover, handleMediaVideoUrlChange, handleMediaVideoFile, clearPendingMediaVideo, handleAddGalleryPhoto, selectCalendarDate, openPostReader, openLightbox, deleteEventWithConfirm, deletePostWithConfirm, deletePhotoWithConfirm, copyFirestoreRules
+      openScheduleLink, toggleMobileMenu, toggleGalleryDeck, updateFirebaseStorageMeter, handleSchoolPhotoFallback: window.handleSchoolPhotoFallback, handleImageError: window.handleImageError, clearSelectedCalendarDate, changeCalendarMonth, scrollEventsHorizontal, filterPosts, filterLessons, openLessonViewer, closeLessonViewer, handleSaveGoodLesson, startEditGoodLesson, cancelEditGoodLesson, deleteGoodLessonWithConfirm, refreshGoodLessonsFromFirestore, addEventCategory, removeEventCategory, addPostCategory, removePostCategory, handleFooterAdminClick, closePostReader, stepReaderImage, selectReaderImage, closeLightbox, navigateLightbox, setLightboxMediaMode, stepLightboxInnerPhoto, selectLightboxInnerPhoto, closeLoginModal, handleAdminLogin, togglePasswordVisibility, logoutAdmin, closeAdminDashboard, switchAdminTab, handleSaveScheduleUrl, testScheduleUrl, clearScheduleUrl, handleAddCalendarEvent, startEditEvent, cancelEditEvent, handleAddPost, startEditPost, cancelEditPost, handleMultipleMediaFiles, addMediaImageUrl, removePendingMediaImage, setPendingMediaCover, handleMediaVideoUrlChange, handleMediaVideoFile, clearPendingMediaVideo, handleAddGalleryPhoto, selectCalendarDate, openPostReader, openLightbox, deleteEventWithConfirm, deletePostWithConfirm, deletePhotoWithConfirm, copyFirestoreRules,
+      saveTreeAdminKey, renderAdminTreeWishes, deleteTreeWishWithConfirm
     });
 
     async function initApp() {
@@ -7483,7 +8559,7 @@ ${bodyHtml}
       syncDynamicCategorySelects(); renderCategoryFilterPills(); renderGoodLessons(); renderPosts();
       renderMiniCalendar(); renderHorizontalEvents(); initEventsSmoothFlow(); renderGallery();
       updateFooterAdminButton(); initShowcaseTilt(); initScrollAnimations();
-      setActiveObjective(0); initFirebaseConnection(); loadAttendanceLocalCache(); initAttendanceFirestoreListeners();
+      setActiveObjective(0); initFirebaseConnection(); loadAttendanceLocalCache();
       await initSecurityVerifiers();
     }
     if (document.readyState === 'loading') window.addEventListener('DOMContentLoaded', initApp); else initApp();
@@ -7718,7 +8794,7 @@ ${bodyHtml}
       }
 
       function initFlakes() {
-        var count = width < 640 ? 32 : 56;
+        var count = width < 640 ? 22 : 46;
         flakes = new Array(count);
         for (var i = 0; i < count; i++) {
           flakes[i] = spawnFlake(true);
@@ -7745,6 +8821,7 @@ ${bodyHtml}
         var dt = Math.min((now - lastTime) / 1000, 0.05);
         lastTime = now;
 
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
         ctx.clearRect(0, 0, width, height);
 
         for (var i = 0; i < flakes.length; i++) {
@@ -7766,12 +8843,11 @@ ${bodyHtml}
           var glint = 0.86 + 0.14 * Math.sin(f.twinklePhase);
           var half = f.size * 0.5;
           ctx.globalAlpha = Math.min(1, f.baseAlpha * glint);
-          ctx.save();
-          ctx.translate(f.x, f.y);
-          ctx.rotate(f.angle);
+          var cs = Math.cos(f.angle) * dpr, sn = Math.sin(f.angle) * dpr;
+          ctx.setTransform(cs, sn, -sn, cs, f.x * dpr, f.y * dpr);
           ctx.drawImage(sprites[f.spriteIdx], -half, -half, f.size, f.size);
-          ctx.restore();
         }
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
         ctx.globalAlpha = 1;
 
         rafId = requestAnimationFrame(render);
