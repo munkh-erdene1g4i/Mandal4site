@@ -1540,6 +1540,142 @@
       .att-gpill { padding: 6px 10px; }
     }
 
+
+    /* ==========================================================================
+       САНАЛ ХҮСЭЛТ — нисдэг дугтуй (transform/opacity анимаци)
+       ========================================================================== */
+    .fb-fab { position: fixed; left: 14px; bottom: max(14px, env(safe-area-inset-bottom)); z-index: 45; display: flex; align-items: center; gap: 8px; border: 0; background: none; padding: 0; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+    .fb-fab-env { position: relative; width: 58px; height: 58px; border-radius: 18px; display: flex; align-items: center; justify-content: center; background: linear-gradient(145deg, #ffffff, #f1f5fb); box-shadow: 0 12px 26px -12px rgba(30, 58, 138, 0.45), 0 0 0 1px rgba(203, 213, 225, 0.95); animation: fbBob 4.5s ease-in-out infinite; }
+    .fb-fab-env svg { width: 40px; height: 30px; overflow: visible; }
+    .fb-fab-flap { transform-origin: 32px 9px; transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1); }
+    .fb-fab:hover .fb-fab-flap, .fb-fab:focus-visible .fb-fab-flap { transform: scaleY(-0.6); }
+    .fb-fab-dot { position: absolute; top: 7px; right: 7px; width: 9px; height: 9px; border-radius: 9999px; background: #d4a017; box-shadow: 0 0 0 2px #fff; animation: fbPing 2.4s ease-in-out infinite; }
+    .fb-fab-label { padding: 7px 13px; border-radius: 9999px; background: rgba(255, 255, 255, 0.96); border: 1px solid #cbd5e1; color: #1e3a8a; font-size: 12px; font-weight: 800; box-shadow: 0 8px 20px -12px rgba(15, 23, 42, 0.35); }
+    @keyframes fbBob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+    @keyframes fbPing { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.35); opacity: 0.75; } }
+    @media (max-width: 639px) { .fb-fab-label { display: none; } .fb-fab-env { width: 52px; height: 52px; border-radius: 16px; } }
+
+    .fb-modal { position: fixed; inset: 0; z-index: 72; display: none; align-items: center; justify-content: center; padding: 16px; overflow: hidden;
+      background: radial-gradient(80% 60% at 50% 30%, #f8fafc, #e6ecf5); }
+    .fb-modal.open { display: flex; animation: fbFade 0.3s ease; }
+    @keyframes fbFade { from { opacity: 0; } to { opacity: 1; } }
+    .fb-close { position: absolute; top: max(14px, env(safe-area-inset-top)); right: 14px; z-index: 10; width: 44px; height: 44px; border-radius: 9999px; border: 1px solid #cbd5e1; background: #fff; color: #1e293b; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 8px 20px -12px rgba(15, 23, 42, 0.4); }
+    .fb-sky i { display: none; position: absolute; width: 8px; height: 8px; border-radius: 9999px; background: #fff; box-shadow: 0 0 12px 3px rgba(148, 163, 184, 0.4); opacity: 0.7; animation: mvTwinkle 4.5s ease-in-out infinite; }
+    .fb-sky i:nth-child(1) { left: 12%; top: 18%; } .fb-sky i:nth-child(2) { left: 82%; top: 24%; animation-delay: -1.2s; }
+    .fb-sky i:nth-child(3) { left: 20%; top: 78%; animation-delay: -2.4s; } .fb-sky i:nth-child(4) { left: 74%; top: 84%; animation-delay: -3.1s; }
+    .fb-sky i:nth-child(5) { left: 50%; top: 8%; animation-delay: -0.6s; }
+
+    .fb-fit { transform: scale(var(--fb-scale, 1)); transform-origin: center center; }
+    .fb-stage {
+      --W: min(390px, calc(100vw - 28px)); --H: calc(var(--W) * 0.62); --LH: 500px; --SH: calc(var(--LH) + var(--H) * 0.7);
+      position: relative; width: var(--W); height: var(--SH);
+    }
+    .fb-clip { position: absolute; inset: 0; overflow: hidden; }
+    .fb-letter {
+      position: absolute; left: 4.5%; right: 4.5%; top: 0; height: var(--LH); z-index: 2; border-radius: 16px;
+      padding: 18px 18px calc(var(--H) * 0.42 + 10px);
+      background: linear-gradient(180deg, #ffffff, #fcfcfa);
+      box-shadow: 0 18px 40px -24px rgba(15, 23, 42, 0.45), inset 0 0 0 1px #e2e8f0;
+      transform: translateY(calc(var(--SH) - var(--H) + 10px));
+      transition: transform 0.6s cubic-bezier(0.55, 0, 0.75, 0.2);
+    }
+    .fb-letter-in { opacity: 0; transition: opacity 0.2s ease; }
+    .fb-stage.is-open .fb-letter { transform: translateY(0); transition: transform 0.9s cubic-bezier(0.2, 0.9, 0.25, 1.06) 0.45s; }
+    .fb-stage.is-open .fb-letter-in { opacity: 1; transition: opacity 0.45s ease 1.05s; }
+
+    .fb-env { position: absolute; left: 0; right: 0; bottom: 0; height: var(--H); }
+    .fb-back { position: absolute; inset: 0; z-index: 1; border-radius: 16px; background: linear-gradient(180deg, #d9ccb0, #cfc0a0); box-shadow: 0 26px 46px -26px rgba(15, 23, 42, 0.5); }
+    .fb-front { position: absolute; inset: 0; z-index: 4; width: 100%; height: 100%; border-radius: 16px; pointer-events: none; filter: drop-shadow(0 -2px 2px rgba(15, 23, 42, 0.08)); }
+    .fb-flap {
+      position: absolute; left: 0; right: 0; top: 0; height: calc(var(--H) * 0.6); z-index: 5; transform-origin: 50% 0;
+      transform: perspective(1000px) rotateX(0deg); transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1), z-index 0s linear 0.27s;
+    }
+    .fb-flap svg { display: block; width: 100%; height: 100%; filter: drop-shadow(0 3px 3px rgba(15, 23, 42, 0.15)); }
+    .fb-stage.is-open .fb-flap { transform: perspective(1000px) rotateX(180deg); z-index: 0; }
+    .fb-seal { position: absolute; left: 50%; top: calc(var(--H) * 0.6 - 22px); z-index: 6; width: 36px; height: 36px; margin-left: -18px; border-radius: 9999px;
+      display: flex; align-items: center; justify-content: center; color: #f6d77a; font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 12px; letter-spacing: -0.02em; line-height: 1;
+      background: radial-gradient(circle at 35% 30%, #2f4fa8, #172554); border: 2px solid #c9a227; box-shadow: 0 4px 10px -3px rgba(23, 37, 84, 0.7), inset 0 -2px 0 rgba(0, 0, 0, 0.2);
+      transform: scale(0); opacity: 0; }
+    .fb-wing { position: absolute; top: 18%; width: 34%; height: auto; z-index: 0; opacity: 0; transform: scale(0.2); }
+    .fb-wing-l { right: 92%; transform-origin: 100% 70%; }
+    .fb-wing-r { left: 92%; transform-origin: 50% 70%; }
+    .fb-trail { position: absolute; right: 100%; top: 40%; width: 90px; height: 40px; opacity: 0; }
+    .fb-trail i { position: absolute; right: 0; height: 3px; border-radius: 9999px; background: linear-gradient(90deg, rgba(148, 163, 184, 0), #94a3b8); }
+    .fb-trail i:nth-child(1) { top: 0; width: 70px; } .fb-trail i:nth-child(2) { top: 16px; width: 90px; } .fb-trail i:nth-child(3) { top: 32px; width: 55px; }
+
+    /* Илгээх: захидал буцаж орж, хавтас хаагдаж, тамга дарж, далавч ургаж нисэнэ */
+    .fb-stage.is-sending .fb-letter-in { opacity: 0; transition: opacity 0.18s ease; }
+    .fb-stage.is-sending .fb-letter { transition: transform 0.6s cubic-bezier(0.55, 0, 0.75, 0.2) 0.12s; }
+    .fb-stage.is-sending .fb-flap { transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.68s, z-index 0s linear 0.93s; }
+    .fb-stage.is-sealed .fb-seal { animation: fbSeal 0.45s cubic-bezier(0.2, 0.9, 0.3, 1.4) forwards; }
+    @keyframes fbSeal { 0% { transform: scale(2.2) rotate(-25deg); opacity: 0; } 100% { transform: scale(1) rotate(0); opacity: 1; } }
+    .fb-stage.is-flying { animation: fbFly 1.35s cubic-bezier(0.55, 0, 0.7, 0.35) forwards; }
+    .fb-stage.is-flying .fb-wing { animation: fbWingIn 0.25s ease-out forwards, fbFlapL 0.22s ease-in-out 0.25s infinite alternate; }
+    .fb-stage.is-flying .fb-wing-r { animation: fbWingIn 0.25s ease-out forwards, fbFlapR 0.22s ease-in-out 0.25s infinite alternate; }
+    .fb-wing-r { transform: scaleX(-1) scale(0.2); }
+    .fb-stage.is-flying .fb-trail { animation: fbTrail 1.35s ease forwards; }
+    @keyframes fbWingIn { to { opacity: 1; transform: scale(1); } }
+    @keyframes fbFlapL { from { opacity: 1; transform: rotate(-14deg); } to { opacity: 1; transform: rotate(26deg) scaleY(0.75); } }
+    @keyframes fbFlapR { from { opacity: 1; transform: scaleX(-1) rotate(-14deg); } to { opacity: 1; transform: scaleX(-1) rotate(26deg) scaleY(0.75); } }
+    @keyframes fbTrail { 0%, 25% { opacity: 0; } 45% { opacity: 1; } 100% { opacity: 0.6; } }
+    @keyframes fbFly {
+      0% { transform: translate(0, 0) rotate(0) scale(1); }
+      22% { transform: translate(-16px, 22px) rotate(5deg) scale(0.96); }
+      45% { transform: translate(8vw, -6vh) rotate(-8deg) scale(0.86); opacity: 1; }
+      100% { transform: translate(85vw, -95vh) rotate(-22deg) scale(0.3); opacity: 0; }
+    }
+
+    .fb-done { position: absolute; left: 50%; top: 50%; z-index: 8; width: min(360px, calc(100vw - 40px)); padding: 26px 22px 22px; border-radius: 26px; text-align: center;
+      background: #fff; border: 1px solid #e2e8f0; box-shadow: 0 30px 60px -30px rgba(15, 23, 42, 0.5);
+      opacity: 0; pointer-events: none; transform: translate(-50%, -42%) scale(0.92); transition: opacity 0.4s ease, transform 0.5s cubic-bezier(0.2, 0.9, 0.3, 1.2); }
+    .fb-modal.show-done .fb-done { opacity: 1; pointer-events: auto; transform: translate(-50%, -50%) scale(1); }
+    .fb-modal.show-done .fb-fit { visibility: hidden; }
+    .fb-done-ico { width: 66px; height: 66px; margin: 0 auto 12px; border-radius: 9999px; display: flex; align-items: center; justify-content: center; color: #fff; background: linear-gradient(135deg, #1e3a8a, #2563eb); box-shadow: 0 12px 26px -12px rgba(37, 99, 235, 0.8); }
+    .fb-done.err .fb-done-ico { background: linear-gradient(135deg, #f59e0b, #d97706); }
+    .fb-done h3 { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 19px; color: #0f172a; }
+    .fb-done p { margin-top: 6px; font-size: 13.5px; font-weight: 600; color: #64748b; line-height: 1.55; }
+    .fb-done-btns { display: flex; gap: 8px; margin-top: 18px; }
+    .fb-btn, .fb-btn-ghost { flex: 1; padding: 12px; border-radius: 14px; font-weight: 800; font-size: 14px; cursor: pointer; border: 0; }
+    .fb-btn { color: #fff; background: linear-gradient(135deg, #1e3a8a, #2563eb); }
+    .fb-btn-ghost { color: #1e293b; background: #f1f5f9; }
+
+    .fb-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+    .fb-to { font-size: 11px; font-weight: 800; color: #64748b; letter-spacing: 0.02em; }
+    .fb-title { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 22px; color: #1e3a8a; line-height: 1.15; margin-top: 2px; }
+    .fb-stamp { width: 50px; height: 58px; flex-shrink: 0; padding: 5px; transform: rotate(6deg); background: #fff;
+      border: 2px dashed #94a3b8; border-radius: 6px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px -6px rgba(15, 23, 42, 0.45); }
+    .fb-stamp img { width: 100%; height: 100%; object-fit: contain; }
+    .fb-sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+    .fb-cats { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0 10px; }
+    @media (max-width: 420px) {
+      .fb-cats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; }
+      .fb-letter .fb-cats button { padding: 7px 0; font-size: 11.5px; letter-spacing: -0.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .fb-emo { display: none; }
+      .fb-letter { padding-left: 14px; padding-right: 14px; }
+      .fb-ta { height: 116px; }
+    }
+    .fb-cats button { padding: 6px 11px; border-radius: 9999px; font-size: 12px; font-weight: 800; cursor: pointer; border: 1px solid #cbd5e1; background: #fff; color: #334155; transition: background 0.2s ease, transform 0.15s ease; }
+    .fb-cats button[aria-pressed="true"] { background: #1e3a8a; border-color: #1e3a8a; color: #fff; box-shadow: 0 4px 12px -8px rgba(30, 58, 138, 0.9); }
+    .fb-cats button:active { transform: scale(0.95); }
+    .fb-in { width: 100%; padding: 11px 13px; border-radius: 14px; border: 1.5px solid #cbd5e1; background: #fff; font-size: 16px; font-weight: 600; color: #0f172a; outline: none; font-family: inherit; }
+    .fb-in:focus { border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.14); }
+    .fb-ta { height: 128px; resize: none; line-height: 1.5; }
+    .fb-cnt { display: flex; justify-content: space-between; gap: 8px; font-size: 11px; font-weight: 700; color: #cbd5e1; margin: 2px 2px 8px; }
+    .fb-opt { color: #94a3b8; }
+    .fb-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .fb-row .fb-in { font-size: 14px; padding: 10px 11px; }
+    @media (max-width: 639px) { .fb-row .fb-in { font-size: 16px; } }
+    .fb-send { width: 100%; margin-top: 10px; padding: 13px; border-radius: 15px; border: 0; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+      color: #fff; font-weight: 900; font-size: 15px; font-family: 'Montserrat', sans-serif; background: linear-gradient(135deg, #1e3a8a, #1d4ed8); box-shadow: 0 12px 24px -14px rgba(30, 58, 138, 0.9); }
+    .fb-send:active { transform: scale(0.98); }
+    .fb-note { min-height: 16px; margin-top: 6px; text-align: center; font-size: 12px; font-weight: 800; color: #be123c; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .fb-fab-env, .fb-fab-dot, .fb-sky i { animation: none !important; }
+      .fb-letter, .fb-flap, .fb-letter-in { transition-duration: 0.01s !important; transition-delay: 0s !important; }
+      .fb-stage.is-flying { animation: fbFade 0.3s reverse forwards; }
+    }
+
     /* ==========================================================================
        POST IMAGES — portrait photos centered, never awkwardly cropped
        ========================================================================== */
@@ -2374,6 +2510,7 @@
             <li><a href="#cultures" class="hover:text-amber-300 transition-colors">Манай сургуулийн 5 соёл</a></li>
             <li><a href="sain-hicheel.html" class="hover:text-amber-300 transition-colors">Сайн хичээл үзэх</a></li>
             <li><a href="#news" class="hover:text-amber-300 transition-colors">Сургуулийн мэдээ мэдээлэл</a></li>
+            <li><button type="button" onclick="openFeedback()" class="hover:text-amber-300 transition-colors font-semibold cursor-pointer">✉ Санал хүсэлт илгээх</button></li>
           </ul>
         </div>
 
@@ -2388,7 +2525,7 @@
       <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/85">
         <div class="flex flex-col gap-1">
           <p>© 2026 Мандал сумын Ерөнхий боловсролын 4-р сургууль. Бүх эрх хуулиар хамгаалагдсан.</p>
-          <span class="text-[10px] text-white/50">хувилбар 3.19</span>
+          <span class="text-[10px] text-white/50">хувилбар 3.21</span>
         </div>
 
         <button
@@ -2695,25 +2832,26 @@
           </svg>
         </button>
         <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/20 text-[11px] font-extrabold mb-2">
-          <span>SHA-256 шифрлэгдсэн хамгаалалт</span>
+          <span>Firebase нэвтрэлтээр хамгаалагдсан</span>
         </div>
         <h3 class="font-heading font-extrabold text-2xl">Админ нэвтрэх</h3>
         <p class="text-xs text-white/85 mt-1">Мандал сумын ЕБ-ын 4-р сургуулийн удирдлагын хэсэг</p>
       </div>
 
-      <form onsubmit="handleAdminLogin(event)" autocomplete="off" class="p-6 sm:p-7 space-y-4">
+      <form onsubmit="handleAdminLogin(event)" autocomplete="on" class="p-6 sm:p-7 space-y-4">
         <div id="login-error-msg" class="hidden p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-600 text-xs font-bold leading-relaxed">
-          Нэвтрэх нэр эсвэл нууц үг буруу байна! Дахин оролдоно уу.
+          Имэйл эсвэл нууц үг буруу байна! Дахин оролдоно уу.
         </div>
 
         <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1.5">Нэвтрэх нэр</label>
+          <label for="admin-username" class="block text-xs font-bold text-slate-700 mb-1.5">Имэйл хаяг</label>
           <input
             id="admin-username"
-            type="text"
+            type="email"
             required
-            autocomplete="off"
-            placeholder="Нэвтрэх нэрээ оруулна уу"
+            autocomplete="username"
+            inputmode="email"
+            placeholder="Админ имэйл хаягаа оруулна уу"
             class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-sm font-semibold focus:outline-none focus:border-fuchsia-500"
           />
         </div>
@@ -2725,8 +2863,8 @@
               id="admin-password"
               type="password"
               required
-              autocomplete="new-password"
-              placeholder="••••"
+              autocomplete="current-password"
+              placeholder="••••••••"
               class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-sm font-semibold focus:outline-none focus:border-fuchsia-500 pr-11"
             />
             <button
@@ -2746,9 +2884,12 @@
         <button id="admin-login-submit-btn" type="submit" class="w-full btn-gradient py-3.5 rounded-xl font-heading font-bold text-sm cursor-pointer">
           Нэвтрэх
         </button>
+        <button type="button" onclick="sendAdminPasswordReset()" class="block mx-auto text-xs font-bold text-indigo-600 hover:underline cursor-pointer">
+          Нууц үг мартсан уу?
+        </button>
 
         <p class="text-[11px] text-center text-slate-400 font-semibold">
-          5 удаа буруу оруулбал 60 сек түгжигдэнэ • 30 мин идэвхгүй бол автоматаар гарна
+          Буруу оролдлого зөвхөн энэ төхөөрөмжийг түр түгжинэ • 30 мин идэвхгүй бол автоматаар гарна
         </p>
       </form>
     </div>
@@ -2809,27 +2950,42 @@
           </button>
         </div>
         <p id="firebase-error-desc" class="text-[11px] text-amber-800 leading-relaxed">
-          <strong>surguuliinsite</strong> төслийн Firebase Console → <strong>Firestore Database → Rules</strong> хэсэгт доорх дүрмийг хуулж <strong>Publish</strong> дарна уу. Гацуурын сэтгэгдэл устгахын тулд <strong>admin_secrets</strong> collection-д <strong>tree</strong> баримт үүсгэж, <strong>key</strong> (string) талбарт нууц түлхүүрээ бичнэ:
+          <strong>surguuliinsite</strong> төслийн Firebase Console → <strong>Firestore Database → Rules</strong> хэсэгт доорх дүрмийг хуулж <strong>Publish</strong> дарна уу. Админ бүрийг <strong>Authentication</strong>-д бүртгээд, <strong>admins</strong> collection-д тухайн имэйлээр (жижиг үсгээр) баримт үүсгэнэ:
         </p>
         <pre id="firestore-rules-snippet" class="p-2.5 rounded-xl bg-slate-900 text-emerald-300 font-mono text-[11px] overflow-x-auto max-h-56 overflow-y-auto select-all">rules_version = '2';
 
-// ============================================================================
-// Мандал 4-р сургуулийн сайт — Firestore Rules (хувилбар 3.19)
-// Firebase Console → Firestore Database → Rules → энэ бүх текстийг хуулж → Publish
-// ============================================================================
+// Мандал 4-р сургуулийн сайт — Firestore Rules (хувилбар 3.21)
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // ---------- Сайтын үндсэн өгөгдөл (өмнөх шигээ ажиллана) ----------
-    // АНХААР: сайт Firebase Auth ашигладаггүй тул эдгээрийг одоохондоо нээлттэй үлдээв.
-    match /settings/{docId}     { allow read, write: if true; }
-    match /events/{docId}       { allow read, write: if true; }
-    match /posts/{docId}        { allow read, write: if true; }
-    match /gallery/{docId}      { allow read, write: if true; }
-    match /good_lessons/{docId} { allow read, write: if true; }
-    match /attendance/{docId}   { allow read, write: if true; }
+    // Админ = Firebase-д нэвтэрсэн, имэйл нь admins жагсаалтад байгаа хүн
+    function isAdmin() {
+      return request.auth != null
+        &amp;&amp; request.auth.token.email != null
+        &amp;&amp; exists(/databases/$(database)/documents/admins/$(request.auth.token.email.lower()));
+    }
 
-    // ---------- Талархлын гацуур ----------
+    // Админ жагсаалт: хүн зөвхөн өөрийнхөө бичлэгийг харна, сайтаас өөрчлөх боломжгүй
+    match /admins/{email} {
+      allow read: if request.auth != null &amp;&amp; request.auth.token.email.lower() == email;
+      allow write: if false;
+    }
+
+    // Сайтын агуулга: хүн бүр уншина, зөвхөн админ бичнэ
+    match /events/{docId}       { allow read: if true; allow write: if isAdmin(); }
+    match /posts/{docId}        { allow read: if true; allow write: if isAdmin(); }
+    match /gallery/{docId}      { allow read: if true; allow write: if isAdmin(); }
+    match /good_lessons/{docId} { allow read: if true; allow write: if isAdmin(); }
+    match /settings/{docId} {
+      allow read: if true;
+      // attendance_totals-ыг багш нар ирц хадгалахдаа шинэчилдэг тул нээлттэй
+      allow write: if isAdmin() || docId == 'attendance_totals';
+    }
+
+    // Ирц: өмнөх шигээ (багшийн кодоор)
+    match /attendance/{docId} { allow read, write: if true; }
+
+    // Талархлын гацуур
     function validWish(d) {
       return d.keys().hasOnly(['to', 'from', 'message', 'style', 'color', 'slot', 'ts', 'createdAt'])
         &amp;&amp; d.keys().hasAll(['to', 'message', 'style', 'color', 'slot', 'ts', 'createdAt'])
@@ -2842,33 +2998,32 @@ service cloud.firestore {
         &amp;&amp; d.ts is number
         &amp;&amp; d.createdAt == request.time;
     }
-
     match /tree_wishes/{wishId} {
-      allow read: if true;                                   // хүн бүр гацуурыг харна
-      allow create: if validWish(request.resource.data);     // зөвхөн зөв хэлбэртэй сэтгэгдэл
-      allow update: if false;                                // өлгөсөн сэтгэгдлийг засахгүй
-      // Устгах: админ нэг batch-аар tree_deletions/{wishId}-г зөв түлхүүртэй үүсгэсэн үед л
-      allow delete: if existsAfter(/databases/$(database)/documents/tree_deletions/$(wishId));
+      allow read: if true;
+      allow create: if validWish(request.resource.data);
+      allow update: if false;
+      allow delete: if isAdmin();
     }
 
-    // Устгалтын бүртгэл — түлхүүр admin_secrets/tree.key-тэй таарах ёстой. Хэн ч уншиж чадахгүй.
-    match /tree_deletions/{wishId} {
-      allow read: if false;
-      allow create: if request.resource.data.keys().hasOnly(['key', 'at'])
-        &amp;&amp; request.resource.data.at == request.time
-        &amp;&amp; request.resource.data.key is string
-        &amp;&amp; request.resource.data.key == get(/databases/$(database)/documents/admin_secrets/tree).data.key
-        &amp;&amp; exists(/databases/$(database)/documents/tree_wishes/$(wishId));
-      allow update, delete: if false;
+    // Санал хүсэлт: хүн бүр илгээнэ, зөвхөн админ уншиж/тэмдэглэж/устгана
+    function validFeedback(d) {
+      return d.keys().hasOnly(['category', 'message', 'name', 'contact', 'ts', 'read', 'createdAt'])
+        &amp;&amp; d.keys().hasAll(['category', 'message', 'ts', 'read', 'createdAt'])
+        &amp;&amp; d.category in ['Санал', 'Хүсэлт', 'Талархал', 'Гомдол']
+        &amp;&amp; d.message is string &amp;&amp; d.message.size() &gt;= 3 &amp;&amp; d.message.size() &lt;= 1000
+        &amp;&amp; (!('name' in d) || (d.name is string &amp;&amp; d.name.size() &lt;= 40))
+        &amp;&amp; (!('contact' in d) || (d.contact is string &amp;&amp; d.contact.size() &lt;= 60))
+        &amp;&amp; d.ts is number
+        &amp;&amp; d.read == false
+        &amp;&amp; d.createdAt == request.time;
     }
-
-    // Нууц түлхүүр — зөвхөн Firebase Console-оос гараар үүсгэнэ, сайтаас уншигдахгүй
-    match /admin_secrets/{docId} {
-      allow read, write: if false;
+    match /feedback/{fbId} {
+      allow create: if validFeedback(request.resource.data);
+      allow read, delete: if isAdmin();
+      allow update: if isAdmin()
+        &amp;&amp; request.resource.data.diff(resource.data).affectedKeys().hasOnly(['read'])
+        &amp;&amp; request.resource.data.read is bool;
     }
-
-    // Дээр нэрлэгдээгүй бусад бүх collection хаалттай.
-    // medee.html, sain-hicheel.html өөр collection ашигладаг бол дээр нэмнэ үү.
   }
 }</pre>
       </div>
@@ -2948,6 +3103,13 @@ service cloud.firestore {
           class="admin-tab-btn px-3.5 py-2.5 rounded-t-xl text-xs sm:text-sm font-bold border-b-2 transition-all cursor-pointer"
         >
           Зургийн цомог
+        </button>
+        <button
+          onclick="switchAdminTab('tab-feedback')"
+          data-tab="tab-feedback"
+          class="admin-tab-btn px-3.5 py-2.5 rounded-t-xl text-xs sm:text-sm font-bold border-b-2 transition-all cursor-pointer"
+        >
+          Санал хүсэлт
         </button>
         <button
           onclick="switchAdminTab('tab-tree')"
@@ -3628,21 +3790,31 @@ service cloud.firestore {
           </div>
         </div>
 
+        <!-- TAB: FEEDBACK INBOX (Санал хүсэлт) -->
+        <div id="tab-feedback" class="admin-tab-panel hidden space-y-5">
+          <div class="p-5 rounded-2xl bg-gradient-to-r from-slate-50 via-blue-50 to-slate-50 border border-blue-100">
+            <h4 class="font-heading font-extrabold text-base text-slate-900">Ирсэн санал хүсэлт (<span id="manage-feedback-count" class="text-blue-700">0</span>) • <span id="manage-feedback-unread" class="text-rose-600">—</span></h4>
+            <p class="text-xs sm:text-sm text-slate-600 mt-1">Сайтын "Санал хүсэлт" дугтуйгаар илгээсэн захидлууд. Уншсаныг тэмдэглэж, шаардлагагүйг устгана.</p>
+          </div>
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <select id="fb-admin-filter" onchange="renderAdminFeedback()" class="px-3 py-2 rounded-xl bg-white border border-slate-300 text-xs font-extrabold text-slate-700">
+              <option value="all">Бүгд</option>
+              <option value="unread">Зөвхөн шинэ</option>
+              <option value="Санал">Санал</option>
+              <option value="Хүсэлт">Хүсэлт</option>
+              <option value="Талархал">Талархал</option>
+              <option value="Гомдол">Гомдол</option>
+            </select>
+            <span id="fb-admin-status" class="text-[11px] font-bold text-slate-500">Хүлээж байна...</span>
+          </div>
+          <div id="admin-feedback-list" class="space-y-2.5"></div>
+        </div>
+
         <!-- TAB 5: GRATITUDE TREE MODERATION (Талархлын гацуурын сэтгэгдэл устгах) -->
         <div id="tab-tree" class="admin-tab-panel hidden space-y-5">
           <div class="p-5 rounded-2xl bg-gradient-to-r from-emerald-50 via-teal-50 to-sky-50 border border-emerald-100">
             <h4 class="font-heading font-extrabold text-base text-slate-900">Талархлын гацуурын сэтгэгдлүүд</h4>
             <p class="text-xs sm:text-sm text-slate-600 mt-1">Зохисгүй, давхардсан сэтгэгдлийг эндээс устгана. Устгасан даруйд бүх хүний гацуураас алга болно.</p>
-          </div>
-
-          <div class="p-4 rounded-2xl bg-white border border-slate-200 space-y-2">
-            <label for="tree-admin-key" class="block text-xs font-extrabold text-slate-800">Устгах нууц түлхүүр</label>
-            <div class="flex items-center gap-2">
-              <input id="tree-admin-key" type="password" autocomplete="off" placeholder="Firestore → admin_secrets → tree → key утга"
-                class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-sm font-semibold focus:outline-none focus:border-emerald-500" />
-              <button type="button" onclick="saveTreeAdminKey()" class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-extrabold shrink-0 cursor-pointer transition-colors">Хадгалах</button>
-            </div>
-            <p id="tree-admin-key-hint" class="text-[11px] font-semibold text-slate-500">Түлхүүр зөвхөн энэ хөтчийн нээлттэй сешнд хадгалагдана (хаахад арилна).</p>
           </div>
 
           <div class="flex flex-wrap items-center justify-between gap-2">
@@ -4657,6 +4829,91 @@ service cloud.firestore {
   })();
   </script>
 
+
+  <!-- ========================================================================
+       САНАЛ ХҮСЭЛТ — нисдэг дугтуй
+       ======================================================================== -->
+  <button id="fb-fab" type="button" class="fb-fab" onclick="openFeedback()" aria-label="Санал хүсэлт илгээх">
+    <span class="fb-fab-env" aria-hidden="true">
+      <svg viewBox="0 0 64 48" fill="none">
+        <rect x="2" y="6" width="60" height="40" rx="6" fill="#f4efe3"/>
+        <path d="M2 40L26 24M62 40L38 24" stroke="#c7b896" stroke-width="2.2" stroke-linecap="round"/>
+        <path class="fb-fab-flap" d="M4 9L32 29L60 9" fill="#e8dfca" stroke="#1e3a8a" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>
+        <rect x="2" y="6" width="60" height="40" rx="6" stroke="#1e3a8a" stroke-width="2.6"/>
+        <circle cx="32" cy="27" r="5" fill="#1e3a8a" stroke="#c9a227" stroke-width="1.4"/>
+      </svg>
+      <span class="fb-fab-dot"></span>
+    </span>
+    <span class="fb-fab-label">Санал хүсэлт</span>
+  </button>
+
+  <div id="fb-modal" class="fb-modal" role="dialog" aria-modal="true" aria-label="Санал хүсэлт илгээх">
+    <button type="button" class="fb-close" onclick="closeFeedback()" aria-label="Хаах">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <div class="fb-sky" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+
+    <div id="fb-fit" class="fb-fit">
+      <div id="fb-stage" class="fb-stage">
+        <div class="fb-clip">
+          <div class="fb-letter">
+            <form id="fb-form" class="fb-letter-in" autocomplete="off" novalidate>
+              <div class="fb-head">
+                <div class="min-w-0">
+                  <div class="fb-to">Хэнд: Мандал 4-р сургуулийн захиргаа</div>
+                  <h3 class="fb-title">Санал хүсэлт</h3>
+                </div>
+                <div class="fb-stamp" aria-hidden="true"><img src="logo.png" alt="" onerror="this.style.display='none'" /></div>
+              </div>
+              <div id="fb-cats" class="fb-cats" role="radiogroup" aria-label="Төрөл">
+                <button type="button" data-cat="Санал" aria-pressed="true">Санал</button>
+                <button type="button" data-cat="Хүсэлт" aria-pressed="false">Хүсэлт</button>
+                <button type="button" data-cat="Талархал" aria-pressed="false">Талархал</button>
+                <button type="button" data-cat="Гомдол" aria-pressed="false">Гомдол</button>
+              </div>
+              <label for="fb-msg" class="fb-sr">Санал хүсэлтээ бичнэ үү</label>
+              <textarea id="fb-msg" class="fb-in fb-ta" maxlength="1000" placeholder="Санал, хүсэлтээ энд тодорхой бичнэ үү..."></textarea>
+              <div class="fb-cnt"><span class="fb-opt">Нэр, холбоо барих — заавал биш</span><span><span id="fb-n">0</span>/1000</span></div>
+              <div class="fb-row">
+                <input id="fb-name" class="fb-in" maxlength="40" placeholder="Таны нэр" aria-label="Нэр (заавал биш)" />
+                <input id="fb-contact" class="fb-in" maxlength="60" placeholder="Утас эсвэл имэйл" aria-label="Утас эсвэл имэйл (заавал биш)" />
+              </div>
+              <button type="submit" class="fb-send">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+                <span>Илгээх</span>
+              </button>
+              <p id="fb-note" class="fb-note" role="status" aria-live="polite"></p>
+            </form>
+          </div>
+        </div>
+        <div class="fb-env">
+          <div class="fb-back"></div>
+          <svg class="fb-front" viewBox="0 0 100 62" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M0 0L50 37L0 62Z" fill="#f7f3ea"/>
+            <path d="M100 0L50 37L100 62Z" fill="#f7f3ea"/>
+            <path d="M0 62L50 31L100 62Z" fill="#efe8d8"/>
+            <path d="M0 62L50 31L100 62" fill="none" stroke="#d8cbb0" stroke-width=".6"/>
+          </svg>
+          <div class="fb-flap"><svg viewBox="0 0 100 60" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0H100L50 58Z" fill="#ebe2cf" stroke="#d3c4a5" stroke-width=".8" stroke-linejoin="round"/></svg></div>
+          <div class="fb-seal" aria-hidden="true">М4</div>
+          <svg class="fb-wing fb-wing-l" viewBox="0 0 60 40" aria-hidden="true"><path d="M58 30C40 34 14 30 2 6c12 4 18 2 26 6 6-6 14-6 18 0 6 2 10 8 12 18z" fill="#fff" stroke="#94a3b8" stroke-width="2" stroke-linejoin="round"/><path d="M50 26C38 26 24 22 14 12M52 20c-8-1-16-4-22-10" fill="none" stroke="#cbd5e1" stroke-width="1.6" stroke-linecap="round"/></svg>
+          <svg class="fb-wing fb-wing-r" viewBox="0 0 60 40" aria-hidden="true"><path d="M58 30C40 34 14 30 2 6c12 4 18 2 26 6 6-6 14-6 18 0 6 2 10 8 12 18z" fill="#fff" stroke="#94a3b8" stroke-width="2" stroke-linejoin="round"/><path d="M50 26C38 26 24 22 14 12M52 20c-8-1-16-4-22-10" fill="none" stroke="#cbd5e1" stroke-width="1.6" stroke-linecap="round"/></svg>
+          <div class="fb-trail" aria-hidden="true"><i></i><i></i><i></i></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="fb-done" class="fb-done" role="status" aria-live="polite">
+      <div class="fb-done-ico"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></div>
+      <h3 id="fb-done-title">Амжилттай илгээгдлээ</h3>
+      <p id="fb-done-text">Таны санал хүсэлтийг сургуулийн захиргаа хүлээн авч, хянан шийдвэрлэнэ. Баярлалаа.</p>
+      <div class="fb-done-btns">
+        <button type="button" class="fb-btn-ghost" onclick="closeFeedback()">Хаах</button>
+        <button type="button" class="fb-btn" onclick="restartFeedback()">Дахин бичих</button>
+      </div>
+    </div>
+  </div>
+
   <div id="toast-container" class="fixed bottom-5 right-5 z-[60] flex flex-col gap-2.5 max-w-sm w-full pointer-events-none px-4 sm:px-0"></div>
 
   <!-- ========================================================================
@@ -4665,6 +4922,13 @@ service cloud.firestore {
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
+    import {
+      getAuth,
+      signInWithEmailAndPassword,
+      signOut,
+      onAuthStateChanged,
+      sendPasswordResetEmail
+    } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
     import {
       getFirestore,
       collection,
@@ -4678,7 +4942,8 @@ service cloud.firestore {
       serverTimestamp,
       query,
       limit,
-      writeBatch
+      writeBatch,
+      updateDoc
     } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
     /* ------------------------------------------------------------------------
@@ -4745,6 +5010,8 @@ service cloud.firestore {
       getAnalytics(app);
     } catch (analyticsErr) {}
     const db = getFirestore(app);
+    const auth = getAuth(app);
+    auth.languageCode = 'mn';
     window.__xmasFB = { db, collection, addDoc, onSnapshot, query, limit, serverTimestamp };
     let isFirestoreReady = false;
     let isInitialDataSeeded = false;
@@ -4985,10 +5252,11 @@ service cloud.firestore {
     const KEY_MASK = [0xA5, 0x5A, 0x3C, 0xC3];
     const SESSION_TIMEOUT_MS = 30 * 60 * 1000;
     const LOCKOUT_DURATION_MS = 60 * 1000;
+    // Төхөөрөмж бүрт тусдаа: 5 буруу → 1 мин, дахиад → 5 мин, 15 мин, 30 мин. Бусад админуудад нөлөөлөхгүй.
+    const LOCKOUT_STEPS_MS = [60 * 1000, 5 * 60 * 1000, 15 * 60 * 1000, 30 * 60 * 1000];
+    const LOCKOUT_LEVEL_KEY = 'mandal4_admin_lock_level_v3';
     const MAX_LOGIN_ATTEMPTS = 5;
 
-    let expectedUserDigestHex = '';
-    let expectedPassDigestHex = '';
     let adminIdleTimer = null;
     let lockoutCountdownInterval = null;
 
@@ -5031,26 +5299,8 @@ service cloud.firestore {
       return mismatch === 0;
     }
 
-    async function initSecurityVerifiers() {
-      const userVector = new Uint8Array([97, 100, 109, 105, 110]);
-      const passVector = new Uint8Array([147, 108, 11, 250]);
-      const pepperBytes = new TextEncoder().encode(AUTH_PEPPER);
-
-      const uBuf = new Uint8Array(userVector.length + pepperBytes.length);
-      uBuf.set(userVector, 0);
-      uBuf.set(pepperBytes, userVector.length);
-      expectedUserDigestHex = await computeSha256Hex(uBuf);
-
-      const pBuf = new Uint8Array(passVector.length + pepperBytes.length);
-      pBuf.set(passVector, 0);
-      pBuf.set(pepperBytes, passVector.length);
-      expectedPassDigestHex = await computeSha256Hex(pBuf);
-
-      userVector.fill(0);
-      passVector.fill(0);
-      uBuf.fill(0);
-      pBuf.fill(0);
-    }
+    // Админ нууц үг кодонд хадгалагдахгүй — шалгалтыг Firebase Authentication сервер хийнэ.
+    async function initSecurityVerifiers() {}
 
     function getLockoutRemainingMs() {
       try {
@@ -5079,6 +5329,7 @@ service cloud.firestore {
     }
 
     function isValidAdminSession() {
+      if (!auth.currentUser) return false;
       try {
         const raw = sessionStorage.getItem(STORAGE_KEYS.SESSION);
         if (!raw) return false;
@@ -5793,24 +6044,80 @@ service cloud.firestore {
       tick(); if (getLockoutRemainingMs() > 0) lockoutCountdownInterval = setInterval(tick, 500);
     }
     
-    async function handleAdminLogin(e) {
-      e.preventDefault(); const err = document.getElementById('login-error-msg');
-      if (getLockoutRemainingMs() > 0) { updateLockoutUI(); return; }
-      const u = document.getElementById('admin-username').value.trim(); const p = document.getElementById('admin-password').value;
-      if (!expectedUserDigestHex) await initSecurityVerifiers();
-      const ih = await computeSha256Hex(buildSaltedCredentialBytes(u, false));
-      const ph = p.length === 4 ? await computeSha256Hex(buildSaltedCredentialBytes(p, true)) : '';
-      document.getElementById('admin-password').value = '';
-      if (constantTimeHexEqual(ih, expectedUserDigestHex) && constantTimeHexEqual(ph, expectedPassDigestHex)) {
-        setAttemptCount(0); isAdminLoggedIn = true; createOrRefreshAdminSession(); err.classList.add('hidden');
-        closeLoginModal(); updateFooterAdminButton(); openAdminDashboard(); showToast('Амжилттай нэвтэрлээ!', 'success');
+    async function checkAdminAllowed(user, withReason = false) {
+      // Админ жагсаалт: Firestore → admins/{имэйл (жижиг үсгээр)} баримт байгаа эсэх
+      let res = { ok: false, reason: 'no-email' };
+      if (user && user.email) {
+        try {
+          const snap = await getDoc(doc(db, 'admins', user.email.toLowerCase()));
+          res = snap.exists() ? { ok: true, reason: '' } : { ok: false, reason: 'not-listed' };
+        } catch (e) {
+          res = { ok: false, reason: e && e.code === 'permission-denied' ? 'rules' : 'network' };
+        }
+      }
+      return withReason ? res : res.ok;
+    }
+
+    function registerFailedLogin(msgPrefix) {
+      const err = document.getElementById('login-error-msg');
+      const a = getAttemptCount() + 1; setAttemptCount(a);
+      if (a >= MAX_LOGIN_ATTEMPTS) {
+        let lvl = 0; try { lvl = parseInt(localStorage.getItem(LOCKOUT_LEVEL_KEY) || '0', 10) || 0; } catch (e) {}
+        const dur = LOCKOUT_STEPS_MS[Math.min(lvl, LOCKOUT_STEPS_MS.length - 1)];
+        try { localStorage.setItem(LOCKOUT_LEVEL_KEY, String(lvl + 1)); localStorage.setItem(STORAGE_KEYS.ATTEMPTS, '0'); } catch (e) {}
+        setLockoutState(dur); updateLockoutUI();
       } else {
-        const a = getAttemptCount() + 1; setAttemptCount(a);
-        if (a >= MAX_LOGIN_ATTEMPTS) { setLockoutState(LOCKOUT_DURATION_MS); setAttemptCount(0); updateLockoutUI(); }
-        else { err.textContent = `Буруу байна! (Үлдсэн оролдлого: ${MAX_LOGIN_ATTEMPTS-a})`; err.classList.remove('hidden'); }
+        err.textContent = `${msgPrefix} (Үлдсэн оролдлого: ${MAX_LOGIN_ATTEMPTS - a})`; err.classList.remove('hidden');
       }
     }
-    function logoutAdmin(auto = false) { isAdminLoggedIn = false; clearAdminSession(); closeAdminDashboard(); updateFooterAdminButton(); showToast(auto ? 'Автоматаар гарлаа.' : 'Системээс гарлаа.', 'info'); }
+
+    async function handleAdminLogin(e) {
+      e.preventDefault(); const err = document.getElementById('login-error-msg'); const btn = document.getElementById('admin-login-submit-btn');
+      if (getLockoutRemainingMs() > 0) { updateLockoutUI(); return; }
+      const email = document.getElementById('admin-username').value.trim().toLowerCase();
+      const pass = document.getElementById('admin-password').value;
+      if (!email || !pass) return;
+      btn.disabled = true; const oldTxt = btn.textContent; btn.textContent = 'Шалгаж байна...';
+      try {
+        const cred = await signInWithEmailAndPassword(auth, email, pass);
+        const chk = await checkAdminAllowed(cred.user, true);
+        if (!chk.ok) {
+          await signOut(auth);
+          // Тохиргооны алдааг буруу оролдлогод тооцохгүй (өөрийгөө түгжихгүй)
+          if (chk.reason === 'rules') { err.textContent = 'Нууц үг зөв боловч Firestore Rules шинэчлэгдээгүй байна. Firebase Console → Firestore → Rules-д шинэ дүрмийг Publish хийнэ үү.'; err.classList.remove('hidden'); }
+          else if (chk.reason === 'not-listed') { err.textContent = `Нууц үг зөв боловч "${email}" хаяг admins жагсаалтад алга. Firestore → admins collection-д яг энэ хаягаар (жижиг үсгээр) Document ID үүсгэнэ үү.`; err.classList.remove('hidden'); }
+          else if (chk.reason === 'network') { err.textContent = 'Firestore-той холбогдож чадсангүй. Интернэтээ шалгана уу.'; err.classList.remove('hidden'); }
+          else registerFailedLogin('Энэ хаяг админ эрхгүй байна.');
+          return;
+        }
+        document.getElementById('admin-password').value = '';
+        setAttemptCount(0); try { localStorage.removeItem(LOCKOUT_LEVEL_KEY); } catch (er) {}
+        isAdminLoggedIn = true; createOrRefreshAdminSession(); err.classList.add('hidden');
+        closeLoginModal(); updateFooterAdminButton(); openAdminDashboard(); showToast('Амжилттай нэвтэрлээ!', 'success');
+      } catch (ex) {
+        const code = ex && ex.code ? ex.code : '';
+        document.getElementById('admin-password').value = '';
+        if (code === 'auth/network-request-failed') { err.textContent = 'Интернэт холболтоо шалгана уу.'; err.classList.remove('hidden'); }
+        else if (code === 'auth/too-many-requests') { err.textContent = 'Firebase түр хамгаалалт идэвхжлээ. Хэдэн минутын дараа оролдох эсвэл "Нууц үг мартсан" ашиглана уу.'; err.classList.remove('hidden'); }
+        else if (code === 'auth/operation-not-allowed' || code === 'auth/configuration-not-found') { err.textContent = 'Firebase Console → Authentication → Sign-in method хэсэгт Email/Password идэвхжээгүй байна.'; err.classList.remove('hidden'); }
+        else if (code === 'auth/unauthorized-domain' || code === 'auth/requests-from-referer-are-blocked') { err.textContent = `Энэ домэйн (${location.hostname}) зөвшөөрөгдөөгүй. Authentication → Settings → Authorized domains-д нэмнэ үү.`; err.classList.remove('hidden'); }
+        else if (code === 'auth/invalid-email') { err.textContent = 'Имэйл хаягийн бичиглэл буруу байна.'; err.classList.remove('hidden'); }
+        else if (code === 'auth/user-disabled') { err.textContent = 'Энэ админ хаяг идэвхгүй болгогдсон байна.'; err.classList.remove('hidden'); }
+        else if (code && !['auth/invalid-credential', 'auth/wrong-password', 'auth/user-not-found', 'auth/invalid-login-credentials'].includes(code)) { err.textContent = `Нэвтрэхэд алдаа гарлаа (${code}).`; err.classList.remove('hidden'); }
+        else registerFailedLogin('Имэйл эсвэл нууц үг буруу байна!');
+      } finally {
+        btn.disabled = getLockoutRemainingMs() > 0; btn.textContent = oldTxt;
+      }
+    }
+
+    async function sendAdminPasswordReset() {
+      const email = document.getElementById('admin-username').value.trim().toLowerCase();
+      if (!email) { showToast('Эхлээд имэйл хаягаа бичнэ үү.', 'error'); document.getElementById('admin-username').focus(); return; }
+      try { await sendPasswordResetEmail(auth, email); } catch (e) {}
+      showToast('Хэрэв энэ хаяг бүртгэлтэй бол нууц үг сэргээх холбоос имэйлээр очно.', 'info');
+    }
+
+    function logoutAdmin(auto = false) { isAdminLoggedIn = false; clearAdminSession(); closeAdminDashboard(); updateFooterAdminButton(); signOut(auth).catch(() => {}); showToast(auto ? 'Автоматаар гарлаа.' : 'Системээс гарлаа.', 'info'); }
 
     function estimateUtf8Bytes(dataObj) {
       try {
@@ -5884,7 +6191,7 @@ service cloud.firestore {
       document.getElementById('admin-dashboard-modal').classList.replace('hidden', 'flex');
       resetAdminIdleTimer(); updateScheduleUrlDisplay(); syncDynamicCategorySelects(); setDefaultAdminDateInputs(); switchAdminTab(tab);
     }
-    function closeAdminDashboard() { document.getElementById('admin-dashboard-modal').classList.replace('flex', 'hidden'); stopAdminTreeListener(); }
+    function closeAdminDashboard() { document.getElementById('admin-dashboard-modal').classList.replace('flex', 'hidden'); stopAdminTreeListener(); stopAdminFeedbackListener(); }
     function switchAdminTab(t) {
       resetAdminIdleTimer();
       document.querySelectorAll('.admin-tab-panel').forEach(p => p.classList.add('hidden')); document.getElementById(t).classList.remove('hidden');
@@ -5894,6 +6201,7 @@ service cloud.firestore {
       renderAdminManageLists();
       if (t === 'tab-lessons') refreshGoodLessonsFromFirestore(false);
       if (t === 'tab-tree') startAdminTreeListener(); else stopAdminTreeListener();
+      if (t === 'tab-feedback') startAdminFeedbackListener(); else stopAdminFeedbackListener();
     }
 
     // Media Helpers
@@ -6449,8 +6757,7 @@ service cloud.firestore {
 
     /* ------------------------------------------------------------------------
        10.5. GRATITUDE TREE MODERATION (админ: гацуурын сэтгэгдэл устгах)
-       Устгалт нь batch-аар хийгдэнэ: tree_deletions/{id}-д нууц түлхүүр бичиж,
-       tree_wishes/{id}-г устгана. Firestore Rules түлхүүрийг admin_secrets/tree-тэй тулгана.
+       Устгах эрхийг Firestore Rules шалгана: зөвхөн admins жагсаалтад байгаа нэвтэрсэн хэрэглэгч.
        ------------------------------------------------------------------------ */
     const TREE_KEY_SESSION = 'mandal4_tree_admin_key';
     let adminTreeWishes = [];
@@ -6482,7 +6789,6 @@ service cloud.firestore {
       if (el) { el.textContent = t; el.className = `text-[11px] font-bold ${isErr ? 'text-rose-600' : 'text-slate-500'}`; }
     }
     function startAdminTreeListener() {
-      updateTreeKeyHint();
       if (adminTreeUnsub) return;
       setTreeAdminStatus('Firebase-ээс уншиж байна...');
       try {
@@ -6537,27 +6843,188 @@ service cloud.firestore {
       resetAdminIdleTimer();
       if (!/^[A-Za-z0-9_-]{1,64}$/.test(String(id))) return;
       if (b.dataset.c !== '1') { b.dataset.c = '1'; b.textContent = 'Устгах уу?'; setTimeout(() => { if (b && b.dataset.c === '1') { b.dataset.c = '0'; b.textContent = 'Устгах'; } }, 3000); return; }
-      const key = getTreeAdminKey();
-      if (!key) {
-        b.dataset.c = '0'; b.textContent = 'Устгах';
-        showToast('Эхлээд дээрх "Устгах нууц түлхүүр"-ээ оруулж хадгална уу.', 'error');
-        const inp = document.getElementById('tree-admin-key'); if (inp) inp.focus();
-        return;
-      }
       b.disabled = true; b.textContent = 'Устгаж байна...';
       try {
-        const batch = writeBatch(db);
-        batch.set(doc(db, 'tree_deletions', id), { key, at: serverTimestamp() });
-        batch.delete(doc(db, 'tree_wishes', id));
-        await batch.commit();
+        await deleteDoc(doc(db, 'tree_wishes', id));
         adminTreeWishes = adminTreeWishes.filter((w) => w.id !== id);
         renderAdminTreeWishes();
         showToast('Сэтгэгдэл гацуураас устгагдлаа.', 'info');
       } catch (err) {
         b.disabled = false; b.dataset.c = '0'; b.textContent = 'Устгах';
         const denied = err && err.code === 'permission-denied';
-        showToast(denied ? 'Зөвшөөрөлгүй: түлхүүр буруу эсвэл Firestore Rules шинэчлэгдээгүй байна.' : `Устгахад алдаа гарлаа (${err && err.code ? err.code : 'холболт'}).`, 'error');
+        showToast(denied ? 'Зөвшөөрөлгүй: админ жагсаалтад байхгүй эсвэл Firestore Rules шинэчлэгдээгүй байна.' : `Устгахад алдаа гарлаа (${err && err.code ? err.code : 'холболт'}).`, 'error');
       }
+    }
+
+
+    /* ------------------------------------------------------------------------
+       10.6. САНАЛ ХҮСЭЛТ — нисдэг дугтуй (feedback collection)
+       ------------------------------------------------------------------------ */
+    const FB_LAST_KEY = 'mandal4_feedback_last';
+    const FB_DRAFT_KEY = 'mandal4_feedback_draft';
+    let fbCategory = 'Санал';
+    let fbBusy = false;
+    let fbTimers = [];
+    let fbInited = false;
+
+    function fbEl(id) { return document.getElementById(id); }
+    function fbClearTimers() { fbTimers.forEach(clearTimeout); fbTimers = []; }
+    function fbLater(fn, ms) { fbTimers.push(setTimeout(fn, ms)); }
+    function fitFeedbackStage() {
+      const st = fbEl('fb-stage'), fit = fbEl('fb-fit'); if (!st || !fit) return;
+      const sc = Math.min(1, (window.innerHeight - 84) / st.offsetHeight);
+      fit.style.setProperty('--fb-scale', String(Math.max(0.6, sc)));
+    }
+    function initFeedbackUi() {
+      if (fbInited) return; fbInited = true;
+      fbEl('fb-cats').addEventListener('click', (e) => {
+        const b = e.target.closest('[data-cat]'); if (!b) return;
+        fbCategory = b.getAttribute('data-cat');
+        fbEl('fb-cats').querySelectorAll('[data-cat]').forEach((x) => x.setAttribute('aria-pressed', x === b ? 'true' : 'false'));
+      });
+      fbEl('fb-msg').addEventListener('input', function () {
+        fbEl('fb-n').textContent = this.value.length;
+        try { localStorage.setItem(FB_DRAFT_KEY, this.value); } catch (e) {}
+      });
+      fbEl('fb-form').addEventListener('submit', submitFeedback);
+      window.addEventListener('resize', () => { if (fbEl('fb-modal').classList.contains('open')) fitFeedbackStage(); }, { passive: true });
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && fbEl('fb-modal').classList.contains('open') && !fbBusy) closeFeedback(); });
+      fbEl('fb-modal').addEventListener('click', (e) => { if (e.target === fbEl('fb-modal') && !fbBusy) closeFeedback(); });
+    }
+    function resetFeedbackStage() {
+      fbClearTimers();
+      const st = fbEl('fb-stage');
+      st.classList.remove('is-open', 'is-sending', 'is-sealed', 'is-flying');
+      fbEl('fb-modal').classList.remove('show-done');
+      fbEl('fb-done').classList.remove('err');
+      fbEl('fb-note').textContent = '';
+    }
+    function openFeedback() {
+      initFeedbackUi();
+      const m = fbEl('fb-modal');
+      resetFeedbackStage();
+      try { const d = localStorage.getItem(FB_DRAFT_KEY); if (d && !fbEl('fb-msg').value) { fbEl('fb-msg').value = d; fbEl('fb-n').textContent = d.length; } } catch (e) {}
+      m.classList.add('open');
+      document.documentElement.style.overflow = 'hidden';
+      fitFeedbackStage();
+      // хоёр frame хүлээгээд нээнэ — анимаци найдвартай эхэлнэ
+      requestAnimationFrame(() => requestAnimationFrame(() => fbEl('fb-stage').classList.add('is-open')));
+      fbLater(() => { try { fbEl('fb-msg').focus({ preventScroll: true }); } catch (e) {} }, 1450);
+    }
+    function closeFeedback() {
+      if (fbBusy) return;
+      fbEl('fb-modal').classList.remove('open');
+      document.documentElement.style.overflow = '';
+      resetFeedbackStage();
+    }
+    function restartFeedback() {
+      resetFeedbackStage();
+      requestAnimationFrame(() => requestAnimationFrame(() => fbEl('fb-stage').classList.add('is-open')));
+      fbLater(() => { try { fbEl('fb-msg').focus({ preventScroll: true }); } catch (e) {} }, 1450);
+    }
+    async function submitFeedback(e) {
+      e.preventDefault();
+      if (fbBusy) return;
+      const note = fbEl('fb-note');
+      const message = fbEl('fb-msg').value.trim();
+      const name = fbEl('fb-name').value.trim().slice(0, 40);
+      const contact = fbEl('fb-contact').value.trim().slice(0, 60);
+      if (message.length < 3) { note.textContent = 'Санал хүсэлтээ бичнэ үү (дор хаяж 3 тэмдэгт).'; fbEl('fb-msg').focus(); return; }
+      let last = 0; try { last = parseInt(localStorage.getItem(FB_LAST_KEY) || '0', 10) || 0; } catch (er) {}
+      const wait = 60000 - (Date.now() - last);
+      if (wait > 0) { note.textContent = `Дахин илгээхийн тулд ${Math.ceil(wait / 1000)} секунд хүлээнэ үү.`; return; }
+      note.textContent = '';
+      fbBusy = true;
+      const payload = { category: fbCategory, message: message.slice(0, 1000), name, contact, ts: Date.now(), read: false, createdAt: serverTimestamp() };
+      const saving = addDoc(collection(db, 'feedback'), payload).then(() => true).catch((err) => { console.warn('feedback', err && err.code); return false; });
+      const st = fbEl('fb-stage');
+      st.classList.add('is-sending'); st.classList.remove('is-open');
+      fbLater(() => st.classList.add('is-sealed'), 1150);
+      fbLater(() => st.classList.add('is-flying'), 1500);
+      const animDone = new Promise((r) => fbLater(r, 2950));
+      const [ok] = await Promise.all([saving, animDone]);
+      fbBusy = false;
+      const done = fbEl('fb-done');
+      if (ok) {
+        try { localStorage.setItem(FB_LAST_KEY, String(Date.now())); localStorage.removeItem(FB_DRAFT_KEY); } catch (er) {}
+        fbEl('fb-msg').value = ''; fbEl('fb-n').textContent = '0';
+        fbEl('fb-done-title').textContent = 'Амжилттай илгээгдлээ';
+        fbEl('fb-done-text').textContent = 'Таны санал хүсэлтийг сургуулийн захиргаа хүлээн авч, хянан шийдвэрлэнэ. Баярлалаа.';
+        done.classList.remove('err');
+      } else {
+        fbEl('fb-done-title').textContent = 'Илгээж чадсангүй';
+        fbEl('fb-done-text').textContent = 'Интернэт холболтоо шалгаад дахин илгээнэ үү. Бичсэн текст тань хадгалагдсан.';
+        done.classList.add('err');
+      }
+      fbEl('fb-modal').classList.add('show-done');
+    }
+
+    /* ---- Админ: санал хүсэлт унших / уншсан гэж тэмдэглэх / устгах ---- */
+    let adminFeedback = [];
+    let adminFeedbackUnsub = null;
+    function startAdminFeedbackListener() {
+      if (adminFeedbackUnsub) return;
+      const st = fbEl('fb-admin-status'); if (st) st.textContent = 'Firebase-ээс уншиж байна...';
+      try {
+        adminFeedbackUnsub = onSnapshot(query(collection(db, 'feedback'), limit(500)), (snap) => {
+          const a = [];
+          snap.forEach((d) => {
+            const v = d.data() || {};
+            a.push({ id: d.id, category: String(v.category || 'Санал'), message: String(v.message || ''), name: String(v.name || ''), contact: String(v.contact || ''), read: !!v.read, ts: Number(v.ts || 0) || (v.createdAt && v.createdAt.seconds ? v.createdAt.seconds * 1000 : 0) });
+          });
+          a.sort((x, y) => y.ts - x.ts);
+          adminFeedback = a;
+          const s2 = fbEl('fb-admin-status'); if (s2) { s2.textContent = `Шууд холбогдсон • ${a.length} захидал`; s2.className = 'text-[11px] font-bold text-slate-500'; }
+          renderAdminFeedback();
+        }, (err) => {
+          const s2 = fbEl('fb-admin-status'); if (s2) { s2.textContent = `Уншихад алдаа: ${err && err.code ? err.code : 'холболт'} (Rules шинэчилсэн эсэхээ шалгана уу)`; s2.className = 'text-[11px] font-bold text-rose-600'; }
+          adminFeedbackUnsub = null;
+        });
+      } catch (e) {}
+    }
+    function stopAdminFeedbackListener() { if (adminFeedbackUnsub) { try { adminFeedbackUnsub(); } catch (e) {} adminFeedbackUnsub = null; } }
+    function renderAdminFeedback() {
+      const list = fbEl('admin-feedback-list'); if (!list) return;
+      const unread = adminFeedback.filter((f) => !f.read).length;
+      const c = fbEl('manage-feedback-count'); if (c) c.textContent = adminFeedback.length;
+      const u = fbEl('manage-feedback-unread'); if (u) u.textContent = unread ? `${unread} шинэ` : 'бүгд уншсан';
+      const filter = fbEl('fb-admin-filter') ? fbEl('fb-admin-filter').value : 'all';
+      const rows = adminFeedback.filter((f) => filter === 'all' || (filter === 'unread' ? !f.read : f.category === filter));
+      if (rows.length === 0) { list.innerHTML = `<div class="p-6 rounded-2xl bg-slate-50 border border-dashed border-slate-300 text-center text-xs font-bold text-slate-500">Энд харуулах захидал алга.</div>`; return; }
+      const catCls = { 'Санал': 'bg-sky-100 text-sky-800', 'Хүсэлт': 'bg-violet-100 text-violet-800', 'Талархал': 'bg-emerald-100 text-emerald-800', 'Гомдол': 'bg-amber-100 text-amber-900' };
+      list.innerHTML = rows.map((f) => {
+        let dt = ''; try { if (f.ts) dt = new Date(f.ts).toLocaleString('mn-MN', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }); } catch (e) {}
+        const id = escapeHtml(f.id);
+        return `<div class="p-3.5 rounded-2xl border ${f.read ? 'bg-slate-50 border-slate-200' : 'bg-blue-50/60 border-blue-200'}">
+          <div class="flex flex-wrap items-center gap-2 text-[11px] font-bold">
+            ${f.read ? '' : '<span class="w-2 h-2 rounded-full bg-rose-500"></span>'}
+            <span class="px-2 py-0.5 rounded-full ${catCls[f.category] || 'bg-slate-100 text-slate-700'}">${escapeHtml(f.category)}</span>
+            <span class="text-slate-500">${escapeHtml(dt)}</span>
+          </div>
+          <p class="mt-2 text-sm font-semibold text-slate-800 whitespace-pre-line break-words">${escapeHtml(f.message)}</p>
+          <div class="mt-2 flex flex-wrap items-center justify-between gap-2">
+            <span class="text-[11px] font-bold text-slate-500">— ${escapeHtml(f.name || 'Нэргүй')}${f.contact ? ` • ${escapeHtml(f.contact)}` : ''}</span>
+            <div class="flex items-center gap-1.5">
+              <button type="button" onclick="toggleFeedbackRead('${id}', ${f.read ? 'false' : 'true'})" class="px-3 py-1.5 rounded-lg text-xs font-bold cursor-pointer ${f.read ? 'bg-white border border-slate-300 text-slate-600' : 'bg-indigo-600 hover:bg-indigo-700 text-white'}">${f.read ? 'Уншаагүй болгох' : 'Уншсан'}</button>
+              <button type="button" onclick="deleteFeedbackWithConfirm('${id}', this)" class="px-3 py-1.5 rounded-lg bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold cursor-pointer">Устгах</button>
+            </div>
+          </div>
+        </div>`;
+      }).join('');
+    }
+    async function toggleFeedbackRead(id, read) {
+      resetAdminIdleTimer();
+      if (!/^[A-Za-z0-9_-]{1,64}$/.test(String(id))) return;
+      try { await updateDoc(doc(db, 'feedback', id), { read: !!read }); }
+      catch (err) { showToast(`Өөрчлөхөд алдаа гарлаа (${err && err.code ? err.code : 'холболт'}).`, 'error'); }
+    }
+    async function deleteFeedbackWithConfirm(id, b) {
+      resetAdminIdleTimer();
+      if (!/^[A-Za-z0-9_-]{1,64}$/.test(String(id))) return;
+      if (b.dataset.c !== '1') { b.dataset.c = '1'; b.textContent = 'Устгах уу?'; setTimeout(() => { if (b && b.dataset.c === '1') { b.dataset.c = '0'; b.textContent = 'Устгах'; } }, 3000); return; }
+      b.disabled = true; b.textContent = 'Устгаж байна...';
+      try { await deleteDoc(doc(db, 'feedback', id)); showToast('Захидал устгагдлаа.', 'info'); }
+      catch (err) { b.disabled = false; b.dataset.c = '0'; b.textContent = 'Устгах'; showToast(`Устгахад алдаа гарлаа (${err && err.code ? err.code : 'холболт'}).`, 'error'); }
     }
 
     /* ------------------------------------------------------------------------
@@ -8550,7 +9017,20 @@ ${bodyHtml}
 
       openDirectorModal, closeDirectorModal, setActiveObjective, downloadEventsExcelTemplate, handleEventsExcelUpload,
       openScheduleLink, toggleMobileMenu, toggleGalleryDeck, updateFirebaseStorageMeter, handleSchoolPhotoFallback: window.handleSchoolPhotoFallback, handleImageError: window.handleImageError, clearSelectedCalendarDate, changeCalendarMonth, scrollEventsHorizontal, filterPosts, filterLessons, openLessonViewer, closeLessonViewer, handleSaveGoodLesson, startEditGoodLesson, cancelEditGoodLesson, deleteGoodLessonWithConfirm, refreshGoodLessonsFromFirestore, addEventCategory, removeEventCategory, addPostCategory, removePostCategory, handleFooterAdminClick, closePostReader, stepReaderImage, selectReaderImage, closeLightbox, navigateLightbox, setLightboxMediaMode, stepLightboxInnerPhoto, selectLightboxInnerPhoto, closeLoginModal, handleAdminLogin, togglePasswordVisibility, logoutAdmin, closeAdminDashboard, switchAdminTab, handleSaveScheduleUrl, testScheduleUrl, clearScheduleUrl, handleAddCalendarEvent, startEditEvent, cancelEditEvent, handleAddPost, startEditPost, cancelEditPost, handleMultipleMediaFiles, addMediaImageUrl, removePendingMediaImage, setPendingMediaCover, handleMediaVideoUrlChange, handleMediaVideoFile, clearPendingMediaVideo, handleAddGalleryPhoto, selectCalendarDate, openPostReader, openLightbox, deleteEventWithConfirm, deletePostWithConfirm, deletePhotoWithConfirm, copyFirestoreRules,
-      saveTreeAdminKey, renderAdminTreeWishes, deleteTreeWishWithConfirm
+      renderAdminTreeWishes, deleteTreeWishWithConfirm, sendAdminPasswordReset,
+      openFeedback, closeFeedback, restartFeedback, renderAdminFeedback, toggleFeedbackRead, deleteFeedbackWithConfirm
+    });
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        if (isAdminLoggedIn) { isAdminLoggedIn = false; clearAdminSession(); closeAdminDashboard(); }
+        updateFooterAdminButton();
+        return;
+      }
+      // Хуудсыг дахин ачаалахад: Firebase-д нэвтэрсэн + 30 мин сешн хүчинтэй + админ жагсаалтад байгаа бол л нэвтэрсэн хэвээр
+      if (isValidAdminSession() && await checkAdminAllowed(user)) { isAdminLoggedIn = true; resetAdminIdleTimer(); }
+      else { isAdminLoggedIn = false; clearAdminSession(); if (!document.getElementById('admin-login-modal').classList.contains('flex')) signOut(auth).catch(() => {}); }
+      updateFooterAdminButton();
     });
 
     async function initApp() {
@@ -8560,7 +9040,6 @@ ${bodyHtml}
       renderMiniCalendar(); renderHorizontalEvents(); initEventsSmoothFlow(); renderGallery();
       updateFooterAdminButton(); initShowcaseTilt(); initScrollAnimations();
       setActiveObjective(0); initFirebaseConnection(); loadAttendanceLocalCache();
-      await initSecurityVerifiers();
     }
     if (document.readyState === 'loading') window.addEventListener('DOMContentLoaded', initApp); else initApp();
   </script>
