@@ -1516,10 +1516,12 @@
        GRATITUDE TREE MODAL
        ========================================================================== */
     .xm-modal {
+      --xbg1: #0a1b36; --xbg2: #0f3358; --xbg3: #14525f; --xglow: rgba(56, 189, 248, 0.22);
       position: fixed; inset: 0; z-index: 70; display: none; flex-direction: column; overflow: hidden; color: #fff;
       background:
-        radial-gradient(70% 50% at 50% 38%, rgba(56, 189, 248, 0.22), rgba(56, 189, 248, 0) 70%),
-        linear-gradient(180deg, #0a1b36 0%, #0f3358 52%, #14525f 100%);
+        radial-gradient(70% 50% at 50% 38%, var(--xglow), rgba(56, 189, 248, 0) 70%),
+        linear-gradient(180deg, var(--xbg1) 0%, var(--xbg2) 52%, var(--xbg3) 100%);
+      transition: background 0.6s ease;
     }
     .xm-modal.open { display: flex; }
     .xm-modal *, .xm-modal *::before, .xm-modal *::after { box-sizing: border-box; }
@@ -1635,6 +1637,101 @@
     .xm-ltxt small { font-size: 11.5px; font-weight: 700; color: #64748b; }
     .xm-lempty { padding: 28px 12px; text-align: center; font-size: 13px; font-weight: 700; color: #64748b; }
     .xm-reader { z-index: 30; }
+
+
+    /* ---------- 3 гацуурын сонголт ---------- */
+    .xm-tl { display: flex; align-items: center; gap: 10px; min-width: 0; }
+    .xm-back { width: 42px; height: 42px; flex-shrink: 0; border-radius: 9999px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+      background: rgba(255, 255, 255, 0.14); border: 1px solid rgba(255, 255, 255, 0.28); color: #fff; }
+    .xm-back[hidden] { display: none; }
+    .xm-choose { display: none; position: relative; z-index: 2; flex: 1; min-height: 0; overflow-y: auto; padding: 8px 16px calc(24px + env(safe-area-inset-bottom));
+      gap: 16px; grid-template-columns: repeat(3, minmax(0, 1fr)); align-content: center; max-width: 1100px; width: 100%; margin: 0 auto; }
+    .xm-modal.xm-picking .xm-choose { display: grid; }
+    .xm-modal.xm-picking .xm-body, .xm-modal.xm-picking .xm-fab { display: none !important; }
+    .xm-tc { position: relative; display: flex; flex-direction: column; gap: 10px; padding: 14px 14px 16px; border-radius: 26px; cursor: pointer; text-align: left; color: #fff;
+      background: radial-gradient(80% 60% at 50% 35%, var(--tglow), rgba(255, 255, 255, 0) 70%), linear-gradient(180deg, var(--tbg1), var(--tbg2) 55%, var(--tbg3));
+      border: 1px solid rgba(255, 255, 255, 0.22); box-shadow: 0 24px 50px -28px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+      opacity: 0; animation: xmTcIn 0.7s cubic-bezier(0.2, 0.9, 0.25, 1) forwards; animation-delay: calc(var(--i) * 110ms); }
+    @keyframes xmTcIn { from { opacity: 0; transform: translateY(26px) scale(0.95); } to { opacity: 1; transform: none; } }
+    .xm-tc:hover, .xm-tc:focus-visible { transform: translateY(-6px); border-color: rgba(253, 230, 138, 0.7); box-shadow: 0 30px 60px -26px rgba(0, 0, 0, 0.85), 0 0 0 2px rgba(253, 230, 138, 0.35); outline: none; }
+    .xm-tc:active { transform: scale(0.98); }
+    .xm-tc-art { display: block; aspect-ratio: 600 / 640; overflow: hidden; }
+    .xm-tc-art svg { width: 100%; height: auto; display: block; transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1); transform-origin: 50% 100%; }
+    .xm-tc:hover .xm-tc-art svg { transform: scale(1.04); }
+    .xm-tc-info { display: flex; flex-direction: column; gap: 4px; }
+    .xm-tc-info b { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 18px; }
+    .xm-tc-info small { font-size: 12px; font-weight: 700; color: rgba(226, 240, 255, 0.75); }
+    .xm-tc-bar { display: block; height: 8px; margin-top: 6px; border-radius: 9999px; background: rgba(255, 255, 255, 0.16); overflow: hidden; }
+    .xm-tc-bar i { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #86efac, #fde047); }
+    .xm-tc.full .xm-tc-bar i { background: linear-gradient(90deg, #fca5a5, #f43f5e); }
+    .xm-tc-meta { display: flex; justify-content: space-between; gap: 8px; font-size: 12px; font-weight: 800; color: rgba(226, 240, 255, 0.9); }
+    .xm-tc-st { color: #86efac; }
+    .xm-tc.full .xm-tc-st { color: #fda4af; }
+    .xm-tc.full::after { content: "Дүүрсэн"; position: absolute; top: 14px; right: 14px; padding: 5px 11px; border-radius: 9999px; font-size: 11px; font-weight: 900;
+      background: #f43f5e; color: #fff; box-shadow: 0 6px 14px -6px rgba(244, 63, 94, 0.9); }
+    @media (max-width: 767px) {
+      .xm-choose { grid-template-columns: 1fr; align-content: start; gap: 12px; }
+      .xm-tc { flex-direction: row; align-items: center; padding: 10px 14px 10px 10px; border-radius: 22px; }
+      .xm-tc-art { width: 104px; flex-shrink: 0; }
+      .xm-tc-info { flex: 1; min-width: 0; }
+      .xm-tc.full::after { top: 10px; right: 10px; }
+    }
+    /* Дүүрсэн гацуур */
+    .xm-fullmsg { display: none; flex-direction: column; align-items: center; gap: 8px; text-align: center; padding: 18px 8px 6px; color: #0f172a; }
+    .xm-fullmsg svg { color: #16a34a; }
+    .xm-fullmsg b { font-family: 'Montserrat', sans-serif; font-size: 18px; font-weight: 800; }
+    .xm-fullmsg span { font-size: 13.5px; font-weight: 600; color: #475569; line-height: 1.5; }
+    .xm-modal.xm-is-full .xm-fullmsg { display: flex; }
+    .xm-modal.xm-is-full #xm-prev, .xm-modal.xm-is-full #xm-form, .xm-modal.xm-is-full .xm-lbl, .xm-modal.xm-is-full #xm-styles, .xm-modal.xm-is-full #xm-swatches { display: none; }
+    .xm-modal.xm-is-full .xm-fab { background: #fecdd3; color: #881337; }
+    .xm-modal.xm-is-full .xm-fab svg { display: none; }
+    .xm-modal.xm-is-full .xm-count { background: rgba(244, 63, 94, 0.85); border-color: rgba(255, 255, 255, 0.4); }
+    @media (prefers-reduced-motion: reduce) { .xm-tc { animation: none; opacity: 1; } }
+
+
+    /* ---------- цастай ой (бүтэн дэлгэц) ---------- */
+    .xm-forest { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+    .xm-forest-svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+    .xf-star { fill: #ffffff; opacity: 0.75; }
+    .xf-mtn { fill: var(--xmtn, #3d6596); transition: fill 0.6s ease; }
+    .xf-far { fill: var(--xfar, #1b3d66); opacity: 0.85; transition: fill 0.6s ease; }
+    .xf-mid { fill: var(--xmid, #0f2945); transition: fill 0.6s ease; }
+    .xm-top { background: linear-gradient(180deg, rgba(4, 12, 28, 0.45), rgba(4, 12, 28, 0)); }
+    /* гацуур газрын цасан дээр зогсоно */
+    .xm-stage { align-items: flex-end !important; padding: 0 8px calc(70px + env(safe-area-inset-bottom)) !important; }
+    .xm-stage svg.xm-tree { max-width: min(520px, 100%); max-height: calc(100dvh - 160px); width: auto; height: auto; }
+    @media (max-width: 1023px) { .xm-stage svg.xm-tree { width: 100%; height: auto; } }
+    @media (min-width: 1024px) {
+      .xm-stage { padding: 0 16px 44px !important; }
+      .xm-stage svg.xm-tree { height: calc(100vh - 140px); width: auto; max-width: 100%; max-height: none; aspect-ratio: 600 / 780; }
+      .xm-panel { background: rgba(255, 255, 255, 0.97); }
+    }
+    /* сонголт: ойд зогсох гурван гацуур (хайрцаггүй) */
+    .xm-choose { align-content: end !important; align-items: end; padding: 8px 12px calc(46px + env(safe-area-inset-bottom)) !important; gap: 8px !important;
+      grid-template-columns: repeat(3, minmax(0, 1fr)) !important; max-width: 1180px; }
+    .xm-tc { background: none !important; border: 0 !important; box-shadow: none !important; padding: 0 !important; border-radius: 0 !important;
+      flex-direction: column !important; align-items: stretch !important; gap: 0 !important; }
+    .xm-tc:hover, .xm-tc:focus-visible { transform: translateY(-8px); box-shadow: none !important; }
+    .xm-tc-halo { position: absolute; left: 50%; top: 42%; width: 120%; aspect-ratio: 1; transform: translate(-50%, -50%) scale(0.85); border-radius: 9999px; pointer-events: none;
+      background: radial-gradient(closest-side, rgba(255, 244, 196, 0.32), rgba(255, 244, 196, 0) 70%); opacity: 0.55; transition: opacity 0.4s ease, transform 0.5s ease; }
+    .xm-tc:hover .xm-tc-halo, .xm-tc:focus-visible .xm-tc-halo { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    .xm-tc-art { position: relative; aspect-ratio: 600 / 780 !important; width: 100% !important; overflow: visible !important; }
+    .xm-tc-art svg { filter: drop-shadow(0 18px 18px rgba(2, 10, 25, 0.35)); }
+    .xm-tc-info { position: relative; margin: -6px auto 0; width: min(260px, 96%); padding: 10px 14px 12px; border-radius: 18px; text-align: center;
+      background: rgba(10, 25, 50, 0.55); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.22); }
+    .xm-tc-meta { justify-content: center; flex-wrap: wrap; gap: 2px 10px; }
+    .xm-tc.full::after { top: 4%; right: 6%; }
+    @media (max-width: 767px) {
+      .xm-choose { gap: 4px !important; padding-left: 6px !important; padding-right: 6px !important; padding-bottom: calc(26px + env(safe-area-inset-bottom)) !important; }
+      .xm-tc-art { width: 100% !important; }
+      .xm-tc-info { padding: 7px 6px 8px; border-radius: 14px; width: 100%; }
+      .xm-tc-info b { font-size: 13px; }
+      .xm-tc-info small { display: none; }
+      .xm-tc-meta { font-size: 10px; flex-direction: column; }
+      .xm-tc-bar { height: 6px; }
+      .xm-tc.full::after { font-size: 9px; padding: 3px 7px; top: 2%; right: 0; }
+    }
 
     .xm-snow { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 1; }
     .xm-snow i {
@@ -3012,7 +3109,7 @@
       <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/85">
         <div class="flex flex-col gap-1">
           <p>© 2026 Мандал сумын Ерөнхий боловсролын 4-р сургууль. Бүх эрх хуулиар хамгаалагдсан.</p>
-          <span class="text-[10px] text-white/50">хувилбар 3.29</span>
+          <span class="text-[10px] text-white/50">хувилбар 3.31</span>
         </div>
 
         <button
@@ -3441,7 +3538,7 @@
         </p>
         <pre id="firestore-rules-snippet" class="p-2.5 rounded-xl bg-slate-900 text-emerald-300 font-mono text-[11px] overflow-x-auto max-h-56 overflow-y-auto select-all">rules_version = '2';
 
-// Мандал 4-р сургуулийн сайт — Firestore Rules (хувилбар 3.29)
+// Мандал 4-р сургуулийн сайт — Firestore Rules (хувилбар 3.31)
 service cloud.firestore {
   match /databases/{database}/documents {
 
@@ -3474,7 +3571,7 @@ service cloud.firestore {
 
     // Талархлын гацуур
     function validWish(d) {
-      return d.keys().hasOnly(['to', 'from', 'message', 'style', 'color', 'slot', 'ts', 'createdAt'])
+      return d.keys().hasOnly(['to', 'from', 'message', 'style', 'color', 'slot', 'tree', 'ts', 'createdAt'])
         &amp;&amp; d.keys().hasAll(['to', 'message', 'style', 'color', 'slot', 'ts', 'createdAt'])
         &amp;&amp; d.to is string &amp;&amp; d.to.size() &gt;= 1 &amp;&amp; d.to.size() &lt;= 40
         &amp;&amp; (!('from' in d) || (d.from is string &amp;&amp; d.from.size() &lt;= 40))
@@ -3482,6 +3579,7 @@ service cloud.firestore {
         &amp;&amp; d.style in ['ball', 'star', 'bell', 'candy', 'gift', 'snow', 'heart', 'drop']
         &amp;&amp; d.color is string &amp;&amp; d.color.matches('^#[0-9a-fA-F]{6}$')
         &amp;&amp; d.slot is int &amp;&amp; d.slot &gt;= 0 &amp;&amp; d.slot &lt; 400
+        &amp;&amp; (!('tree' in d) || (d.tree is int &amp;&amp; d.tree &gt;= 0 &amp;&amp; d.tree &lt;= 2))
         &amp;&amp; d.ts is number
         &amp;&amp; d.createdAt == request.time;
     }
@@ -4857,6 +4955,7 @@ service cloud.firestore {
        GRATITUDE FIR TREE (Талархлын гацуур)
        ======================================================================== -->
   <div id="xm-modal" class="xm-modal" role="dialog" aria-modal="true" aria-label="Талархлын гацуур">
+    <div id="xm-forest" class="xm-forest" aria-hidden="true"></div>
     <div class="xm-snow" aria-hidden="true">
       <i style="--l:4%;--s:4px;--d:11s;--dl:-1s"></i><i style="--l:12%;--s:6px;--d:14s;--dl:-6s"></i><i style="--l:21%;--s:3px;--d:10s;--dl:-3s"></i><i style="--l:30%;--s:5px;--d:13s;--dl:-9s"></i>
       <i style="--l:39%;--s:4px;--d:12s;--dl:-4s"></i><i style="--l:47%;--s:6px;--d:15s;--dl:-11s"></i><i style="--l:55%;--s:3px;--d:10s;--dl:-7s"></i><i style="--l:63%;--s:5px;--d:13s;--dl:-2s"></i>
@@ -4864,9 +4963,14 @@ service cloud.firestore {
     </div>
 
     <div class="xm-top">
-      <div>
-        <div class="xm-title">Талархлын гацуур</div>
-        <div class="xm-sub">Чимэглэл бүр дээр талархлын үг нуугдаж байна — дарж уншаарай</div>
+      <div class="xm-tl">
+        <button type="button" id="xm-back" class="xm-back" onclick="xmBackToTrees()" aria-label="Гацуурууд руу буцах" hidden>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <div class="min-w-0">
+          <div id="xm-title-t" class="xm-title">Талархлын гацуурууд</div>
+          <div id="xm-title-s" class="xm-sub">Гацуураа сонгоод талархлаа өлгөөрэй</div>
+        </div>
       </div>
       <div class="xm-actions">
         <button type="button" class="xm-allbtn" onclick="xmList(true)" aria-label="Бүх сэтгэгдлийг харах">
@@ -4879,6 +4983,8 @@ service cloud.firestore {
       </div>
     </div>
 
+    <div id="xm-choose" class="xm-choose" role="list" aria-label="Гацуур сонгох"></div>
+
     <div class="xm-body">
       <div class="xm-stage">
         <span id="xm-count" class="xm-count">Чимэглэл: 0</span>
@@ -4890,6 +4996,12 @@ service cloud.firestore {
         <div class="xm-ph">
           <h3>Талархал өлгөх</h3>
           <button type="button" class="xm-pclose" onclick="xmPanel(false)" aria-label="Хаах">✕</button>
+        </div>
+        <div class="xm-fullmsg" role="status">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l4 6h-2.5l3.5 5h-2.5l4 6H5.5l4-6H7l3.5-5H8z"/><path d="M12 19v3"/></svg>
+          <b>Энэ гацуур дүүрсэн байна</b>
+          <span>Чимэглэл өлгөх зай үлдээгүй тул өөр гацуур сонгоно уу. Өлгөсөн талархлуудыг уншиж болно.</span>
+          <button type="button" class="xm-submit" onclick="xmBackToTrees()">Өөр гацуур сонгох</button>
         </div>
         <div id="xm-prev" class="xm-prev"></div>
 
@@ -4918,7 +5030,7 @@ service cloud.firestore {
 
     <button id="xm-fab" type="button" class="xm-fab" onclick="xmPanel(true)">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
-      Талархал өлгөх
+      <span id="xm-fab-t">Талархал өлгөх</span>
     </button>
 
     <div id="xm-list" class="xm-list" onclick="if(event.target===this)xmList(false)">
@@ -5091,55 +5203,182 @@ service cloud.firestore {
     }
     var SLOTS = buildSlots();
 
-    function treeMarkup() {
+    /* ---------- 3 гацуурын өнгөний сэдэв ---------- */
+    var TREES = [
+      { name: 'Маргад гацуур', sub: 'Сонгодог ногоон', tiers: [['#1f8a4c', '#0b5129'], ['#25a05a', '#0f6a36'], ['#2db46a', '#147b42'], ['#3fcf80', '#1a9653']],
+        garland: '#fcd34d', bulbs: ['#fb7185', '#fde047', '#7dd3fc', '#86efac', '#f9a8d4'], glow: 'rgba(56, 189, 248, 0.22)', bg1: '#071328', bg2: '#0e2a52', bg3: '#1d4f7a', far: '#1b3d66', mid: '#0f2945', mtn: '#3d6596' },
+      { name: 'Цасан гацуур', sub: 'Мөнгөлөг цэнхэр', tiers: [['#1e7a6f', '#0c4a52'], ['#25917f', '#0f5c61'], ['#2fa891', '#136d70'], ['#46c3a8', '#1a8582']],
+        garland: '#e2e8f0', bulbs: ['#bae6fd', '#e0e7ff', '#f0f9ff', '#a5f3fc', '#c7d2fe'], glow: 'rgba(165, 243, 252, 0.22)', bg1: '#0c1d40', bg2: '#21497e', bg3: '#5a86b8', far: '#3a6496', mid: '#244a77', mtn: '#88a9d3' },
+      { name: 'Алтан гацуур', sub: 'Алтлаг гэрэлт', tiers: [['#17703f', '#08401f'], ['#1c8549', '#0b5229'], ['#219a54', '#0f6232'], ['#2fb565', '#137a3d']],
+        garland: '#fbbf24', bulbs: ['#fde68a', '#fbbf24', '#fca5a5', '#fdba74', '#fef3c7'], glow: 'rgba(251, 191, 36, 0.2)', bg1: '#140b2a', bg2: '#33204f', bg3: '#7a4a5c', far: '#43295e', mid: '#2b1a40', mtn: '#8a5f86' }
+    ];
+    var CAPACITY = SLOTS.length; // нэг гацуурт өлгөх чимэглэлийн дээд тоо
+
+    function treeMarkup(ti) {
+      var th = TREES[ti] || TREES[0];
       var s = '<defs>';
       TIERS.forEach(function (t, i) {
-        s += '<linearGradient id="xtg' + i + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + t.c1 + '"/><stop offset="1" stop-color="' + t.c2 + '"/></linearGradient>';
+        s += '<linearGradient id="xtg' + i + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + th.tiers[i][0] + '"/><stop offset="1" stop-color="' + th.tiers[i][1] + '"/></linearGradient>';
       });
-      s += '<linearGradient id="xtTrunk" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7c4a21"/><stop offset=".5" stop-color="#a0622d"/><stop offset="1" stop-color="#6b3d1a"/></linearGradient>' +
+      s += '<linearGradient id="xtShine" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ffffff" stop-opacity=".22"/><stop offset=".45" stop-color="#ffffff" stop-opacity="0"/><stop offset="1" stop-color="#000000" stop-opacity=".18"/></linearGradient>' +
+        '<linearGradient id="xtTrunk" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#6b3d1a"/><stop offset=".5" stop-color="#a0622d"/><stop offset="1" stop-color="#5a3214"/></linearGradient>' +
         '<radialGradient id="xtHalo"><stop offset="0" stop-color="#fff3b0" stop-opacity=".95"/><stop offset=".45" stop-color="#fde047" stop-opacity=".35"/><stop offset="1" stop-color="#fde047" stop-opacity="0"/></radialGradient>' +
+        '<radialGradient id="xtMoon" cx=".4" cy=".4" r=".7"><stop offset="0" stop-color="#fffdf2"/><stop offset="1" stop-color="#e8e3cf"/></radialGradient>' +
+        '<radialGradient id="xtGlow"><stop offset="0" stop-color="#ffffff" stop-opacity=".9"/><stop offset="1" stop-color="#ffffff" stop-opacity="0"/></radialGradient>' +
         '<linearGradient id="xtStar" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff7c2"/><stop offset=".55" stop-color="#fcd34d"/><stop offset="1" stop-color="#f59e0b"/></linearGradient>' +
         '</defs>';
-      /* trunk + snow ground */
-      s += '<rect x="270" y="636" width="60" height="96" rx="4" fill="url(#xtTrunk)"/>' +
-        '<ellipse cx="300" cy="748" rx="292" ry="30" fill="#cfe4f7"/><ellipse cx="300" cy="742" rx="262" ry="22" fill="#f4f9ff"/>';
+      /* хонгилын гэрэл (газар дээрх гацуурын гэрлийн тусгал) */
+      s += '<ellipse cx="300" cy="730" rx="300" ry="60" fill="url(#xtGlow)" opacity=".22"/>';
+      /* trunk + зөөлөн цасан овоо (ирмэггүй, газрын цастай нийлнэ) */
+      s += '<rect x="272" y="636" width="56" height="104" rx="5" fill="url(#xtTrunk)"/><path d="M282 650 v70 M300 646 v80 M316 652 v66" stroke="#4a2810" stroke-width="2" opacity=".35"/>' +
+        '<radialGradient id="xtMound" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ffffff"/><stop offset=".62" stop-color="#eef5fd"/><stop offset="1" stop-color="#eef5fd" stop-opacity="0"/></radialGradient>' +
+        '<ellipse cx="300" cy="752" rx="300" ry="44" fill="url(#xtMound)"/>' +
+        '<ellipse cx="300" cy="736" rx="110" ry="10" fill="rgba(20,40,70,.18)"/>';
+      [[150, 746], [220, 754], [372, 750], [446, 744], [96, 752], [500, 752]].forEach(function (p, i) {
+        s += '<path class="xl-b" style="--d:' + (-(i * 0.5)).toFixed(1) + 's" d="M' + p[0] + ' ' + (p[1] - 5) + 'l1.4 3.6 3.6 1.4-3.6 1.4-1.4 3.6-1.4-3.6-3.6-1.4 3.6-1.4z" fill="#ffffff"/>';
+      });
       /* tiers, bottom to top */
       TIERS.forEach(function (t, i) {
         var d = tierPath(t);
-        s += '<path d="' + d + '" transform="translate(0 7)" fill="rgba(4,30,18,.28)"/>' +
+        s += '<path d="' + d + '" transform="translate(0 8)" fill="rgba(2,20,12,.32)"/>' +
           '<path d="' + d + '" fill="url(#xtg' + i + ')"/>' +
-          '<path d="M' + (CX + t.hw) + ' ' + edge(t) + ' ' + scallops(t) + '" fill="none" stroke="#eaf5ff" stroke-width="3.6" stroke-linecap="round" opacity=".9"/>' +
-          '<path d="M' + CX + ' ' + (t.top + 6) + ' Q' + (CX - t.hw * 0.5) + ' ' + (t.top + (edge(t) - t.top) * 0.45) + ' ' + (CX - t.hw + 14) + ' ' + (edge(t) - 8) + '" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".13"/>';
+          '<path d="' + d + '" fill="url(#xtShine)"/>';
+        /* зүүн навчны зураас */
+        var bx = edge(t);
+        for (var k = 1; k <= 5; k++) {
+          var fy = t.top + (bx - t.top) * (k / 6), fw = t.hw * (k / 6) * 0.9;
+          s += '<path d="M' + (CX - fw).toFixed(1) + ' ' + fy.toFixed(1) + ' q' + (fw * 0.5).toFixed(1) + ' 10 ' + fw.toFixed(1) + ' 4 q' + (fw * 0.5).toFixed(1) + ' -6 ' + fw.toFixed(1) + ' -4" fill="none" stroke="rgba(0,0,0,.14)" stroke-width="1.6" stroke-linecap="round"/>';
+        }
+        /* цасан ирмэг + цасан бөөгнөрөл */
+        s += '<path d="M' + (CX + t.hw) + ' ' + bx + ' ' + scallops(t) + '" fill="none" stroke="#f1f8ff" stroke-width="4.6" stroke-linecap="round" opacity=".95"/>' +
+          '<path d="M' + CX + ' ' + (t.top + 6) + ' Q' + (CX - t.hw * 0.5) + ' ' + (t.top + (bx - t.top) * 0.45) + ' ' + (CX - t.hw + 14) + ' ' + (bx - 8) + '" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".16"/>';
+        for (var m = 0; m < 3; m++) {
+          var sx = CX + (m - 1) * t.hw * 0.55, sy = bx - 3 + (m % 2) * 3;
+          s += '<ellipse cx="' + sx.toFixed(1) + '" cy="' + sy.toFixed(1) + '" rx="' + (10 + i * 2) + '" ry="5" fill="#ffffff" opacity=".92"/>';
+        }
       });
-      /* garland swags with twinkling bulbs */
-      var cols = ['#fb7185', '#fde047', '#7dd3fc', '#86efac', '#f9a8d4'], k = 0;
+      /* цасны ширхэгт тоос */
+      for (var q = 0; q < 26; q++) {
+        var yy = 120 + ((q * 97) % 500), hwq = hwAt(yy) - 20; if (hwq < 10) continue;
+        var xx = CX - hwq + ((q * 61) % Math.max(1, Math.floor(2 * hwq)));
+        s += '<circle cx="' + xx.toFixed(1) + '" cy="' + yy + '" r="' + (1.2 + (q % 3) * 0.6) + '" fill="#ffffff" opacity=".55"/>';
+      }
+      /* garland swags with glowing bulbs */
+      var cols = th.bulbs, k2 = 0;
       [166, 238, 310, 382, 454, 526, 598].forEach(function (y) {
         var hw = hwAt(y) - 14; if (hw < 24) return;
         var x0 = CX - hw, x2 = CX + hw, cy = y + 30;
-        s += '<path d="M' + x0 + ' ' + y + ' Q' + CX + ' ' + cy + ' ' + x2 + ' ' + y + '" fill="none" stroke="#fcd34d" stroke-width="1.7" opacity=".6"/>';
+        s += '<path d="M' + x0 + ' ' + y + ' Q' + CX + ' ' + cy + ' ' + x2 + ' ' + y + '" fill="none" stroke="' + th.garland + '" stroke-width="2.4" stroke-dasharray="1 5" stroke-linecap="round" opacity=".85"/>' +
+          '<path d="M' + x0 + ' ' + y + ' Q' + CX + ' ' + cy + ' ' + x2 + ' ' + y + '" fill="none" stroke="' + th.garland + '" stroke-width="1" opacity=".45"/>';
         var n = Math.max(3, Math.floor(2 * hw / 44));
         for (var i = 1; i <= n; i++) {
           var t = i / (n + 1), u = 1 - t;
-          var bx = u * u * x0 + 2 * u * t * CX + t * t * x2, by = u * u * y + 2 * u * t * cy + t * t * y;
-          var col = cols[k % cols.length];
-          s += '<circle class="xl-b" cx="' + bx.toFixed(1) + '" cy="' + (by + 3).toFixed(1) + '" r="3.6" fill="' + col + '" style="--d:' + (-(k * 0.43) % 2.4).toFixed(2) + 's"/>';
-          k++;
+          var bx2 = u * u * x0 + 2 * u * t * CX + t * t * x2, by = u * u * y + 2 * u * t * cy + t * t * y;
+          var col = cols[k2 % cols.length], dl = (-(k2 * 0.43) % 2.4).toFixed(2);
+          s += '<circle class="xl-b" cx="' + bx2.toFixed(1) + '" cy="' + (by + 3).toFixed(1) + '" r="8" fill="' + col + '" opacity=".25" style="--d:' + dl + 's"/>' +
+            '<circle class="xl-b" cx="' + bx2.toFixed(1) + '" cy="' + (by + 3).toFixed(1) + '" r="3.8" fill="' + col + '" style="--d:' + dl + 's"/>';
+          k2++;
         }
       });
-      /* star + halo */
-      s += '<circle cx="' + CX + '" cy="56" r="44" fill="url(#xtHalo)"><animate attributeName="r" values="38;54;38" dur="3.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".45 0 .55 1;.45 0 .55 1"/></circle>' +
-        '<path d="' + starPath(CX, 56, 30, 13) + '" fill="url(#xtStar)" stroke="#d97706" stroke-width="1.2" stroke-linejoin="round"/>' +
-        '<path d="' + starPath(CX, 56, 15, 6.4) + '" fill="#fffbe0" opacity=".8"/>';
+      /* star + halo + rays */
+      s += '<circle cx="' + CX + '" cy="56" r="44" fill="url(#xtHalo)"><animate attributeName="r" values="38;56;38" dur="3.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".45 0 .55 1;.45 0 .55 1"/></circle>' +
+        '<g opacity=".55"><animateTransform attributeName="transform" type="rotate" from="0 ' + CX + ' 56" to="360 ' + CX + ' 56" dur="24s" repeatCount="indefinite"/>';
+      for (var r = 0; r < 8; r++) {
+        var a = r * Math.PI / 4, x1 = CX + Math.cos(a) * 34, y1 = 56 + Math.sin(a) * 34, x3 = CX + Math.cos(a) * (r % 2 ? 54 : 66), y3 = 56 + Math.sin(a) * (r % 2 ? 54 : 66);
+        s += '<path d="M' + x1.toFixed(1) + ' ' + y1.toFixed(1) + ' L' + x3.toFixed(1) + ' ' + y3.toFixed(1) + '" stroke="#fff6c2" stroke-width="2" stroke-linecap="round"/>';
+      }
+      s += '</g><path d="' + starPath(CX, 56, 30, 13) + '" fill="url(#xtStar)" stroke="#d97706" stroke-width="1.2" stroke-linejoin="round"/>' +
+        '<path d="' + starPath(CX, 56, 15, 6.4) + '" fill="#fffbe0" opacity=".85"/>';
       /* small gifts at the base */
       function box(x, y, w, h, c, r) {
-        return '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="3" fill="' + c + '"/>' +
+        return '<rect x="' + x + '" y="' + (y + 3) + '" width="' + w + '" height="' + h + '" rx="3" fill="rgba(0,0,0,.18)"/>' +
+          '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="3" fill="' + c + '"/>' +
+          '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + (h * 0.32) + '" rx="3" fill="#ffffff" opacity=".14"/>' +
           '<rect x="' + (x + w / 2 - 3.5) + '" y="' + y + '" width="7" height="' + h + '" fill="' + r + '"/>' +
           '<rect x="' + x + '" y="' + (y + h / 2 - 3.5) + '" width="' + w + '" height="7" fill="' + r + '" opacity=".9"/>' +
           '<ellipse cx="' + (x + w / 2 - 6) + '" cy="' + (y - 3) + '" rx="6" ry="3.6" fill="' + r + '"/><ellipse cx="' + (x + w / 2 + 6) + '" cy="' + (y - 3) + '" rx="6" ry="3.6" fill="' + r + '"/>';
       }
-      s += box(120, 706, 54, 40, '#2563eb', '#fde68a') + box(176, 722, 40, 28, '#e11d48', '#fff') +
-        box(398, 710, 50, 38, '#7c3aed', '#fcd34d') + box(354, 726, 38, 26, '#0d9488', '#fff');
+      s += box(116, 704, 56, 42, '#2563eb', '#fde68a') + box(176, 720, 42, 30, '#e11d48', '#fff') +
+        box(396, 708, 52, 40, '#7c3aed', '#fcd34d') + box(352, 724, 40, 28, '#0d9488', '#fff') + box(450, 726, 30, 24, '#f59e0b', '#fff');
       s += '<g id="xm-orn"></g>';
+      return s;
+    }
+
+    /* ---------- бүтэн дэлгэцийн цастай ой ---------- */
+    function rnd(seed) { var x = Math.sin(seed * 999.13) * 10000; return x - Math.floor(x); }
+    function pine(x, base, hgt, w, cls, snow) {
+      var d = '', tiers = 4;
+      for (var i = 0; i < tiers; i++) {
+        var top = base - hgt + i * hgt * 0.2, bot = base - hgt * 0.68 + i * hgt * 0.22, hw = w * (0.32 + i * 0.22);
+        d += 'M' + x.toFixed(1) + ' ' + top.toFixed(1) + 'L' + (x + hw).toFixed(1) + ' ' + bot.toFixed(1) + 'L' + (x - hw).toFixed(1) + ' ' + bot.toFixed(1) + 'Z';
+      }
+      var out = '<path class="' + cls + '" d="' + d + '"/><rect class="' + cls + '" x="' + (x - w * 0.06).toFixed(1) + '" y="' + (base - hgt * 0.12).toFixed(1) + '" width="' + (w * 0.12).toFixed(1) + '" height="' + (hgt * 0.14).toFixed(1) + '"/>';
+      if (snow) {
+        var sd = '';
+        for (var j = 0; j < tiers; j++) {
+          var t2 = base - hgt + j * hgt * 0.2, hw2 = w * (0.32 + j * 0.22) * 0.38;
+          sd += 'M' + x.toFixed(1) + ' ' + t2.toFixed(1) + 'L' + (x + hw2).toFixed(1) + ' ' + (t2 + hgt * 0.09).toFixed(1) + 'Q' + x.toFixed(1) + ' ' + (t2 + hgt * 0.06).toFixed(1) + ' ' + (x - hw2).toFixed(1) + ' ' + (t2 + hgt * 0.09).toFixed(1) + 'Z';
+        }
+        out += '<path d="' + sd + '" fill="#f1f7ff" opacity="' + snow + '"/>';
+      }
+      return out;
+    }
+    function forestMarkup() {
+      var s = '<svg class="xm-forest-svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><defs>' +
+        '<linearGradient id="xfGround" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".5" stop-color="#e9f2fc"/><stop offset="1" stop-color="#cfe0f2"/></linearGradient>' +
+        '<linearGradient id="xfGround2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#dfeaf7"/><stop offset="1" stop-color="#b9cfe8"/></linearGradient>' +
+        '<radialGradient id="xfMoonGlow"><stop offset="0" stop-color="#fffbe6" stop-opacity=".55"/><stop offset="1" stop-color="#fffbe6" stop-opacity="0"/></radialGradient>' +
+        '<radialGradient id="xfMoon" cx=".4" cy=".4" r=".7"><stop offset="0" stop-color="#fffef6"/><stop offset="1" stop-color="#e9e3c9"/></radialGradient>' +
+        '<linearGradient id="xfMist" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff" stop-opacity="0"/><stop offset="1" stop-color="#ffffff" stop-opacity=".18"/></linearGradient>' +
+        '</defs>';
+      /* одод */
+      for (var i = 0; i < 70; i++) {
+        var sx = rnd(i + 1) * 1600, sy = rnd(i + 101) * 470, r = 0.8 + rnd(i + 201) * 1.8;
+        s += '<circle class="' + (i % 3 === 0 ? 'xl-b ' : '') + 'xf-star" cx="' + sx.toFixed(0) + '" cy="' + sy.toFixed(0) + '" r="' + r.toFixed(1) + '" style="--d:' + (-(i * 0.37) % 2.4).toFixed(2) + 's"/>';
+      }
+      /* сар */
+      s += '<circle cx="1330" cy="150" r="150" fill="url(#xfMoonGlow)"/><circle cx="1330" cy="150" r="48" fill="url(#xfMoon)"/>' +
+        '<circle cx="1314" cy="140" r="8" fill="#e5dec2" opacity=".7"/><circle cx="1345" cy="168" r="6" fill="#e5dec2" opacity=".6"/><circle cx="1340" cy="130" r="4" fill="#e5dec2" opacity=".5"/>';
+      /* уулс */
+      s += '<path class="xf-mtn" d="M0 640 L120 520 L210 590 L340 450 L470 580 L560 520 L700 610 L820 500 L960 600 L1080 470 L1210 590 L1330 520 L1460 600 L1600 540 V900 H0Z" opacity=".55"/>' +
+        '<path d="M340 450 L380 492 L360 488 L340 470 L322 486 L300 490Z M1080 470 L1120 510 L1100 506 L1080 490 L1060 504 L1042 510Z M820 500 L850 530 L833 526 L820 515 L806 526 L792 530Z" fill="#ffffff" opacity=".55"/>';
+      /* алсын ой */
+      for (var a = 0; a < 34; a++) {
+        var x = a * 48 + rnd(a + 300) * 30, hh = 90 + rnd(a + 400) * 90;
+        s += pine(x, 770 + rnd(a + 500) * 14, hh, hh * 0.42, 'xf-far', 0.35);
+      }
+      s += '<rect x="0" y="600" width="1600" height="200" fill="url(#xfMist)"/>';
+      /* ойрын ой (голын хэсэгт намхан, хоёр талд өндөр) */
+      for (var b = 0; b < 18; b++) {
+        var bx = b * 92 + rnd(b + 600) * 40, side = Math.abs(bx - 800) / 800;
+        var bh = 130 + side * 190 + rnd(b + 700) * 60;
+        s += pine(bx, 812 + rnd(b + 800) * 10, bh, bh * 0.44, 'xf-mid', 0.75);
+      }
+      /* газрын цас */
+      s += '<path d="M0 790 Q200 760 420 785 T860 778 T1280 788 T1600 776 V900 H0Z" fill="url(#xfGround2)"/>' +
+        '<path d="M0 815 Q260 790 520 812 T1040 806 T1600 812 V900 H0Z" fill="url(#xfGround)"/>';
+      for (var c = 0; c < 24; c++) {
+        var gx = rnd(c + 900) * 1600, gy = 820 + rnd(c + 950) * 70;
+        s += '<path class="xl-b" style="--d:' + (-(c * 0.41) % 2.4).toFixed(2) + 's" d="M' + gx.toFixed(0) + ' ' + (gy - 4).toFixed(0) + 'l1.2 3 3 1.2-3 1.2-1.2 3-1.2-3-3-1.2 3-1.2z" fill="#ffffff"/>';
+      }
+      return s + '</svg>';
+    }
+
+    /* Сонгох дэлгэцийн жижиг гацуур (хөдөлгөөнгүй, хөнгөн) */
+    function miniTree(ti, wishes) {
+      var th = TREES[ti], p = 'mt' + ti + '_';
+      var s = '<svg viewBox="0 0 600 780" aria-hidden="true"><defs>';
+      TIERS.forEach(function (t, i) { s += '<linearGradient id="' + p + i + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + th.tiers[i][0] + '"/><stop offset="1" stop-color="' + th.tiers[i][1] + '"/></linearGradient>'; });
+      s += '<radialGradient id="' + p + 'm" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ffffff"/><stop offset=".6" stop-color="#eef5fd"/><stop offset="1" stop-color="#eef5fd" stop-opacity="0"/></radialGradient>';
+      s += '</defs><rect x="274" y="636" width="52" height="104" rx="5" fill="#8a5427"/><ellipse cx="300" cy="752" rx="300" ry="46" fill="url(#' + p + 'm)"/>';
+      TIERS.forEach(function (t, i) {
+        s += '<path d="' + tierPath(t) + '" fill="url(#' + p + i + ')"/><path d="M' + (CX + t.hw) + ' ' + edge(t) + ' ' + scallops(t) + '" fill="none" stroke="#f1f8ff" stroke-width="5" stroke-linecap="round"/>';
+      });
+      (wishes || []).forEach(function (w) {
+        var sl = SLOTS[(w.slot || 0) % SLOTS.length] || SLOTS[0];
+        s += '<circle cx="' + sl.x + '" cy="' + (sl.y + 18) + '" r="11" fill="' + (/^#[0-9a-fA-F]{6}$/.test(w.color) ? w.color : '#e11d48') + '"/>';
+      });
+      s += '<path d="' + starPath(CX, 56, 34, 15) + '" fill="#fcd34d" stroke="#d97706" stroke-width="1.5"/></svg>';
       return s;
     }
 
@@ -5147,14 +5386,25 @@ service cloud.firestore {
     var LKEY = 'mandal4_xmas_wishes_v1', RKEY = 'mandal4_xmas_last_post';
     var remote = [], extra = [], rendered = {}, unsub = null, built = false, firstBatch = true, retry = null;
     var sel = { style: 'ball', color: '#e11d48' };
+    var curTree = 0, mode = 'pick';
 
     function loadExtra() { try { var a = JSON.parse(localStorage.getItem(LKEY) || '[]'); return Array.isArray(a) ? a : []; } catch (e) { return []; } }
     function saveExtra() { try { localStorage.setItem(LKEY, JSON.stringify(extra.slice(-60))); } catch (e) {} }
     function esc(s) { return String(s == null ? '' : s); }
 
-    function allWishes() {
-      return remote.concat(extra).sort(function (a, b) { return (a.ts || 0) - (b.ts || 0); }).slice(-260);
+    function treeOf(w) {
+      if (w && typeof w.tree === 'number' && w.tree >= 0 && w.tree <= 2) return w.tree;
+      return w && typeof w._t === 'number' ? w._t : 0;
     }
+    function allWishes() {
+      var list = remote.concat(extra).sort(function (a, b) { return (a.ts || 0) - (b.ts || 0); });
+      // Гацуурын дугааргүй хуучин талархлуудыг дарааллаар нь гацуурт хуваарилна (эхний 72 нь 1-р гацуурт гэх мэт)
+      var k = 0;
+      list.forEach(function (w) { if (typeof w.tree !== 'number') { w._t = Math.min(2, Math.floor(k / CAPACITY)); k++; } });
+      return list;
+    }
+    function wishesFor(t) { return allWishes().filter(function (w) { return treeOf(w) === t; }); }
+    function isFull(t) { return wishesFor(t).length >= CAPACITY; }
     function svgEl(str) { var g = document.createElementNS(NS, 'g'); g.innerHTML = str; return g.firstElementChild; }
 
     function orn(w, idx, animateIn, rep) {
@@ -5165,14 +5415,15 @@ service cloud.firestore {
       var html = '<g class="xo" data-id="' + w.id.replace(/[^\w-]/g, '') + '" tabindex="0" role="button" aria-label="' + esc(w.to).replace(/"/g, '') + ' — талархал унших" transform="translate(' + s.x + ' ' + s.y + ') scale(0.86)">' +
         '<g><animateTransform attributeName="transform" type="rotate" values="-' + amp + ' 0 0;' + amp + ' 0 0;-' + amp + ' 0 0" keyTimes="0;.5;1" calcMode="spline" keySplines=".45 0 .55 1;.45 0 .55 1" dur="' + dur + 's" begin="' + begin + 's" repeatCount="indefinite"/>' +
         '<circle cx="0" cy="22" r="27" fill="transparent"/>' +
-        '<g class="' + (animateIn ? 'xo-in' : '') + '" style="--d:' + (animateIn === 'stagger' ? (idx * 0.04).toFixed(2) : '0') + 's"><g class="xo-pop">' +
+        '<g class="' + (animateIn ? 'xo-in' : '') + '" style="--d:' + (animateIn === 'stagger' ? Math.min(idx * 0.018, 1.2).toFixed(2) : '0') + 's"><g class="xo-pop">' +
         (ORN[w.style] || ORN.ball)(w.color || '#e11d48') + '</g></g></g></g>';
       return svgEl(html);
     }
 
     function render() {
+      if (mode === 'pick') { renderChooser(); }
       var host = $('xm-orn'); if (!host) return;
-      var list = allWishes(), seen = {}, reps = {};
+      var list = mode === 'tree' ? wishesFor(curTree).slice(0, CAPACITY + 20) : [], seen = {}, reps = {};
       list.forEach(function (w, i) {
         seen[w.id] = 1;
         var rep = reps[w.slot] = (reps[w.slot] == null ? 0 : reps[w.slot] + 1);
@@ -5185,8 +5436,9 @@ service cloud.firestore {
         if (!seen[id]) { var r = rendered[id]; if (r.el.parentNode) r.el.parentNode.removeChild(r.el); delete rendered[id]; }
       });
       if (list.length) firstBatch = false;
-      $('xm-count').textContent = 'Чимэглэл: ' + list.length;
-      var an = $('xm-all-n'); if (an) an.textContent = list.length;
+      $('xm-count').textContent = 'Чимэглэл: ' + Math.min(list.length, CAPACITY) + ' / ' + CAPACITY;
+      var an = $('xm-all-n'); if (an) an.textContent = mode === 'tree' ? list.length : allWishes().length;
+      updateFullState();
       if ($('xm-list') && $('xm-list').classList.contains('open')) renderList();
     }
 
@@ -5196,14 +5448,14 @@ service cloud.firestore {
     function renderList() {
       var box = $('xm-list-items'); if (!box) return;
       var q = ($('xm-list-q').value || '').trim().toLowerCase();
-      var list = allWishes().slice().reverse();
-      $('xm-list-n').textContent = '(' + list.length + ')';
+      var list = (mode === 'tree' ? wishesFor(curTree) : allWishes()).slice().reverse();
+      $('xm-list-n').textContent = (mode === 'tree' ? '• ' + TREES[curTree].name + ' ' : '') + '(' + list.length + ')';
       if (q) list = list.filter(function (w) { return (w.to + ' ' + w.from + ' ' + w.message).toLowerCase().indexOf(q) >= 0; });
       if (!list.length) { box.innerHTML = '<div class="xm-lempty">' + (q ? 'Хайлтад тохирох талархал алга.' : 'Одоогоор талархал өлгөөгүй байна. Эхнийх нь болоорой!') + '</div>'; return; }
       box.innerHTML = list.map(function (w) {
         return '<button type="button" class="xm-litem" data-lid="' + h(w.id) + '">' +
           '<span class="xm-lorn">' + ornSvg(w.style, /^#[0-9a-fA-F]{6}$/.test(w.color) ? w.color : '#e11d48', 34, 44) + '</span>' +
-          '<span class="xm-ltxt"><b>Хэнд: ' + h(w.to) + '</b><span>' + h(w.message) + '</span><small>— ' + h(w.from || 'Нэргүй') + (w.ts ? ' • ' + h(fmtDate(w.ts)) : '') + '</small></span></button>';
+          '<span class="xm-ltxt"><b>Хэнд: ' + h(w.to) + '</b><span>' + h(w.message) + '</span><small>— ' + h(w.from || 'Нэргүй') + (w.ts ? ' • ' + h(fmtDate(w.ts)) : '') + (mode === 'pick' ? ' • ' + h(TREES[treeOf(w)].name) : '') + '</small></span></button>';
       }).join('');
     }
     window.xmList = function (open) {
@@ -5221,11 +5473,11 @@ service cloud.firestore {
         return;
       }
       try {
-        unsub = fb.onSnapshot(fb.query(fb.collection(fb.db, 'tree_wishes'), fb.limit(300)), function (snap) {
+        unsub = fb.onSnapshot(fb.query(fb.collection(fb.db, 'tree_wishes'), fb.limit(500)), function (snap) {
           var a = [];
           snap.forEach(function (d) {
             var v = d.data() || {};
-            a.push({ id: d.id, to: v.to || '', from: v.from || '', message: v.message || '', style: v.style || 'ball', color: v.color || '#e11d48', slot: typeof v.slot === 'number' ? v.slot : 0, ts: v.ts || 0 });
+            a.push({ id: d.id, to: v.to || '', from: v.from || '', message: v.message || '', style: v.style || 'ball', color: v.color || '#e11d48', slot: typeof v.slot === 'number' ? v.slot : 0, tree: typeof v.tree === 'number' ? v.tree : undefined, ts: v.ts || 0 });
           });
           remote = a; render();
         }, function () { remote = []; render(); });
@@ -5260,7 +5512,7 @@ service cloud.firestore {
     function note(msg, err) { var n = $('xm-note'); n.textContent = msg; n.className = 'xm-note' + (err ? ' err' : ''); }
 
     function pickSlot() {
-      var used = {}; allWishes().forEach(function (w) { used[w.slot] = 1; });
+      var used = {}; wishesFor(curTree).forEach(function (w) { used[w.slot] = 1; });
       var free = []; for (var i = 0; i < SLOTS.length; i++) if (!used[i]) free.push(i);
       var pool = free.length ? free : SLOTS.map(function (_, i) { return i; });
       return pool[Math.floor(Math.random() * pool.length)];
@@ -5271,8 +5523,9 @@ service cloud.firestore {
       var to = $('xm-to').value.trim(), msg = $('xm-msg').value.trim(), from = $('xm-from').value.trim();
       if (!to) { note('Хэнд талархаж байгаагаа бичнэ үү', true); $('xm-to').focus(); return; }
       if (msg.length < 2) { note('Талархлын үгээ бичнэ үү', true); $('xm-msg').focus(); return; }
+      if (isFull(curTree)) { note('Энэ гацуур дүүрсэн байна. Өөр гацуур сонгоно уу.', true); updateFullState(); return; }
       try { var last = parseInt(localStorage.getItem(RKEY) || '0', 10); if (Date.now() - last < 15000) { note('Түр хүлээгээд дахин өлгөнө үү', true); return; } } catch (er) {}
-      var wish = { to: to.slice(0, 40), from: from.slice(0, 40), message: msg.slice(0, 240), style: sel.style, color: sel.color, slot: pickSlot(), ts: Date.now() };
+      var wish = { to: to.slice(0, 40), from: from.slice(0, 40), message: msg.slice(0, 240), style: sel.style, color: sel.color, slot: pickSlot(), tree: curTree, ts: Date.now() };
       try { localStorage.setItem(RKEY, String(Date.now())); } catch (er) {}
       var fb = window.__xmasFB, fallback = function () {
         wish.id = 'l' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
@@ -5288,16 +5541,85 @@ service cloud.firestore {
       setTimeout(function () { xmPanel(false); note('', false); }, 1100);
     }
 
+    /* ---------- 3 гацуурын сонголт ---------- */
+    function renderChooser() {
+      var box = $('xm-choose'); if (!box) return;
+      box.innerHTML = TREES.map(function (th, i) {
+        var ws = wishesFor(i), n = Math.min(ws.length, CAPACITY), full = ws.length >= CAPACITY, pct = Math.round(n / CAPACITY * 100);
+        return '<button type="button" class="xm-tc' + (full ? ' full' : '') + '" data-tree="' + i + '" style="--tbg1:' + th.bg1 + ';--tbg2:' + th.bg2 + ';--tbg3:' + th.bg3 + ';--tglow:' + th.glow + ';--i:' + i + '" aria-label="' + th.name + ', ' + n + ' / ' + CAPACITY + ' чимэглэл' + (full ? ', дүүрсэн' : '') + '">' +
+          '<span class="xm-tc-halo" aria-hidden="true"></span><span class="xm-tc-art">' + miniTree(i, ws.slice(0, CAPACITY)) + '</span>' +
+          '<span class="xm-tc-info"><b>' + th.name + '</b><small>' + th.sub + '</small>' +
+          '<span class="xm-tc-bar"><i style="width:' + pct + '%"></i></span>' +
+          '<span class="xm-tc-meta"><span>' + n + ' / ' + CAPACITY + ' чимэглэл</span><span class="xm-tc-st">' + (full ? 'Дүүрсэн' : 'Сул зай бий') + '</span></span></span>' +
+          '</button>';
+      }).join('');
+    }
+    function setHeader() {
+      var t = $('xm-title-t'), sb = $('xm-title-s'), back = $('xm-back');
+      if (mode === 'pick') { t.textContent = 'Талархлын гацуурууд'; sb.textContent = 'Гацуураа сонгоод талархлаа өлгөөрэй'; back.hidden = true; }
+      else { t.textContent = TREES[curTree].name; sb.textContent = 'Чимэглэл бүр дээр талархлын үг нуугдаж байна — дарж уншаарай'; back.hidden = false; }
+    }
+    function applyTheme() {
+      var th = TREES[mode === 'pick' ? 0 : curTree], m = $('xm-modal');
+      m.style.setProperty('--xbg1', th.bg1); m.style.setProperty('--xbg2', th.bg2); m.style.setProperty('--xbg3', th.bg3); m.style.setProperty('--xglow', th.glow);
+      m.style.setProperty('--xfar', th.far); m.style.setProperty('--xmid', th.mid); m.style.setProperty('--xmtn', th.mtn);
+    }
+    function updateFullState() {
+      var full = mode === 'tree' && isFull(curTree);
+      var m = $('xm-modal'); if (m) m.classList.toggle('xm-is-full', full);
+      var f = $('xm-fab-t'); if (f) f.textContent = full ? 'Гацуур дүүрсэн' : 'Талархал өлгөх';
+    }
+    function clearOrnaments() {
+      var host = $('xm-orn'); if (host) host.innerHTML = '';
+      rendered = {};
+    }
+    function enterTree(i, card) {
+      curTree = i; mode = 'tree';
+      xmList(false); xmCloseReader();
+      clearOrnaments();
+      $('xm-tree').innerHTML = treeMarkup(i);
+      applyTheme();
+      var m = $('xm-modal');
+      m.classList.remove('xm-picking'); setHeader();
+      firstBatch = true; render();
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var svg = $('xm-tree');
+      if (!reduce && svg.animate && card) {
+        var art = card.querySelector('.xm-tc-art') || card;
+        var r = art.getBoundingClientRect(), c = svg.getBoundingClientRect();
+        if (c.width > 0) {
+          var sc = Math.max(0.2, Math.min(1, r.width / c.width));
+          var dx = (r.left + r.width / 2) - (c.left + c.width / 2), dy = (r.top + r.height / 2) - (c.top + c.height / 2);
+          svg.animate([{ transform: 'translate(' + dx.toFixed(0) + 'px,' + dy.toFixed(0) + 'px) scale(' + sc.toFixed(3) + ')', opacity: 0.6 }, { transform: 'none', opacity: 1 }],
+            { duration: 750, easing: 'cubic-bezier(0.2, 0.9, 0.25, 1)' });
+        }
+        var bg = $('xm-modal');
+        bg.animate([{ filter: 'brightness(1.5)' }, { filter: 'none' }], { duration: 700, easing: 'ease-out' });
+      }
+      try { $('xm-back').focus({ preventScroll: true }); } catch (e) {}
+    }
+    window.xmBackToTrees = function () {
+      mode = 'pick'; xmPanel(false); xmList(false); xmCloseReader();
+      var m = $('xm-modal'); m.classList.add('xm-picking'); m.classList.remove('xm-is-full');
+      setHeader(); applyTheme(); renderChooser();
+      var box = $('xm-choose');
+      if (box && box.animate && !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) box.animate([{ opacity: 0, transform: 'scale(1.06)' }, { opacity: 1, transform: 'none' }], { duration: 420, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' });
+      var an = $('xm-all-n'); if (an) an.textContent = allWishes().length;
+    };
+
     window.xmPanel = function (open) {
       var p = $('xm-panel'); if (!p) return;
+      if (open && mode === 'tree' && isFull(curTree)) updateFullState();
       p.classList.toggle('open', !!open);
       var fab = $('xm-fab'); if (fab) fab.style.visibility = open ? 'hidden' : '';
       if (open) setTimeout(function () { try { $('xm-to').focus({ preventScroll: true }); } catch (e) {} }, 380);
     };
 
     function init() {
-      $('xm-tree').innerHTML = treeMarkup();
+      $('xm-tree').innerHTML = treeMarkup(0);
+      $('xm-forest').innerHTML = forestMarkup();
       renderPicker();
+      $('xm-choose').addEventListener('click', function (e) { var b = e.target.closest('[data-tree]'); if (b) enterTree(parseInt(b.getAttribute('data-tree'), 10), b); });
       $('xm-styles').addEventListener('click', function (e) { var b = e.target.closest('[data-style]'); if (!b) return; sel.style = b.getAttribute('data-style'); renderPicker(); });
       $('xm-swatches').addEventListener('click', function (e) { var b = e.target.closest('[data-color]'); if (!b) return; sel.color = b.getAttribute('data-color'); renderPicker(); });
       $('xm-msg').addEventListener('input', function () { $('xm-msg-n').textContent = this.value.length; });
@@ -5318,6 +5640,8 @@ service cloud.firestore {
       if (!built) { extra = loadExtra(); init(); }
       m.classList.add('open');
       document.documentElement.style.overflow = 'hidden';
+      mode = 'pick'; m.classList.add('xm-picking'); m.classList.remove('xm-is-full'); setHeader(); applyTheme();
+      clearOrnaments();
       firstBatch = true;
       if (!unsub) subscribe(0);
       render();
@@ -5333,7 +5657,7 @@ service cloud.firestore {
     document.addEventListener('keydown', function (e) {
       if (e.key !== 'Escape') return;
       var m = $('xm-modal'); if (!m || !m.classList.contains('open')) return;
-      if ($('xm-reader').classList.contains('open')) xmCloseReader(); else if ($('xm-list').classList.contains('open')) xmList(false); else closeXmasTree();
+      if ($('xm-reader').classList.contains('open')) xmCloseReader(); else if ($('xm-list').classList.contains('open')) xmList(false); else if (mode === 'tree') xmBackToTrees(); else closeXmasTree();
     });
   })();
 
@@ -7364,7 +7688,7 @@ service cloud.firestore {
           const a = [];
           snap.forEach((d) => {
             const v = d.data() || {};
-            a.push({ id: d.id, to: String(v.to || ''), from: String(v.from || ''), message: String(v.message || ''), color: String(v.color || '#e11d48'), style: String(v.style || 'ball'), ts: Number(v.ts || 0) || (v.createdAt && v.createdAt.seconds ? v.createdAt.seconds * 1000 : 0) });
+            a.push({ id: d.id, tree: typeof v.tree === 'number' ? v.tree : 0, to: String(v.to || ''), from: String(v.from || ''), message: String(v.message || ''), color: String(v.color || '#e11d48'), style: String(v.style || 'ball'), ts: Number(v.ts || 0) || (v.createdAt && v.createdAt.seconds ? v.createdAt.seconds * 1000 : 0) });
           });
           a.sort((x, y) => y.ts - x.ts);
           adminTreeWishes = a;
@@ -7398,7 +7722,7 @@ service cloud.firestore {
           <div class="flex items-start gap-3 min-w-0">
             <span class="mt-1 w-3.5 h-3.5 rounded-full shrink-0 ring-2 ring-white shadow" style="background:${color}"></span>
             <div class="min-w-0">
-              <span class="text-[11px] font-bold text-emerald-700 block truncate">Хэнд: ${escapeHtml(w.to)}${dt ? ` • ${escapeHtml(dt)}` : ''}</span>
+              <span class="text-[11px] font-bold text-emerald-700 block truncate">${['Маргад', 'Цасан', 'Алтан'][w.tree] || 'Маргад'} гацуур • Хэнд: ${escapeHtml(w.to)}${dt ? ` • ${escapeHtml(dt)}` : ''}</span>
               <p class="text-xs sm:text-sm font-semibold text-slate-800 mt-0.5 break-words whitespace-pre-line line-clamp-4">${escapeHtml(w.message)}</p>
               <span class="text-[11px] font-bold text-slate-500 block mt-0.5">— ${escapeHtml(w.from || 'Нэргүй')}</span>
             </div>
